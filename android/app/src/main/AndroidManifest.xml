@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.xpns42">
+    package="ch.frenchguy.xpns42">
    <application
         android:label="xpns42"
         android:name="${applicationName}"
