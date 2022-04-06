@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.frenchguy.xpns42">
-	<uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="xpns42"
         android:name="${applicationName}"
