@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gettext_i18n/gettext_i18n.dart';
 
+import 'app_theme.dart';
 import 'pages/home_page.dart';
 
 class App extends StatelessWidget {
@@ -10,8 +11,10 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return MaterialApp(
       title: 'Xpns42',
+      theme: AppTheme.data,
+      debugShowCheckedModeBanner: false,
       supportedLocales: const [Locale('en'), Locale('fr')],
       localizationsDelegates: [
         GettextLocalizationsDelegate(defaultLanguage: 'fr'),
