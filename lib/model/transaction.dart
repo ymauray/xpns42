@@ -13,6 +13,7 @@ class Transaction {
     required this.id,
     required this.title,
     required this.amount,
+    required this.currency,
     required this.date,
     required this.payement,
     required this.person1IsOriginator,
@@ -24,9 +25,10 @@ class Transaction {
       id: map['id'] as int,
       title: map['title'] as String,
       amount: map['amount'] as double,
+      currency: map['currency'] as String,
       date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
       payement: map['payement'] as bool,
-      person1IsOriginator: map['persone1IsOriginator'] as bool,
+      person1IsOriginator: map['person1IsOriginator'] as bool,
       split: map['split'] as bool,
     );
   }
@@ -35,6 +37,7 @@ class Transaction {
   final int id;
   final String title;
   final double amount;
+  final String currency;
   final DateTime date;
   final bool payement;
   final bool person1IsOriginator;
@@ -44,18 +47,20 @@ class Transaction {
     int? id,
     String? title,
     double? amount,
+    String? currency,
     DateTime? date,
     bool? payement,
-    bool? persone1IsOriginator,
+    bool? person1IsOriginator,
     bool? split,
   }) {
     return Transaction(
       id: id ?? this.id,
       title: title ?? this.title,
       amount: amount ?? this.amount,
+      currency: currency ?? this.currency,
       date: date ?? this.date,
       payement: payement ?? this.payement,
-      person1IsOriginator: persone1IsOriginator ?? person1IsOriginator,
+      person1IsOriginator: person1IsOriginator ?? this.person1IsOriginator,
       split: split ?? this.split,
     );
   }
@@ -65,9 +70,10 @@ class Transaction {
       'id': id,
       'title': title,
       'amount': amount,
+      'currency': currency,
       'date': date.millisecondsSinceEpoch,
       'payement': payement,
-      'persone1IsOriginator': person1IsOriginator,
+      'person1IsOriginator': person1IsOriginator,
       'split': split,
     };
   }
@@ -76,7 +82,7 @@ class Transaction {
 
   @override
   String toString() {
-    return 'Transaction(id: $id, title: $title, amount: $amount, date: $date, payement: $payement, persone1IsOriginator: $person1IsOriginator, split: $split)';
+    return 'Transaction(id: $id, title: $title, amount: $amount, currency: $currency, date: $date, payement: $payement, person1IsOriginator: $person1IsOriginator, split: $split)';
   }
 
   @override
@@ -86,6 +92,7 @@ class Transaction {
     return other.id == id &&
         other.title == title &&
         other.amount == amount &&
+        other.currency == currency &&
         other.date == date &&
         other.payement == payement &&
         other.person1IsOriginator == person1IsOriginator &&
@@ -97,6 +104,7 @@ class Transaction {
     return id.hashCode ^
         title.hashCode ^
         amount.hashCode ^
+        currency.hashCode ^
         date.hashCode ^
         payement.hashCode ^
         person1IsOriginator.hashCode ^

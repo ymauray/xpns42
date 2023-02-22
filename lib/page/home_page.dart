@@ -16,9 +16,7 @@ class HomePage extends ConsumerWidget {
       body: book.when(
         data: (book) => Column(
           children: [
-            SafeArea(
-              child: Header(book: book),
-            ),
+            Header(book: book),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -88,8 +86,22 @@ class HomePage extends ConsumerWidget {
                             children: [
                               const VerticalDivider(),
                               const Spacer(),
-                              Text(
-                                t.amount.toStringAsFixed(2),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      t.amount.toStringAsFixed(2),
+                                    ),
+                                  ),
+                                  Text(
+                                    t.currency,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
