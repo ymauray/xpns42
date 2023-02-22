@@ -90,6 +90,9 @@ class Header extends StatelessWidget {
                             ),
                             child: const Text(
                               'Add expense',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),

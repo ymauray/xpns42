@@ -16,7 +16,9 @@ class HomePage extends ConsumerWidget {
       body: book.when(
         data: (book) => Column(
           children: [
-            Header(book: book),
+            SafeArea(
+              child: Header(book: book),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -24,6 +26,13 @@ class HomePage extends ConsumerWidget {
                   itemCount: book.transactions.length,
                   itemBuilder: (context, index) {
                     final t = book.transactions[index];
+                    final originator =
+                        t.person1IsOriginator ? book.person1 : book.person2;
+                    final beneficiary = t.split
+                        ? '${book.person1} & ${book.person2}'
+                        : t.person1IsOriginator
+                            ? book.person2
+                            : book.person1;
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -32,14 +41,58 @@ class HomePage extends ConsumerWidget {
                       ),
                       child: ListTile(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         tileColor: Colors.white,
-                        title: Text(
-                          '${t.title} ${DateFormat.yMEd().format(t.date)}',
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            children: [
+                              Text(
+                                t.title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Text(
+                                  DateFormat.yMd().format(t.date),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        subtitle: Text(
-                          t.date.toString(),
+                        subtitle: Row(
+                          children: [
+                            Text(
+                              originator,
+                              style: TextStyle(
+                                color: t.payement ? Colors.green : Colors.red,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              beneficiary,
+                              style: TextStyle(
+                                color: t.payement ? Colors.red : Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                        trailing: SizedBox(
+                          width: 70,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const VerticalDivider(),
+                              const Spacer(),
+                              Text(
+                                t.amount.toStringAsFixed(2),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
