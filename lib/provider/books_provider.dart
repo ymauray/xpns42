@@ -1,0 +1,53 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpns42/model/book.dart';
+import 'package:xpns42/model/transaction.dart';
+
+final booksProvider = FutureProvider(
+  (ref) => Future.delayed(const Duration(seconds: 3), () {
+    final book = Book(
+      person1: 'Yannick',
+      person2: 'Sandrine',
+      balance: -1358.25,
+      transactions: [
+        Transaction(
+          id: 0,
+          title: 'Lidl',
+          amount: 25,
+          date: DateTime(2023, 2, 22),
+        ),
+        Transaction(
+          id: 1,
+          title: 'Aldi',
+          amount: 125.55,
+          date: DateTime(2023, 2, 21),
+        ),
+        Transaction(
+          id: 2,
+          title: 'Coop',
+          amount: 123.54,
+          date: DateTime(2023, 2, 14),
+        ),
+        Transaction(
+          id: 3,
+          title: 'Migros',
+          amount: 25.25,
+          date: DateTime(2023, 2, 7),
+        ),
+        Transaction(
+          id: 4,
+          title: 'Intermarché',
+          amount: 25.50,
+          date: DateTime(2023, 1, 31),
+        ),
+        Transaction(
+          id: 5,
+          title: 'Bricomarché',
+          amount: 79.24,
+          date: DateTime(2023, 1, 24),
+        ),
+      ],
+    );
+
+    return book;
+  }),
+);

@@ -9,19 +9,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  gettext_i18n: ^1.0.5
-  intl: ^0.17.0
+  flutter_launcher_icons: ^0.9.3
   flutter_localizations:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.3
   flutter_riverpod: ^1.0.4
+  intl: ^0.17.0
+  very_good_analysis: ^4.0.0+1
 
 dev_dependencies:
+  dart_code_metrics: ^4.16.0
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
-  dart_code_metrics: ^4.16.0
 
 flutter:
   uses-material-design: true
