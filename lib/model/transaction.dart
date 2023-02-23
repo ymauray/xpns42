@@ -14,6 +14,7 @@ class Transaction {
     required this.title,
     required this.amount,
     required this.currency,
+    required this.convertedAmount,
     required this.date,
     required this.payement,
     required this.person1IsOriginator,
@@ -26,6 +27,7 @@ class Transaction {
       title: map['title'] as String,
       amount: map['amount'] as double,
       currency: map['currency'] as String,
+      convertedAmount: map['convertedAmount'] as double,
       date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
       payement: map['payement'] as bool,
       person1IsOriginator: map['person1IsOriginator'] as bool,
@@ -38,6 +40,7 @@ class Transaction {
   final String title;
   final double amount;
   final String currency;
+  final double convertedAmount;
   final DateTime date;
   final bool payement;
   final bool person1IsOriginator;
@@ -48,6 +51,7 @@ class Transaction {
     String? title,
     double? amount,
     String? currency,
+    double? convertedAmount,
     DateTime? date,
     bool? payement,
     bool? person1IsOriginator,
@@ -58,6 +62,7 @@ class Transaction {
       title: title ?? this.title,
       amount: amount ?? this.amount,
       currency: currency ?? this.currency,
+      convertedAmount: convertedAmount ?? this.convertedAmount,
       date: date ?? this.date,
       payement: payement ?? this.payement,
       person1IsOriginator: person1IsOriginator ?? this.person1IsOriginator,
@@ -71,6 +76,7 @@ class Transaction {
       'title': title,
       'amount': amount,
       'currency': currency,
+      'convertedAmount': convertedAmount,
       'date': date.millisecondsSinceEpoch,
       'payement': payement,
       'person1IsOriginator': person1IsOriginator,
@@ -82,7 +88,7 @@ class Transaction {
 
   @override
   String toString() {
-    return 'Transaction(id: $id, title: $title, amount: $amount, currency: $currency, date: $date, payement: $payement, person1IsOriginator: $person1IsOriginator, split: $split)';
+    return 'Transaction(id: $id, title: $title, amount: $amount, currency: $currency, convertedAmount: $convertedAmount, date: $date, payement: $payement, person1IsOriginator: $person1IsOriginator, split: $split)';
   }
 
   @override
@@ -93,6 +99,7 @@ class Transaction {
         other.title == title &&
         other.amount == amount &&
         other.currency == currency &&
+        other.convertedAmount == convertedAmount &&
         other.date == date &&
         other.payement == payement &&
         other.person1IsOriginator == person1IsOriginator &&
@@ -105,6 +112,7 @@ class Transaction {
         title.hashCode ^
         amount.hashCode ^
         currency.hashCode ^
+        convertedAmount.hashCode ^
         date.hashCode ^
         payement.hashCode ^
         person1IsOriginator.hashCode ^

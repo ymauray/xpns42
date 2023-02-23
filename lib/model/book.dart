@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -13,20 +14,25 @@ class Book {
     required this.person1,
     required this.person2,
     required this.balance,
+    required this.currency,
     required this.transactions,
   });
   factory Book.fromMap(Map<String, dynamic> map) {
     return Book(
-      person1: map['person1'] ?? '',
-      person2: map['person2'] ?? '',
-      balance: map['balance']?.toDouble() ?? 0.0,
+      person1: map['person1'] as String,
+      person2: map['person2'] as String,
+      balance: map['balance'] as double,
+      currency: map['currency'] as String,
       transactions: List<Transaction>.from(
-        map['transactions']?.map(Transaction.fromMap),
+        (map['transactions'] as List<int>).map<Transaction>(
+          (x) => Transaction.fromMap(x as Map<String, dynamic>),
+        ),
       ),
     );
   }
 
-  factory Book.fromJson(String source) => Book.fromMap(json.decode(source));
+  factory Book.fromJson(String source) =>
+      Book.fromMap(json.decode(source) as Map<String, dynamic>);
 
   String get debtor => balance >= 0 ? person1 : person2;
   String get creditor => balance < 0 ? person1 : person2;
@@ -36,27 +42,31 @@ class Book {
   final String person1;
   final String person2;
   final double balance;
+  final String currency;
   final List<Transaction> transactions;
 
   Book copyWith({
     String? person1,
     String? person2,
     double? balance,
+    String? currency,
     List<Transaction>? transactions,
   }) {
     return Book(
       person1: person1 ?? this.person1,
       person2: person2 ?? this.person2,
       balance: balance ?? this.balance,
+      currency: currency ?? this.currency,
       transactions: transactions ?? this.transactions,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'person1': person1,
       'person2': person2,
       'balance': balance,
+      'currency': currency,
       'transactions': transactions.map((x) => x.toMap()).toList(),
     };
   }
@@ -65,17 +75,17 @@ class Book {
 
   @override
   String toString() {
-    return 'Book(person1: $person1, person2: $person2, balance: $balance, transactions: $transactions)';
+    return 'Book(person1: $person1, person2: $person2, balance: $balance, currency: $currency, transactions: $transactions)';
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant Book other) {
     if (identical(this, other)) return true;
 
-    return other is Book &&
-        other.person1 == person1 &&
+    return other.person1 == person1 &&
         other.person2 == person2 &&
         other.balance == balance &&
+        other.currency == currency &&
         listEquals(other.transactions, transactions);
   }
 
@@ -84,6 +94,7 @@ class Book {
     return person1.hashCode ^
         person2.hashCode ^
         balance.hashCode ^
+        currency.hashCode ^
         transactions.hashCode;
   }
 }

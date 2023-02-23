@@ -6,9 +6,9 @@ import 'package:intl/intl_standalone.dart';
 import 'package:xpns42/app.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await findSystemLocale();
   await initializeDateFormatting();
-  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,
@@ -16,5 +16,6 @@ void main() async {
       SystemUiOverlay.bottom, //This line is used for showing the bottom bar
     ],
   );
+
   runApp(const ProviderScope(child: App()));
 }
