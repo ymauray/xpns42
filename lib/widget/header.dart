@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xpns42/colors.dart';
 import 'package:xpns42/model/book.dart';
 import 'package:xpns42/widget/add_expense_button.dart';
 import 'package:xpns42/widget/balance.dart';
@@ -18,7 +19,7 @@ class Header extends StatelessWidget {
         Expanded(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: Colors.grey.shade900,
+              color: AppColors.header,
               borderRadius: const BorderRadius.vertical(
                 bottom: Radius.circular(32),
               ),

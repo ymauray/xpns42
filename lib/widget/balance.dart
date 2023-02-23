@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xpns42/colors.dart';
 import 'package:xpns42/model/book.dart';
 
 class Balance extends StatelessWidget {
@@ -13,7 +14,7 @@ class Balance extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Colors.teal.shade500,
+        color: AppColors.balance,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Padding(

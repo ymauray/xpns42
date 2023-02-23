@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:xpns42/colors.dart';
 import 'package:xpns42/model/transaction.dart';
 import 'package:xpns42/provider/books_provider.dart';
 import 'package:xpns42/widget/grouped_list_view.dart';
@@ -18,7 +19,7 @@ class HomePage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Xpns42'),
         centerTitle: true,
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: AppColors.header,
         elevation: 0,
         //actions: [
         //  IconButton(
@@ -119,6 +120,8 @@ class HomePage extends ConsumerWidget {
         error: (error, stack) => const Center(child: Text('Error')),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey.shade100,
+        selectedItemColor: Colors.grey.shade900,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
