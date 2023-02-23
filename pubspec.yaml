@@ -10,28 +10,54 @@ dependencies:
   file: ^6.1.4
   flutter:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.3
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.2.16
   flutter_riverpod: ^2.0.0
   http: ^0.13.5
   intl: ^0.17.0
+  pocketbase: ^0.7.3
   riverpod_annotation: ^1.2.1
   shared_preferences: ^2.0.18
-  very_good_analysis: ^4.0.0+1
 
 dev_dependencies:
   build_runner: ^2.3.3
   dart_code_metrics: ^4.16.0
+  flutter_launcher_icons: ^0.9.3
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
   riverpod_generator: ^1.1.1
+  very_good_analysis: ^4.0.0+1
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+  fonts:
+    - family: Percolator
+      fonts:
+        - asset: assets/fonts/Percolator/percolator-expert.ttf
+    - family: WoD3
+      fonts:
+        - asset: assets/fonts/WoD3/WOD3____.ttf
+    - family: Cardo
+      fonts:
+        - asset: assets/fonts/Cardo/Cardo-Regular.ttf
+        - asset: assets/fonts/Cardo/Cardo-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Cardo/Cardo-Bold.ttf
+          weight: 700
 
 flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/launcher_icon/saco.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/launcher_icon/saco.png"
+  color_dark: "#434343"
+  image_dark: "assets/launcher_icon/saco.png"
+  android: true
+  ios: true

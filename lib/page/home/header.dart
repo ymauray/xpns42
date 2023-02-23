@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:xpns42/colors.dart';
+import 'package:xpns42/util/colors.dart';
 import 'package:xpns42/model/book.dart';
-import 'package:xpns42/widget/add_expense_button.dart';
-import 'package:xpns42/widget/balance.dart';
+import 'package:xpns42/page/home/add_expense_button.dart';
+import 'package:xpns42/page/home/balance.dart';
 
 class Header extends StatelessWidget {
   const Header({

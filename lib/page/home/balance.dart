@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xpns42/colors.dart';
+import 'package:xpns42/util/colors.dart';
 import 'package:xpns42/model/book.dart';
 
 class Balance extends StatelessWidget {
