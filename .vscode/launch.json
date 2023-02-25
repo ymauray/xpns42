@@ -1,0 +1,45 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "xpns42",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "xpns42 (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "xpns42 (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "login_registration_form",
+            "cwd": "packages/login_registration_form",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "login_registration_form (profile mode)",
+            "cwd": "packages/login_registration_form",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "login_registration_form (release mode)",
+            "cwd": "packages/login_registration_form",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

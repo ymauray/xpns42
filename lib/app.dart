@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/page/login/login_page.dart';
-import 'package:xpns42/util/color_utils.dart';
-import 'package:xpns42/util/colors.dart';
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'Xpns42',
-      debugShowCheckedModeBanner: false,
+      title: 'Widget Samples',
       theme: ThemeData(
-        primarySwatch: ColorUtils.createMaterialColor(AppColors.base),
+        primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

@@ -16,6 +16,8 @@ dependencies:
   flutter_riverpod: ^2.0.0
   http: ^0.13.5
   intl: ^0.17.0
+  login_registration_form:
+    path: packages/login_registration_form
   pocketbase: ^0.7.3
   riverpod_annotation: ^1.2.1
   shared_preferences: ^2.0.18
