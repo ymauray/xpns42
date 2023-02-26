@@ -21,14 +21,6 @@ class FormContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final identifierController = TextEditingController(text: identifier);
-    //if (identifier != null) {
-    //  identifierController.text = identifier!;
-    //}
-
-    //final passwordController = TextEditingController();
-    //final confirmPasswordController = TextEditingController();
-
     final formState = ref.watch(formStateControllerProvider);
 
     return Row(
@@ -38,10 +30,9 @@ class FormContent extends ConsumerWidget {
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.only(
-                top: 32,
+                top: 16,
                 left: 32,
                 right: 32,
-                bottom: 16,
               ),
               child: Column(
                 children: [
@@ -49,11 +40,15 @@ class FormContent extends ConsumerWidget {
                     label: 'Identifier',
                     controller: identifierController,
                     readOnly: formState.loading,
+                    prefixIcon: const Icon(Icons.people),
+                    focusColor: const Color(0xFFa473cd),
                   ),
                   FormTextField.password(
                     label: 'Password',
                     controller: passwordController,
                     readOnly: formState.loading,
+                    prefixIcon: const Icon(Icons.lock),
+                    focusColor: const Color(0xFFa473cd),
                   ),
                   if (!formState.isRegistrationForm) ...[
                     FormButton(
@@ -113,6 +108,8 @@ class FormContent extends ConsumerWidget {
                       label: 'Confirm Password',
                       controller: confirmPasswordController,
                       readOnly: formState.loading,
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      focusColor: const Color(0xFFa473cd),
                     ),
                     FormButton(
                       label: formState.loading

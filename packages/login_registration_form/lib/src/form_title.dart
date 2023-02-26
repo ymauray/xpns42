@@ -17,7 +17,10 @@ class FormTitle extends ConsumerWidget {
           child: ColoredBox(
             color: const Color(0xFF4f4587),
             child: Padding(
-              padding: const EdgeInsets.all(32),
+              padding: const EdgeInsets.symmetric(
+                vertical: 16,
+                horizontal: 32,
+              ),
               child: title,
             ),
           ),

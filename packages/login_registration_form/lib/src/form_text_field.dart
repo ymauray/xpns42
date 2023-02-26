@@ -6,6 +6,8 @@ class FormTextField extends ConsumerWidget {
     required this.label,
     required this.controller,
     required this.readOnly,
+    this.prefixIcon,
+    this.focusColor,
     super.key,
   }) : obscureText = false;
 
@@ -13,6 +15,8 @@ class FormTextField extends ConsumerWidget {
     required this.label,
     required this.controller,
     required this.readOnly,
+    this.prefixIcon,
+    this.focusColor,
     super.key,
   }) : obscureText = true;
 
@@ -20,6 +24,8 @@ class FormTextField extends ConsumerWidget {
   final TextEditingController controller;
   final bool obscureText;
   final bool readOnly;
+  final Widget? prefixIcon;
+  final Color? focusColor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,9 +37,23 @@ class FormTextField extends ConsumerWidget {
         obscureText: obscureText,
         controller: controller,
         readOnly: readOnly,
+        cursorColor: focusColor ?? Colors.grey,
         decoration: InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.never,
           labelText: label,
-          border: const OutlineInputBorder(borderRadius: BorderRadius.zero),
+          prefixIcon: prefixIcon,
+          prefixIconColor: MaterialStateColor.resolveWith(
+            (states) => states.contains(MaterialState.focused)
+                ? focusColor ?? Colors.grey
+                : Colors.grey,
+          ),
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.zero,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.zero,
+            borderSide: BorderSide(width: 2, color: focusColor ?? Colors.grey),
+          ),
         ),
       ),
     );
