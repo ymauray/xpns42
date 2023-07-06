@@ -1,28 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:xpns42/page/book/book_page.dart';
-import 'package:xpns42/page/home/home_page.dart';
+import 'package:xpns42/page/book_page.dart';
+import 'package:xpns42/page/expense_form.dart';
+import 'package:xpns42/page/home_page.dart';
+import 'package:xpns42/page/register_page.dart';
+import 'package:xpns42/page/sign_in_page.dart';
+import 'package:xpns42/widget/book_form.dart';
+import 'package:xpns42/widget/wrapper.dart';
 
 class App extends ConsumerWidget {
-  App({super.key});
+  const App({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp.router(
-      routerConfig: _routerConfig,
+    return MaterialApp(
+      title: 'Xpns42',
       debugShowCheckedModeBanner: false,
-      title: 'Widget Samples',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        colorSchemeSeed: Colors.teal,
+        brightness: Brightness.light,
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+        ),
+        //elevatedButtonTheme: ElevatedButtonThemeData(
+        //  style: ButtonStyle(
+        //    shape: MaterialStateProperty.all(
+        //      const RoundedRectangleBorder(
+        //        borderRadius: BorderRadius.all(
+        //          Radius.circular(4),
+        //        ),
+        //      ),
+        //    ),
+        //  ),
+        //),
       ),
+      home: const Wrapper(),
+      routes: {
+        '/home': (context) => const HomePage(),
+        '/login': (context) => const SignInPage(),
+        '/register': (context) => const RegisterPage(),
+        '/add': (context) => const BookForm(),
+        '/edit': (context) => const BookForm(),
+        '/expenses': (context) => const BookPage(),
+        '/expenses/add': (context) => const ExpenseForm(),
+      },
     );
   }
-
-  final GoRouter _routerConfig = GoRouter(
-    routes: [
-      GoRoute(path: '/', builder: (context, state) => const HomePage()),
-      GoRoute(path: '/book', builder: (context, state) => BookPage()),
-    ],
-  );
 }

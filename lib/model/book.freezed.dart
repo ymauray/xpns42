@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'book.dart';
 
@@ -14,15 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Book _$BookFromJson(Map<String, dynamic> json) {
+  return _Book.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Book {
-  int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-  double get initialBalance => throw _privateConstructorUsedError;
-  double get currentBalance => throw _privateConstructorUsedError;
-  List<Operation> get operations => throw _privateConstructorUsedError;
+  double get balance => throw _privateConstructorUsedError;
+  String? get firstPerson => throw _privateConstructorUsedError;
+  String? get secondPerson => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $BookCopyWith<Book> get copyWith => throw _privateConstructorUsedError;
 }
@@ -33,12 +37,11 @@ abstract class $BookCopyWith<$Res> {
       _$BookCopyWithImpl<$Res, Book>;
   @useResult
   $Res call(
-      {int id,
-      String title,
-      String currency,
-      double initialBalance,
-      double currentBalance,
-      List<Operation> operations});
+      {String title,
+      double balance,
+      String? firstPerson,
+      String? secondPerson,
+      String? id});
 }
 
 /// @nodoc
@@ -54,38 +57,33 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? title = null,
-    Object? currency = null,
-    Object? initialBalance = null,
-    Object? currentBalance = null,
-    Object? operations = null,
+    Object? balance = null,
+    Object? firstPerson = freezed,
+    Object? secondPerson = freezed,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      initialBalance: null == initialBalance
-          ? _value.initialBalance
-          : initialBalance // ignore: cast_nullable_to_non_nullable
+      balance: null == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
               as double,
-      currentBalance: null == currentBalance
-          ? _value.currentBalance
-          : currentBalance // ignore: cast_nullable_to_non_nullable
-              as double,
-      operations: null == operations
-          ? _value.operations
-          : operations // ignore: cast_nullable_to_non_nullable
-              as List<Operation>,
+      firstPerson: freezed == firstPerson
+          ? _value.firstPerson
+          : firstPerson // ignore: cast_nullable_to_non_nullable
+              as String?,
+      secondPerson: freezed == secondPerson
+          ? _value.secondPerson
+          : secondPerson // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -97,12 +95,11 @@ abstract class _$$_BookCopyWith<$Res> implements $BookCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String title,
-      String currency,
-      double initialBalance,
-      double currentBalance,
-      List<Operation> operations});
+      {String title,
+      double balance,
+      String? firstPerson,
+      String? secondPerson,
+      String? id});
 }
 
 /// @nodoc
@@ -114,74 +111,63 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? title = null,
-    Object? currency = null,
-    Object? initialBalance = null,
-    Object? currentBalance = null,
-    Object? operations = null,
+    Object? balance = null,
+    Object? firstPerson = freezed,
+    Object? secondPerson = freezed,
+    Object? id = freezed,
   }) {
     return _then(_$_Book(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      initialBalance: null == initialBalance
-          ? _value.initialBalance
-          : initialBalance // ignore: cast_nullable_to_non_nullable
+      balance: null == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
               as double,
-      currentBalance: null == currentBalance
-          ? _value.currentBalance
-          : currentBalance // ignore: cast_nullable_to_non_nullable
-              as double,
-      operations: null == operations
-          ? _value._operations
-          : operations // ignore: cast_nullable_to_non_nullable
-              as List<Operation>,
+      firstPerson: freezed == firstPerson
+          ? _value.firstPerson
+          : firstPerson // ignore: cast_nullable_to_non_nullable
+              as String?,
+      secondPerson: freezed == secondPerson
+          ? _value.secondPerson
+          : secondPerson // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_Book implements _Book {
   const _$_Book(
-      {required this.id,
-      required this.title,
-      required this.currency,
-      required this.initialBalance,
-      required this.currentBalance,
-      required final List<Operation> operations})
-      : _operations = operations;
+      {required this.title,
+      required this.balance,
+      this.firstPerson,
+      this.secondPerson,
+      this.id});
 
-  @override
-  final int id;
+  factory _$_Book.fromJson(Map<String, dynamic> json) => _$$_BookFromJson(json);
+
   @override
   final String title;
   @override
-  final String currency;
+  final double balance;
   @override
-  final double initialBalance;
+  final String? firstPerson;
   @override
-  final double currentBalance;
-  final List<Operation> _operations;
+  final String? secondPerson;
   @override
-  List<Operation> get operations {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_operations);
-  }
+  final String? id;
 
   @override
   String toString() {
-    return 'Book(id: $id, title: $title, currency: $currency, initialBalance: $initialBalance, currentBalance: $currentBalance, operations: $operations)';
+    return 'Book(title: $title, balance: $balance, firstPerson: $firstPerson, secondPerson: $secondPerson, id: $id)';
   }
 
   @override
@@ -189,56 +175,54 @@ class _$_Book implements _Book {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Book &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.initialBalance, initialBalance) ||
-                other.initialBalance == initialBalance) &&
-            (identical(other.currentBalance, currentBalance) ||
-                other.currentBalance == currentBalance) &&
-            const DeepCollectionEquality()
-                .equals(other._operations, _operations));
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.firstPerson, firstPerson) ||
+                other.firstPerson == firstPerson) &&
+            (identical(other.secondPerson, secondPerson) ||
+                other.secondPerson == secondPerson) &&
+            (identical(other.id, id) || other.id == id));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      title,
-      currency,
-      initialBalance,
-      currentBalance,
-      const DeepCollectionEquality().hash(_operations));
+  int get hashCode =>
+      Object.hash(runtimeType, title, balance, firstPerson, secondPerson, id);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_BookCopyWith<_$_Book> get copyWith =>
       __$$_BookCopyWithImpl<_$_Book>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_BookToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Book implements Book {
   const factory _Book(
-      {required final int id,
-      required final String title,
-      required final String currency,
-      required final double initialBalance,
-      required final double currentBalance,
-      required final List<Operation> operations}) = _$_Book;
+      {required final String title,
+      required final double balance,
+      final String? firstPerson,
+      final String? secondPerson,
+      final String? id}) = _$_Book;
 
-  @override
-  int get id;
+  factory _Book.fromJson(Map<String, dynamic> json) = _$_Book.fromJson;
+
   @override
   String get title;
   @override
-  String get currency;
+  double get balance;
   @override
-  double get initialBalance;
+  String? get firstPerson;
   @override
-  double get currentBalance;
+  String? get secondPerson;
   @override
-  List<Operation> get operations;
+  String? get id;
   @override
   @JsonKey(ignore: true)
   _$$_BookCopyWith<_$_Book> get copyWith => throw _privateConstructorUsedError;
