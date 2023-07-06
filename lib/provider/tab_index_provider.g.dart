@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'books_provider.dart';
+part of 'tab_index_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,20 +29,18 @@ class _SystemHash {
   }
 }
 
-String _$BookControllerHash() => r'fad94d1bacde649d3605ab33e906ba9b145446ac';
+String _$TabIndexHash() => r'382e5488ff2b070929ee317391a4a4d21452cf59';
 
-/// See also [BookController].
-final bookControllerProvider =
-    AutoDisposeAsyncNotifierProvider<BookController, List<Book>>(
-  BookController.new,
-  name: r'bookControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$BookControllerHash,
+/// See also [TabIndex].
+final tabIndexProvider = AutoDisposeNotifierProvider<TabIndex, int>(
+  TabIndex.new,
+  name: r'tabIndexProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$TabIndexHash,
 );
-typedef BookControllerRef = AutoDisposeAsyncNotifierProviderRef<List<Book>>;
+typedef TabIndexRef = AutoDisposeNotifierProviderRef<int>;
 
-abstract class _$BookController extends AutoDisposeAsyncNotifier<List<Book>> {
+abstract class _$TabIndex extends AutoDisposeNotifier<int> {
   @override
-  FutureOr<List<Book>> build();
+  int build();
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'database_provider.dart';
+part of 'preferences_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,13 +29,20 @@ class _SystemHash {
   }
 }
 
-String _$databaseHash() => r'891b9771d61b4a5140e23bfd08b574c2af475d8e';
+String _$PreferencesHash() => r'd712ff97e8a37d9125fead6410028abb7d7fef96';
 
-/// See also [database].
-final databaseProvider = AutoDisposeFutureProvider<Database>(
-  database,
-  name: r'databaseProvider',
+/// See also [Preferences].
+final preferencesProvider =
+    AutoDisposeAsyncNotifierProvider<Preferences, SharedPreferences>(
+  Preferences.new,
+  name: r'preferencesProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$databaseHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$PreferencesHash,
 );
-typedef DatabaseRef = AutoDisposeFutureProviderRef<Database>;
+typedef PreferencesRef = AutoDisposeAsyncNotifierProviderRef<SharedPreferences>;
+
+abstract class _$Preferences
+    extends AutoDisposeAsyncNotifier<SharedPreferences> {
+  @override
+  FutureOr<SharedPreferences> build();
+}

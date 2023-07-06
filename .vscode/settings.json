@@ -3,5 +3,6 @@
     "source.fixAll": true,
     "source.organizeImports": true,
     },
+    "cmake.sourceDirectory": "/opt/flutter-projects/xpns42/linux",
     "java.configuration.updateBuildConfiguration": "automatic"
 }

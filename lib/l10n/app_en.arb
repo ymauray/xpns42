@@ -1,0 +1,20 @@
+{
+    "continueAs": "Continue as {username}",
+    "or": "or",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign in",
+    "register": "Register",
+    "noAccountYet": "No account yet ?",
+    "alreadyHaveAnAccount": "Already have an account ?",
+
+    "books": "Books",
+    "profile": "Profile",
+
+    "displayName": "Display name",
+    "updateProfile": "Update profile",
+    "profileUpdatedSuccessfully": "Profile updated successfully",
+    "changeAccount": "Change account"
+}
