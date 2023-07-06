@@ -14,8 +14,8 @@ class SignInPage extends ConsumerWidget {
     final passwordController = TextEditingController();
 
     final username =
-        (FirebaseAuth.instance.currentUser!.displayName ?? '').isEmpty
-            ? FirebaseAuth.instance.currentUser!.email
+        (FirebaseAuth.instance.currentUser?.displayName ?? '').isEmpty
+            ? FirebaseAuth.instance.currentUser?.email??''
             : FirebaseAuth.instance.currentUser!.displayName;
 
     return Scaffold(
