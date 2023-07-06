@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'book_repository.dart';
+part of 'books_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,14 +29,18 @@ class _SystemHash {
   }
 }
 
-String _$booksRepositoryHash() => r'3cb0ca41a3ee774f066283d02b26d14cc73862c5';
+String _$BooksHash() => r'cc4605a8354e14cb48aa177aa6ede435c5dab842';
 
-/// See also [booksRepository].
-final booksRepositoryProvider = AutoDisposeProvider<BooksRepository>(
-  booksRepository,
-  name: r'booksRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$booksRepositoryHash,
+/// See also [Books].
+final booksProvider = NotifierProvider<Books, List<Book>>(
+  Books.new,
+  name: r'booksProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$BooksHash,
 );
-typedef BooksRepositoryRef = AutoDisposeProviderRef<BooksRepository>;
+typedef BooksRef = NotifierProviderRef<List<Book>>;
+
+abstract class _$Books extends Notifier<List<Book>> {
+  @override
+  List<Book> build();
+}

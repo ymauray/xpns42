@@ -4,7 +4,6 @@ import 'package:xpns42/model/book.dart';
 import 'package:xpns42/page/books_page.dart';
 import 'package:xpns42/page/profile_page.dart';
 import 'package:xpns42/provider/tab_index_provider.dart';
-import 'package:xpns42/repository/book_repository.dart';
 import 'package:xpns42/utils/localization_extension.dart';
 
 class HomePage extends ConsumerWidget {
@@ -12,8 +11,6 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final books = ref.watch(booksProvider);
-
     final tabIndex = ref.watch(tabIndexProvider);
 
     return Scaffold(
@@ -31,9 +28,7 @@ class HomePage extends ConsumerWidget {
             label: context.t.books,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(
-              Icons.account_circle,
-            ),
+            icon: const Icon(Icons.account_circle),
             label: context.t.profile,
           ),
         ],

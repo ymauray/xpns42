@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xpns42/model/book.dart';
@@ -23,46 +22,78 @@ extension Mapper on DataSnapshot {
   }
 }
 
-@riverpod
-class Books extends _$Books {
-  @override
-  FutureOr<List<Book>> build() {
-    return _fetchBooks();
-  }
-
-  Future<List<Book>> _fetchBooks() async {
+class BooksRepository {
+  FutureOr<List<Book>> loadBooks(String uid) async {
     final instance = FirebaseDatabase.instance;
-    final data = await instance
-        .ref(
-          '/user_books/${FirebaseAuth.instance.currentUser!.uid}',
-        )
-        .get();
+    final data = await instance.ref('/user_books/$uid').get();
 
     final books = data.mapList<Book>(mapper: Book.fromJson);
 
     return books;
   }
 
-  Future<void> addBook(Book book) async {
-    state = await AsyncValue.guard(() async {
-      final myBooks = FirebaseDatabase.instance.ref(
-        '/user_books/${FirebaseAuth.instance.currentUser!.uid}',
-      );
-      final newBook = myBooks.push();
-      await newBook.set(book.copyWith(id: newBook.key).toJson());
-
-      return _fetchBooks();
-    });
+  Future<void> addBook(String uid, Book book) async {
+    final myBooks = FirebaseDatabase.instance.ref('/user_books/$uid');
+    final newBook = myBooks.push();
+    await newBook.set(book.copyWith(id: newBook.key).toJson());
   }
 
-  Future<void> updateBook(Book args) async {
-    state = await AsyncValue.guard(() async {
-      final book = FirebaseDatabase.instance.ref(
-        '/user_books/${FirebaseAuth.instance.currentUser!.uid}/${args.id}',
-      );
-      await book.update(args.toJson());
+  Future<void> updateBook(String uid, Book args) async {
+    final book = FirebaseDatabase.instance.ref('/user_books/$uid/${args.id}');
+    await book.update(args.toJson());
+  }
 
-      return _fetchBooks();
-    });
+  Future<void> deleteBook(String uid, Book args) async {
+    final book = FirebaseDatabase.instance.ref('/user_books/$uid/${args.id}');
+    await book.remove();
   }
 }
+
+@riverpod
+BooksRepository booksRepository(BooksRepositoryRef ref) {
+  return BooksRepository();
+}
+
+//@riverpod
+//class Books extends _$Books {
+//  @override
+//  FutureOr<List<Book>> build() {
+//    return _fetchBooks();
+//  }
+
+//  Future<List<Book>> _fetchBooks() async {
+//    final instance = FirebaseDatabase.instance;
+//    final data = await instance
+//        .ref(
+//          '/user_books/${FirebaseAuth.instance.currentUser!.uid}',
+//        )
+//        .get();
+
+//    final books = data.mapList<Book>(mapper: Book.fromJson);
+
+//    return books;
+//  }
+
+//  Future<void> addBook(Book book) async {
+//    state = await AsyncValue.guard(() async {
+//      final myBooks = FirebaseDatabase.instance.ref(
+//        '/user_books/${FirebaseAuth.instance.currentUser!.uid}',
+//      );
+//      final newBook = myBooks.push();
+//      await newBook.set(book.copyWith(id: newBook.key).toJson());
+
+//      return _fetchBooks();
+//    });
+//  }
+
+//  Future<void> updateBook(Book args) async {
+//    state = await AsyncValue.guard(() async {
+//      final book = FirebaseDatabase.instance.ref(
+//        '/user_books/${FirebaseAuth.instance.currentUser!.uid}/${args.id}',
+//      );
+//      await book.update(args.toJson());
+
+//      return _fetchBooks();
+//    });
+//  }
+//}

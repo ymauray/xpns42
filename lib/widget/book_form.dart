@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/model/book.dart';
-import 'package:xpns42/repository/book_repository.dart';
 
 class BookForm extends ConsumerWidget {
   const BookForm({super.key});
@@ -33,7 +32,7 @@ class BookForm extends ConsumerWidget {
                   secondPerson: secondPersonController.text,
                   balance: args.balance,
                 );
-                await ref.read(booksProvider.notifier).updateBook(book);
+                //await ref.read(booksProvider.notifier).updateBook(book);
               } else {
                 final book = Book(
                   title: titleController.text,
@@ -41,7 +40,7 @@ class BookForm extends ConsumerWidget {
                   secondPerson: secondPersonController.text,
                   balance: 0,
                 );
-                await ref.read(booksProvider.notifier).addBook(book);
+                //await ref.read(booksProvider.notifier).addBook(book);
               }
               Navigator.of(context).pop();
             },

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/provider/auth_provider.dart';
+import 'package:xpns42/provider/books_provider.dart';
 import 'package:xpns42/provider/long_operation_status_provider.dart';
 import 'package:xpns42/utils/localization_extension.dart';
 import 'package:xpns42/widget/long_operation_indicator.dart';
@@ -28,7 +29,7 @@ class SignInPage extends ConsumerWidget {
               child: PaddedForm(
                 children: [
                   if (FirebaseAuth.instance.currentUser != null) ...[
-                    _buildContinueAsLink(context, username),
+                    _buildContinueAsLink(context, username, ref),
                     _buildDivider(context),
                   ],
                   _buildEmailField(emailController, context),
@@ -51,12 +52,17 @@ class SignInPage extends ConsumerWidget {
     );
   }
 
-  Row _buildContinueAsLink(BuildContext context, String? username) {
+  Row _buildContinueAsLink(
+    BuildContext context,
+    String? username,
+    WidgetRef ref,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
           onPressed: () async {
+            await ref.read(booksProvider.notifier).loadBooks();
             await Navigator.of(context).pushReplacementNamed('/home');
           },
           child: Text(
@@ -143,6 +149,7 @@ class SignInPage extends ConsumerWidget {
                 email: emailController.text,
                 password: passwordController.text,
               );
+          await ref.read(booksProvider.notifier).loadBooks();
           ref.read(longOperationStatusProvider.notifier).stop();
           await Navigator.of(context).pushReplacementNamed('/home');
         } catch (e) {
