@@ -1,7 +1,7 @@
 {
     "delete": "Delete",
     "cancel": "Cancel",
-    
+
     "continueAs": "Continue as {username}",
     "or": "or",
     "email": "Email",
@@ -21,6 +21,7 @@
     "save": "Save",
     "deleteBook": "Delete book",
     "deleteBookConfirmation": "Are you sure you want to delete this book ?",
+    "currency": "Currency",
     
     "profile": "Profile",
     "displayName": "Display name",

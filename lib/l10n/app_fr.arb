@@ -21,6 +21,7 @@
     "save": "Enregistrer",
     "deleteBook": "Supprimer le livre",
     "deleteBookConfirmation": "Êtes-vous sûr de vouloir supprimer ce livre ?",
+    "currency": "Devise",
 
     "profile": "Profil",
     "displayName": "Nom affiché",
