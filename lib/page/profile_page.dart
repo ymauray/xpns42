@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/provider/auth_provider.dart';
 import 'package:xpns42/provider/long_operation_status_provider.dart';
+import 'package:xpns42/utils/localization_extension.dart';
 import 'package:xpns42/widget/long_operation_indicator.dart';
 import 'package:xpns42/widget/padded_form.dart';
 
-class AccountPage extends ConsumerWidget {
-  AccountPage({super.key});
+class ProfilePage extends ConsumerWidget {
+  ProfilePage({super.key});
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _displayNameController = TextEditingController();
@@ -21,26 +22,18 @@ class AccountPage extends ConsumerWidget {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'Account',
-            ),
-          ),
+          appBar: AppBar(title: Text(context.t.profile)),
           body: PaddedForm(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  enabled: false,
-                ),
+                decoration:
+                    InputDecoration(labelText: context.t.email, enabled: false),
               ),
               TextFormField(
                 controller: _displayNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Display name',
-                ),
+                decoration: InputDecoration(labelText: context.t.displayName),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -55,9 +48,9 @@ class AccountPage extends ConsumerWidget {
                         );
                     ref.read(longOperationStatusProvider.notifier).stop();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         backgroundColor: Colors.green,
-                        content: Text('Profile updated successfully'),
+                        content: Text(context.t.profileUpdatedSuccessfully),
                       ),
                     );
                   } catch (e) {
@@ -70,24 +63,22 @@ class AccountPage extends ConsumerWidget {
                     );
                   }
                 },
-                child: const Text(
-                  'Update profile',
-                ),
+                child: Text(context.t.updateProfile),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
+                  TextButton(
+                    onPressed: () async {
+                      await Navigator.of(context)
+                          .pushReplacementNamed('/login');
+                    },
                     child: Text(
-                      'Change account',
+                      context.t.changeAccount,
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
-                    onTap: () async {
-                      await Navigator.of(context)
-                          .pushReplacementNamed('/login');
-                    },
                   ),
                 ],
               ),

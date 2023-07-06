@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/page/book_page.dart';
 import 'package:xpns42/page/expense_form.dart';
@@ -17,6 +18,8 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Xpns42',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -25,17 +28,6 @@ class App extends ConsumerWidget {
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(),
         ),
-        //elevatedButtonTheme: ElevatedButtonThemeData(
-        //  style: ButtonStyle(
-        //    shape: MaterialStateProperty.all(
-        //      const RoundedRectangleBorder(
-        //        borderRadius: BorderRadius.all(
-        //          Radius.circular(4),
-        //        ),
-        //      ),
-        //    ),
-        //  ),
-        //),
       ),
       home: const Wrapper(),
       routes: {

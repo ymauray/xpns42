@@ -32,11 +32,8 @@ void main() async {
 
     final analytics = FirebaseAnalytics.instance;
     await analytics.logAppOpen();
+    await findSystemLocale();
   }
 
-  runApp(
-    const ProviderScope(
-      child: App(),
-    ),
-  );
+  runApp(const ProviderScope(child: App()));
 }

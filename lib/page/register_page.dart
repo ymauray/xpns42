@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/provider/auth_provider.dart';
 import 'package:xpns42/provider/long_operation_status_provider.dart';
+import 'package:xpns42/utils/localization_extension.dart';
 import 'package:xpns42/widget/long_operation_indicator.dart';
 import 'package:xpns42/widget/padded_form.dart';
 
@@ -24,22 +25,22 @@ class RegisterPage extends ConsumerWidget {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     controller: emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
+                    decoration: InputDecoration(
+                      labelText: context.t.email,
                     ),
                   ),
                   TextFormField(
                     obscureText: true,
                     controller: passwordController,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
+                    decoration: InputDecoration(
+                      labelText: context.t.password,
                     ),
                   ),
                   TextFormField(
                     obscureText: true,
                     controller: passwordController2,
-                    decoration: const InputDecoration(
-                      labelText: 'Confirm password',
+                    decoration: InputDecoration(
+                      labelText: context.t.confirmPassword,
                     ),
                   ),
                   ElevatedButton(
@@ -69,18 +70,18 @@ class RegisterPage extends ConsumerWidget {
                         );
                       }
                     },
-                    child: const Text('Register'),
+                    child: Text(context.t.register),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () async {
+                      TextButton(
+                        onPressed: () async {
                           await Navigator.of(context)
                               .pushReplacementNamed('/login');
                         },
                         child: Text(
-                          'Already have an account ? Login here !',
+                          context.t.alreadyHaveAnAccount,
                           style: Theme.of(context)
                               .textTheme
                               .labelSmall!
