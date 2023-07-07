@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$SecureStorageHash() => r'90809aa7d006ccae437bf2505b14142e249be554';
+String _$SecureStorageHash() => r'9df93c00f9d1232bec1a3119eff83b08fca82866';
 
 /// See also [SecureStorage].
 final secureStorageProvider =

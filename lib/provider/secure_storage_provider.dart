@@ -46,7 +46,7 @@ $privateKeyString
     required String account,
   }) async {
     final keysAsString = await state.read(key: account);
-    final keysAsStringArray = keysAsString!.split('\r\n');
+    final keysAsStringArray = keysAsString!.split('\n\n');
     final publicKeyString = keysAsStringArray[0];
     final privateKeyString = keysAsStringArray[1];
     final crypto = ref.read(cryptoProvider);
