@@ -14,6 +14,7 @@ class RegisterPage extends ConsumerWidget {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final passwordController2 = TextEditingController();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: Stack(
@@ -21,6 +22,7 @@ class RegisterPage extends ConsumerWidget {
           Center(
             child: SingleChildScrollView(
               child: PaddedForm(
+                formKey: formKey,
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
@@ -28,6 +30,8 @@ class RegisterPage extends ConsumerWidget {
                     decoration: InputDecoration(
                       labelText: context.t.email,
                     ),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? '' : null,
                   ),
                   TextFormField(
                     obscureText: true,
@@ -35,6 +39,8 @@ class RegisterPage extends ConsumerWidget {
                     decoration: InputDecoration(
                       labelText: context.t.password,
                     ),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? '' : null,
                   ),
                   TextFormField(
                     obscureText: true,
@@ -42,12 +48,12 @@ class RegisterPage extends ConsumerWidget {
                     decoration: InputDecoration(
                       labelText: context.t.confirmPassword,
                     ),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? '' : null,
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (emailController.text.isEmpty ||
-                          passwordController.text.isEmpty ||
-                          passwordController2.text.isEmpty) {
+                      if (!formKey.currentState!.validate()) {
                         return;
                       }
                       FocusManager.instance.primaryFocus?.unfocus();

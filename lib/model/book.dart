@@ -7,9 +7,10 @@ part 'book.g.dart';
 class Book with _$Book {
   const factory Book({
     required String title,
-    required double balance,
-    String? firstPerson,
-    String? secondPerson,
+    required String firstPerson,
+    required String secondPerson,
+    required String currency,
+    double? balance,
     String? id,
   }) = _Book;
 

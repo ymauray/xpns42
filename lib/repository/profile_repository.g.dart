@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_provider.dart';
+part of 'profile_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,13 +29,14 @@ class _SystemHash {
   }
 }
 
-String _$authHash() => r'97c9b8964f88f7f3c7d5781f3f41df02e4afe5a8';
+String _$profileRepositoryHash() => r'a418040ab411f107fba532de8de16ac2d7b772cf';
 
-/// See also [auth].
-final authProvider = AutoDisposeProvider<AuthProvider>(
-  auth,
-  name: r'authProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authHash,
+/// See also [profileRepository].
+final profileRepositoryProvider = AutoDisposeProvider<ProfileRepository>(
+  profileRepository,
+  name: r'profileRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$profileRepositoryHash,
 );
-typedef AuthRef = AutoDisposeProviderRef<AuthProvider>;
+typedef ProfileRepositoryRef = AutoDisposeProviderRef<ProfileRepository>;

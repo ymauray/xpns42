@@ -15,11 +15,8 @@ class SignInPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-
-    final username =
-        (FirebaseAuth.instance.currentUser?.displayName ?? '').isEmpty
-            ? FirebaseAuth.instance.currentUser?.email ?? ''
-            : FirebaseAuth.instance.currentUser!.displayName;
+    final username = ref.watch(authProvider).currentUserDisplayName;
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: Stack(
@@ -27,6 +24,7 @@ class SignInPage extends ConsumerWidget {
           Center(
             child: SingleChildScrollView(
               child: PaddedForm(
+                formKey: formKey,
                 children: [
                   if (FirebaseAuth.instance.currentUser != null) ...[
                     _buildContinueAsLink(context, username, ref),
@@ -39,6 +37,7 @@ class SignInPage extends ConsumerWidget {
                     context,
                     emailController,
                     passwordController,
+                    formKey,
                     ref,
                   ),
                   _buildRegisterLink(context),
@@ -66,6 +65,7 @@ class SignInPage extends ConsumerWidget {
             await Navigator.of(context).pushReplacementNamed('/home');
           },
           child: Text(
+            textAlign: TextAlign.center,
             context.t.continueAs(username!),
             style: TextStyle(
               color: Theme.of(context).primaryColor,
@@ -100,6 +100,7 @@ class SignInPage extends ConsumerWidget {
       decoration: InputDecoration(
         labelText: context.t.email,
       ),
+      validator: (value) => value == null || value.isEmpty ? '' : null,
     );
   }
 
@@ -113,6 +114,7 @@ class SignInPage extends ConsumerWidget {
       decoration: InputDecoration(
         labelText: context.t.password,
       ),
+      validator: (value) => value == null || value.isEmpty ? '' : null,
     );
   }
 
@@ -130,16 +132,18 @@ class SignInPage extends ConsumerWidget {
     );
   }
 
+  // ignore: long-parameter-list
   ElevatedButton _buildSignInButton(
     BuildContext context,
     TextEditingController emailController,
     TextEditingController passwordController,
+    GlobalKey<FormState> formKey,
     WidgetRef ref,
   ) {
     return ElevatedButton(
       child: Text(context.t.signIn),
       onPressed: () async {
-        if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+        if (!formKey.currentState!.validate()) {
           return;
         }
         FocusManager.instance.primaryFocus?.unfocus();

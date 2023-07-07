@@ -27,6 +27,7 @@ class App extends ConsumerWidget {
         brightness: Brightness.light,
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(),
+          errorStyle: TextStyle(height: 0),
         ),
       ),
       home: const Wrapper(),

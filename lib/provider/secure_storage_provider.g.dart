@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_provider.dart';
+part of 'secure_storage_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,13 +29,21 @@ class _SystemHash {
   }
 }
 
-String _$authHash() => r'97c9b8964f88f7f3c7d5781f3f41df02e4afe5a8';
+String _$SecureStorageHash() => r'90809aa7d006ccae437bf2505b14142e249be554';
 
-/// See also [auth].
-final authProvider = AutoDisposeProvider<AuthProvider>(
-  auth,
-  name: r'authProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authHash,
+/// See also [SecureStorage].
+final secureStorageProvider =
+    AutoDisposeNotifierProvider<SecureStorage, FlutterSecureStorage>(
+  SecureStorage.new,
+  name: r'secureStorageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$SecureStorageHash,
 );
-typedef AuthRef = AutoDisposeProviderRef<AuthProvider>;
+typedef SecureStorageRef = AutoDisposeNotifierProviderRef<FlutterSecureStorage>;
+
+abstract class _$SecureStorage
+    extends AutoDisposeNotifier<FlutterSecureStorage> {
+  @override
+  FlutterSecureStorage build();
+}

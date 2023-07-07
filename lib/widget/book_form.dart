@@ -31,6 +31,7 @@ class BookForm extends ConsumerWidget {
                   firstPerson: firstPersonController.text,
                   secondPerson: secondPersonController.text,
                   balance: args.balance,
+                  currency: '',
                 );
                 //await ref.read(booksProvider.notifier).updateBook(book);
               } else {
@@ -39,6 +40,7 @@ class BookForm extends ConsumerWidget {
                   firstPerson: firstPersonController.text,
                   secondPerson: secondPersonController.text,
                   balance: 0,
+                  currency: '',
                 );
                 //await ref.read(booksProvider.notifier).addBook(book);
               }

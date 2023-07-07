@@ -21,9 +21,10 @@ Book _$BookFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Book {
   String get title => throw _privateConstructorUsedError;
-  double get balance => throw _privateConstructorUsedError;
-  String? get firstPerson => throw _privateConstructorUsedError;
-  String? get secondPerson => throw _privateConstructorUsedError;
+  String get firstPerson => throw _privateConstructorUsedError;
+  String get secondPerson => throw _privateConstructorUsedError;
+  String get currency => throw _privateConstructorUsedError;
+  double? get balance => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,9 +39,10 @@ abstract class $BookCopyWith<$Res> {
   @useResult
   $Res call(
       {String title,
-      double balance,
-      String? firstPerson,
-      String? secondPerson,
+      String firstPerson,
+      String secondPerson,
+      String currency,
+      double? balance,
       String? id});
 }
 
@@ -58,9 +60,10 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
   @override
   $Res call({
     Object? title = null,
-    Object? balance = null,
-    Object? firstPerson = freezed,
-    Object? secondPerson = freezed,
+    Object? firstPerson = null,
+    Object? secondPerson = null,
+    Object? currency = null,
+    Object? balance = freezed,
     Object? id = freezed,
   }) {
     return _then(_value.copyWith(
@@ -68,18 +71,22 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as double,
-      firstPerson: freezed == firstPerson
+      firstPerson: null == firstPerson
           ? _value.firstPerson
           : firstPerson // ignore: cast_nullable_to_non_nullable
-              as String?,
-      secondPerson: freezed == secondPerson
+              as String,
+      secondPerson: null == secondPerson
           ? _value.secondPerson
           : secondPerson // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: freezed == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -96,9 +103,10 @@ abstract class _$$_BookCopyWith<$Res> implements $BookCopyWith<$Res> {
   @useResult
   $Res call(
       {String title,
-      double balance,
-      String? firstPerson,
-      String? secondPerson,
+      String firstPerson,
+      String secondPerson,
+      String currency,
+      double? balance,
       String? id});
 }
 
@@ -112,9 +120,10 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
   @override
   $Res call({
     Object? title = null,
-    Object? balance = null,
-    Object? firstPerson = freezed,
-    Object? secondPerson = freezed,
+    Object? firstPerson = null,
+    Object? secondPerson = null,
+    Object? currency = null,
+    Object? balance = freezed,
     Object? id = freezed,
   }) {
     return _then(_$_Book(
@@ -122,18 +131,22 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as double,
-      firstPerson: freezed == firstPerson
+      firstPerson: null == firstPerson
           ? _value.firstPerson
           : firstPerson // ignore: cast_nullable_to_non_nullable
-              as String?,
-      secondPerson: freezed == secondPerson
+              as String,
+      secondPerson: null == secondPerson
           ? _value.secondPerson
           : secondPerson // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: freezed == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -147,9 +160,10 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
 class _$_Book implements _Book {
   const _$_Book(
       {required this.title,
-      required this.balance,
-      this.firstPerson,
-      this.secondPerson,
+      required this.firstPerson,
+      required this.secondPerson,
+      required this.currency,
+      this.balance,
       this.id});
 
   factory _$_Book.fromJson(Map<String, dynamic> json) => _$$_BookFromJson(json);
@@ -157,17 +171,19 @@ class _$_Book implements _Book {
   @override
   final String title;
   @override
-  final double balance;
+  final String firstPerson;
   @override
-  final String? firstPerson;
+  final String secondPerson;
   @override
-  final String? secondPerson;
+  final String currency;
+  @override
+  final double? balance;
   @override
   final String? id;
 
   @override
   String toString() {
-    return 'Book(title: $title, balance: $balance, firstPerson: $firstPerson, secondPerson: $secondPerson, id: $id)';
+    return 'Book(title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, currency: $currency, balance: $balance, id: $id)';
   }
 
   @override
@@ -176,18 +192,20 @@ class _$_Book implements _Book {
         (other.runtimeType == runtimeType &&
             other is _$_Book &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.firstPerson, firstPerson) ||
                 other.firstPerson == firstPerson) &&
             (identical(other.secondPerson, secondPerson) ||
                 other.secondPerson == secondPerson) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, title, balance, firstPerson, secondPerson, id);
+  int get hashCode => Object.hash(
+      runtimeType, title, firstPerson, secondPerson, currency, balance, id);
 
   @JsonKey(ignore: true)
   @override
@@ -206,9 +224,10 @@ class _$_Book implements _Book {
 abstract class _Book implements Book {
   const factory _Book(
       {required final String title,
-      required final double balance,
-      final String? firstPerson,
-      final String? secondPerson,
+      required final String firstPerson,
+      required final String secondPerson,
+      required final String currency,
+      final double? balance,
       final String? id}) = _$_Book;
 
   factory _Book.fromJson(Map<String, dynamic> json) = _$_Book.fromJson;
@@ -216,11 +235,13 @@ abstract class _Book implements Book {
   @override
   String get title;
   @override
-  double get balance;
+  String get firstPerson;
   @override
-  String? get firstPerson;
+  String get secondPerson;
   @override
-  String? get secondPerson;
+  String get currency;
+  @override
+  double? get balance;
   @override
   String? get id;
   @override

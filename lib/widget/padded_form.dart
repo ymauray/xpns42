@@ -6,6 +6,7 @@ import 'package:xpns42/widget/form_field_row.dart';
 class PaddedForm extends ConsumerWidget {
   const PaddedForm({
     required this.children,
+    required this.formKey,
     this.padding = kFormPadding,
     this.mainAxisAlignment = MainAxisAlignment.center,
     super.key,
@@ -14,10 +15,12 @@ class PaddedForm extends ConsumerWidget {
   final List<Widget> children;
   final EdgeInsets padding;
   final MainAxisAlignment mainAxisAlignment;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Form(
+      key: formKey,
       child: Column(
         mainAxisAlignment: mainAxisAlignment,
         children: children

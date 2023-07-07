@@ -2,7 +2,7 @@
     "delete": "Supprimer",
     "cancel": "Annuler",
 
-    "continueAs": "Continuer en tant que {username}",
+    "continueAs": "Continuer en tant que\r\n{username}",
     "or": "ou",
     "email": "Email",
     "password": "Mot de passe",
@@ -21,6 +21,7 @@
     "save": "Enregistrer",
     "deleteBook": "Supprimer le livre",
     "deleteBookConfirmation": "Êtes-vous sûr de vouloir supprimer ce livre ?",
+    "balance": "Solde",
     "currency": "Devise",
 
     "profile": "Profil",

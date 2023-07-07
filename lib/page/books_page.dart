@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:xpns42/model/book.dart';
+import 'package:xpns42/provider/auth_provider.dart';
 import 'package:xpns42/provider/books_provider.dart';
 import 'package:xpns42/provider/long_operation_status_provider.dart';
 import 'package:xpns42/utils/currencies.dart';
@@ -137,7 +138,7 @@ class BooksPage extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            book.balance.toStringAsFixed(2),
+                            (book.balance ?? 0).toStringAsFixed(2),
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],
@@ -164,13 +165,16 @@ class _AddBookDialog extends ConsumerWidget {
 
   final titleController = TextEditingController();
   final otherPersonController = TextEditingController();
+  final balanceController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = Localizations.localeOf(context);
+    final locale = PlatformDispatcher.instance.locale;
     final format = NumberFormat.simpleCurrency(locale: locale.toString());
-    debugPrint('CURRENCY SYMBOL ${format.currencySymbol}'); // $
-    debugPrint('CURRENCY NAME ${format.currencyName}'); // USD
+    final formKey = GlobalKey<FormState>();
+    final auth = ref.read(authProvider);
+
+    var selectedCurrency = format.currencyName;
 
     return Dialog.fullscreen(
       child: Scaffold(
@@ -178,37 +182,58 @@ class _AddBookDialog extends ConsumerWidget {
           title: Text(context.t.newBook),
         ),
         body: PaddedForm(
+          formKey: formKey,
           children: [
             TextFormField(
               decoration: InputDecoration(
                 labelText: context.t.title,
               ),
               controller: titleController,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.sentences,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '';
+                }
+
+                return null;
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
                 labelText: context.t.otherPerson,
               ),
               controller: otherPersonController,
+              keyboardType: TextInputType.name,
+              textCapitalization: TextCapitalization.sentences,
+              validator: (value) =>
+                  (value == null || value.isEmpty) ? '' : null,
             ),
-            DropdownButtonFormField(
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: context.t.currency,
+                contentPadding: const EdgeInsets.all(22),
+              ),
               items: currencies,
+              menuMaxHeight: 5 * kMinInteractiveDimension,
               hint: Text(context.t.currency),
-              value: format.currencyName,
-              onChanged: (value) {},
+              value: selectedCurrency,
+              onChanged: (value) {
+                selectedCurrency = value;
+              },
             ),
             ElevatedButton(
               onPressed: () {
-                if (titleController.text.isEmpty ||
-                    otherPersonController.text.isEmpty) {
+                if (!formKey.currentState!.validate()) {
                   return;
                 }
                 Navigator.of(context).pop(
                   Book(
                     title: titleController.text,
-                    firstPerson: FirebaseAuth.instance.currentUser!.displayName,
+                    firstPerson: auth.currentUserDisplayName,
                     secondPerson: otherPersonController.text,
                     balance: 0,
+                    currency: selectedCurrency!,
                   ),
                 );
               },

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_provider.dart';
+part of 'crypto_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,13 +29,23 @@ class _SystemHash {
   }
 }
 
-String _$authHash() => r'97c9b8964f88f7f3c7d5781f3f41df02e4afe5a8';
+String _$cryptoHash() => r'99445b1975c0c22d3435aa5f1c7cbc7bde910588';
 
-/// See also [auth].
-final authProvider = AutoDisposeProvider<AuthProvider>(
-  auth,
-  name: r'authProvider',
+/// See also [crypto].
+final cryptoProvider = AutoDisposeProvider<ICryptoProvider>(
+  crypto,
+  name: r'cryptoProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$cryptoHash,
 );
-typedef AuthRef = AutoDisposeProviderRef<AuthProvider>;
+typedef CryptoRef = AutoDisposeProviderRef<ICryptoProvider>;
+String _$secureRandomHash() => r'317f045deb5a0af23715bc9e75cc7483b2832b1c';
+
+/// See also [secureRandom].
+final secureRandomProvider = AutoDisposeProvider<SecureRandom>(
+  secureRandom,
+  name: r'secureRandomProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$secureRandomHash,
+);
+typedef SecureRandomRef = AutoDisposeProviderRef<SecureRandom>;
