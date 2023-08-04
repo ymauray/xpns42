@@ -8,7 +8,7 @@
 PRODUCT_NAME = xpns42
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = ch.yannickmauray.xpns42
+PRODUCT_BUNDLE_IDENTIFIER = ch.frenchguy.xpns42
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 ch.yannickmauray. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 ch.frenchguy. All rights reserved.
