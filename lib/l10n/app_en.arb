@@ -1,32 +1,14 @@
 {
-    "delete": "Delete",
-    "cancel": "Cancel",
-
-    "continueAs": "Continue as\r\n{username}",
-    "or": "or",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm password",
-    "forgotPassword": "Forgot password?",
+    "appTitle": "Expense for two",
+    "emailField": "Email",
+    "passwordField": "Password",
+    "confirmPasswordField": "Confirm password",
+    "allFieldsRequired": "All fields are required",
+    "authenticationFailed": "Authentication failed",
+    "registrationFailed": "Registration failed",
+    "userNotFound": "User not found",
     "signIn": "Sign in",
     "register": "Register",
-    "noAccountYet": "No account yet ?",
-    "alreadyHaveAnAccount": "Already have an account ?",
-
-    "books": "Books",
-    "noBooks": "No books",
-    "newBook": "New book",
-    "title": "Title",
-    "otherPerson": "Other person",
-    "save": "Save",
-    "deleteBook": "Delete book",
-    "deleteBookConfirmation": "Are you sure you want to delete this book ?",
-    "balance": "Balance",
-    "currency": "Currency",
-    
-    "profile": "Profile",
-    "displayName": "Display name",
-    "updateProfile": "Update profile",
-    "profileUpdatedSuccessfully": "Profile updated successfully",
-    "changeAccount": "Change account"
+    "forgotPassword": "Forgot password ?",
+    "resetPassword": "Reset password"
 }

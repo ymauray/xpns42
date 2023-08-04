@@ -1,32 +1,14 @@
 {
-    "delete": "Supprimer",
-    "cancel": "Annuler",
-
-    "continueAs": "Continuer en tant que\r\n{username}",
-    "or": "ou",
-    "email": "Email",
-    "password": "Mot de passe",
-    "confirmPassword": "Confirmer le mot de passe",
-    "forgotPassword": "Mot de passe oublié ?",
+    "appTitle": "Dépenses pour deux",
+    "emailField": "Email",
+    "passwordField": "Mot de passe",
+    "confirmPasswordField": "Confirmer le mot de passe",
+    "allFieldsRequired": "Tous les champs sont requis",
+    "authenticationFailed": "L'authentification a échoué",
+    "registrationFailed": "L'inscription a échoué",
+    "userNotFound": "Utilisateur non trouvé",
     "signIn": "Connexion",
     "register": "S'inscrire",
-    "noAccountYet": "Pas encore de compte ?",
-    "alreadyHaveAnAccount": "Vous avez déjà un compte ?",
-
-    "books": "Livres",
-    "noBooks": "Aucun livre",
-    "newBook": "Nouveau livre",
-    "title": "Titre",
-    "otherPerson": "Autre personne",
-    "save": "Enregistrer",
-    "deleteBook": "Supprimer le livre",
-    "deleteBookConfirmation": "Êtes-vous sûr de vouloir supprimer ce livre ?",
-    "balance": "Solde",
-    "currency": "Devise",
-
-    "profile": "Profil",
-    "displayName": "Nom affiché",
-    "updateProfile": "Mettre à jour le profil",
-    "profileUpdatedSuccessfully": "Profil mis à jour avec succès",
-    "changeAccount": "Changer de compte"
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser"
 }

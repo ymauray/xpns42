@@ -1,8 +1,16 @@
 {
     "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true,
+        "source.fixAll": true,
+        "source.organizeImports": true,
     },
-    "cmake.sourceDirectory": "/opt/flutter-projects/xpns42/linux",
+    "cmake.sourceDirectory": "${workspaceFolder}/linux",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": ".dart_tool/sqflite_common_ffi/databases/freelanceplus.db",
+            "name": "Freelance+"
+        }
+    ],
     "java.configuration.updateBuildConfiguration": "automatic"
 }
