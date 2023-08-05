@@ -20,6 +20,7 @@ dependencies:
   flutter_form_builder: ^9.0.0
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.3.1
   flutter_riverpod: ^2.3.6
   freezed_annotation: ^2.2.0
   google_fonts: ^5.1.0
@@ -73,8 +74,17 @@ flutter:
           weight: 900
 
 flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
   remove_alpha_ios: true
-  image_path: "assets/xpns42_icon.png"
-
+  image_path: "assets/launcher_icon/saco.png"
+  ios: true
+  macos:
+    generate: true
+    image_path: "assets/launcher_icon/saco.png"
+    
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/launcher_icon/saco.png"
+  color_dark: "#434343"
+  image_dark: "assets/launcher_icon/saco.png"
+  android: true
+  ios: true
