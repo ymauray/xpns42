@@ -22,133 +22,9 @@ class SignInPage extends ConsumerWidget {
               Expanded(child: Container()),
               Expanded(
                 flex: 2,
-                child: Form(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: context.t.emailField,
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: context.t.passwordField,
-                        ),
-                        controller: passwordController,
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (emailController.text.isNotEmpty &&
-                                    passwordController.text.isNotEmpty) {
-                                  try {
-                                    final userCredentials = await FirebaseAuth
-                                        .instance
-                                        .signInWithEmailAndPassword(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                    );
-                                    final user = userCredentials.user;
-                                    if (user != null) {
-                                      await Navigator.of(context)
-                                          .pushReplacementNamed(
-                                        '/home',
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Success',
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            context.t.authenticationFailed,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  } catch (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          context.t.authenticationFailed,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content:
-                                          Text(context.t.allFieldsRequired),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: Text(context.t.signIn),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      // Register link
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushReplacementNamed('/forgot_password');
-                              },
-                              child: Text(
-                                context.t.forgotPassword,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      // Register link
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushReplacementNamed('/register');
-                              },
-                              child: Text(
-                                context.t.register,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                child: SignInForm(
+                  emailController: emailController,
+                  passwordController: passwordController,
                 ),
               ),
               Expanded(child: Container()),
@@ -156,6 +32,143 @@ class SignInPage extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SignInForm extends StatelessWidget {
+  const SignInForm({
+    required this.emailController,
+    required this.passwordController,
+    super.key,
+  });
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextFormField(
+            decoration: InputDecoration(labelText: context.t.emailField),
+            keyboardType: TextInputType.emailAddress,
+            controller: emailController,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            obscureText: true,
+            decoration: InputDecoration(labelText: context.t.passwordField),
+            controller: passwordController,
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: SignInButton(
+                  emailController: emailController,
+                  passwordController: passwordController,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          // Register link
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed('/forgot_password');
+                  },
+                  child: Text(
+                    context.t.forgotPassword,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          // Register link
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed('/register');
+                  },
+                  child: Text(
+                    context.t.register,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SignInButton extends StatelessWidget {
+  const SignInButton({
+    required this.emailController,
+    required this.passwordController,
+    super.key,
+  });
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        if (emailController.text.isNotEmpty &&
+            passwordController.text.isNotEmpty) {
+          try {
+            final userCredentials =
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: emailController.text,
+              password: passwordController.text,
+            );
+            final user = userCredentials.user;
+            if (user != null) {
+              await Navigator.of(context).pushReplacementNamed('/');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Success')),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(context.t.authenticationFailed)),
+              );
+            }
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.t.authenticationFailed)),
+            );
+            debugPrint(e.toString());
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t.allFieldsRequired)),
+          );
+        }
+      },
+      child: Text(context.t.signIn),
     );
   }
 }

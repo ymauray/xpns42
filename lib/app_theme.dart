@@ -12,6 +12,9 @@ class AppTheme {
                 color: Colors.white,
               ),
         ),
+        cardTheme: const CardTheme(
+          color: Colors.blue,
+        ),
         inputDecorationTheme: const InputDecorationTheme(
           contentPadding: EdgeInsets.all(16),
           hintStyle: TextStyle(
