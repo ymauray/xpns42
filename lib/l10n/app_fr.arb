@@ -10,5 +10,6 @@
     "signIn": "Connexion",
     "register": "S'inscrire",
     "forgotPassword": "Mot de passe oublié ?",
-    "resetPassword": "Réinitialiser"
+    "resetPassword": "Réinitialiser",
+    "addAccount": "Ajouter un compte"
 }

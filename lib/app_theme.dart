@@ -37,6 +37,9 @@ class AppTheme {
             ),
           ),
         ),
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.white,
+        ),
         scaffoldBackgroundColor: Colors.blue.shade700,
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.white,

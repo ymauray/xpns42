@@ -1,42 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
+import 'package:xpns42/widgets/sign_in_button.dart';
 
-class SignInPage extends ConsumerWidget {
-  const SignInPage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.t.signIn),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Row(
-            children: [
-              Expanded(child: Container()),
-              Expanded(
-                flex: 2,
-                child: SignInForm(
-                  emailController: emailController,
-                  passwordController: passwordController,
-                ),
-              ),
-              Expanded(child: Container()),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SignInForm extends StatelessWidget {
+class SignInForm extends ConsumerWidget {
   const SignInForm({
     required this.emailController,
     required this.passwordController,
@@ -47,7 +14,7 @@ class SignInForm extends StatelessWidget {
   final TextEditingController passwordController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Form(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -119,56 +86,6 @@ class SignInForm extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class SignInButton extends StatelessWidget {
-  const SignInButton({
-    required this.emailController,
-    required this.passwordController,
-    super.key,
-  });
-
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        if (emailController.text.isNotEmpty &&
-            passwordController.text.isNotEmpty) {
-          try {
-            final userCredentials =
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: emailController.text,
-              password: passwordController.text,
-            );
-            final user = userCredentials.user;
-            if (user != null) {
-              await Navigator.of(context).pushReplacementNamed('/');
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Success')),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.t.authenticationFailed)),
-              );
-            }
-          } catch (e) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(context.t.authenticationFailed)),
-            );
-            debugPrint(e.toString());
-          }
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.t.allFieldsRequired)),
-          );
-        }
-      },
-      child: Text(context.t.signIn),
     );
   }
 }

@@ -10,5 +10,6 @@
     "signIn": "Sign in",
     "register": "Register",
     "forgotPassword": "Forgot password ?",
-    "resetPassword": "Reset password"
+    "resetPassword": "Reset password",
+    "addAccount": "Add account"
 }
