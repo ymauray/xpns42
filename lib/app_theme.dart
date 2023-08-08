@@ -27,15 +27,18 @@ class AppTheme {
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
+            borderSide: BorderSide(color: Colors.white),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
+            borderSide: BorderSide(color: Colors.white),
           ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+          ),
+          errorStyle: TextStyle(height: 0.001, color: Colors.transparent),
         ),
         listTileTheme: const ListTileThemeData(
           iconColor: Colors.white,

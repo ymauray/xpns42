@@ -11,5 +11,9 @@
     "register": "S'inscrire",
     "forgotPassword": "Mot de passe oublié ?",
     "resetPassword": "Réinitialiser",
-    "addAccount": "Ajouter un compte"
+    "addAccount": "Ajouter un compte",
+    "title": "Titre",
+    "firstPerson": "Première personne",
+    "secondPerson": "Deuxième personne",
+    "bookPassword": "Mot de passe du compte"
 }

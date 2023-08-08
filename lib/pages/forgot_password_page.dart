@@ -9,6 +9,7 @@ class ForgotPasswordPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -22,6 +23,7 @@ class ForgotPasswordPage extends ConsumerWidget {
               Expanded(
                 flex: 2,
                 child: Form(
+                  key: formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -31,6 +33,7 @@ class ForgotPasswordPage extends ConsumerWidget {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         controller: emailController,
+                        validator: (value) => value!.isEmpty ? '' : null,
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -38,7 +41,7 @@ class ForgotPasswordPage extends ConsumerWidget {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () async {
-                                if (emailController.text.isNotEmpty) {
+                                if (formKey.currentState!.validate()) {
                                   try {
                                     await FirebaseAuth.instance
                                         .sendPasswordResetEmail(
@@ -63,13 +66,6 @@ class ForgotPasswordPage extends ConsumerWidget {
                                       );
                                     }
                                   }
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content:
-                                          Text(context.t.allFieldsRequired),
-                                    ),
-                                  );
                                 }
                               },
                               child: Text(context.t.resetPassword),

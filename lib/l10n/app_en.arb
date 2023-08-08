@@ -11,5 +11,9 @@
     "register": "Register",
     "forgotPassword": "Forgot password ?",
     "resetPassword": "Reset password",
-    "addAccount": "Add account"
+    "addAccount": "Add account",
+    "title": "Title",
+    "firstPerson": "First person",
+    "secondPerson": "Second person",
+    "bookPassword": "Book password"
 }

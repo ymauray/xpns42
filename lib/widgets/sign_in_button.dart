@@ -15,10 +15,11 @@ class SignInButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //final profileRepository = ref.watch(profileRepositoryProvider);
+
     return ElevatedButton(
       onPressed: () async {
-        if (emailController.text.isNotEmpty &&
-            passwordController.text.isNotEmpty) {
+        if (Form.of(context).validate()) {
           try {
             final userCredentials =
                 await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -27,10 +28,9 @@ class SignInButton extends ConsumerWidget {
             );
             final user = userCredentials.user;
             if (user != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Success')),
-              );
-              await Navigator.of(context).pushReplacementNamed('/');
+              //final profile = await profileRepository.getProfile(user.uid);
+              await Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/', (_) => true);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(context.t.authenticationFailed)),
@@ -42,10 +42,6 @@ class SignInButton extends ConsumerWidget {
             );
             debugPrint(e.toString());
           }
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.t.allFieldsRequired)),
-          );
         }
       },
       child: Text(context.t.signIn),

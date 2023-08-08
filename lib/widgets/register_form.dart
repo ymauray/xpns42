@@ -27,6 +27,7 @@ class RegisterForm extends ConsumerWidget {
             ),
             keyboardType: TextInputType.emailAddress,
             controller: emailController,
+            validator: (value) => value!.isEmpty ? '' : null,
           ),
           const SizedBox(height: 16),
           TextFormField(
@@ -35,6 +36,15 @@ class RegisterForm extends ConsumerWidget {
               labelText: context.t.passwordField,
             ),
             controller: passwordController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '';
+              }
+              if (value != confirmPasswordController.text) {
+                return '';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 16),
           TextFormField(
@@ -43,6 +53,15 @@ class RegisterForm extends ConsumerWidget {
               labelText: context.t.confirmPasswordField,
             ),
             controller: confirmPasswordController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '';
+              }
+              if (value != passwordController.text) {
+                return '';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 16),
           Row(

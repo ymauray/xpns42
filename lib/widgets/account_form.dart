@@ -7,34 +7,87 @@ class AccountForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final titleController = TextEditingController();
+    final firstPersonController = TextEditingController();
+    final secondPersonController = TextEditingController();
+    final passwordController = TextEditingController();
+
+    final formKey = GlobalKey<FormState>();
+
     return Form(
+      key: formKey,
       child: SingleChildScrollView(
         child: Column(
           children: [
             PaddedRow(
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Title',
+                controller: titleController,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: InputDecoration(
+                  labelText: context.t.title,
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '';
+                  }
+                  return null;
+                },
               ),
             ),
             PaddedRow(
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'First person',
+                controller: firstPersonController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  labelText: context.t.firstPerson,
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '';
+                  }
+                  return null;
+                },
               ),
             ),
             PaddedRow(
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Second person',
+                controller: secondPersonController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  labelText: context.t.secondPerson,
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            PaddedRow(
+              child: TextFormField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: context.t.bookPassword,
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '';
+                  }
+                  return null;
+                },
               ),
             ),
             PaddedRow(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing Data')),
+                    );
+                  }
+                },
                 child: Text(context.t.addAccount),
               ),
             ),

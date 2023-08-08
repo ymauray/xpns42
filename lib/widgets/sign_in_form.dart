@@ -15,7 +15,10 @@ class SignInForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = GlobalKey<FormState>();
+
     return Form(
+      key: formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -23,12 +26,14 @@ class SignInForm extends ConsumerWidget {
             decoration: InputDecoration(labelText: context.t.emailField),
             keyboardType: TextInputType.emailAddress,
             controller: emailController,
+            validator: (value) => value!.isEmpty ? '' : null,
           ),
           const SizedBox(height: 16),
           TextFormField(
             obscureText: true,
             decoration: InputDecoration(labelText: context.t.passwordField),
             controller: passwordController,
+            validator: (value) => value!.isEmpty ? '' : null,
           ),
           const SizedBox(height: 16),
           Row(

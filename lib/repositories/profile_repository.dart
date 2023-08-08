@@ -10,6 +10,20 @@ class ProfileRepository {
     final newProfile = profileRef.push();
     await newProfile.set(profile.copyWith(id: newProfile.key).toJson());
   }
+
+  FutureOr<Profile?> getProfile(String uid) async {
+    final profileRef = FirebaseDatabase.instance.ref('/profiles/$uid');
+    final snapshot = await profileRef.get();
+    if (snapshot.exists) {
+      final map =
+          Map<String, dynamic>.from(snapshot.value! as Map<dynamic, dynamic>);
+      final jsonMap =
+          Map<String, dynamic>.from(map.values.first! as Map<dynamic, dynamic>);
+      final profile = Profile.fromJson(jsonMap);
+      return profile;
+    }
+    return null;
+  }
 }
 
 @riverpod
