@@ -20,17 +20,80 @@ class HomePage extends ConsumerWidget {
         title: Text(context.t.appTitle),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              await Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/sign_in',
-                (route) => false,
-              );
+          PopupMenuButton(
+            icon: const Icon(Icons.more_vert),
+            onSelected: (value) async {
+              if (value == 0) {
+                await FirebaseAuth.instance.signOut();
+                await Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/sign_in',
+                  (route) => false,
+                );
+              } else if (value == 1) {
+                await showDialog<void>(
+                  context: context,
+                  builder: (context) => const NewAccountDialog(),
+                );
+              }
             },
-            icon: const Icon(Icons.logout),
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuEntry<int>>[
+                //const PopupMenuItem(
+                //  value: 1,
+                //  child: Row(
+                //    children: [
+                //      Icon(Icons.settings),
+                //      SizedBox(width: 8),
+                //      Text('Settings'),
+                //    ],
+                //  ),
+                //),
+                PopupMenuItem(
+                  value: 1,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.add),
+                      const SizedBox(width: 8),
+                      Text(context.t.addAccount),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 2,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.import_export),
+                      const SizedBox(width: 8),
+                      Text(context.t.import),
+                    ],
+                  ),
+                ),
+                const PopupMenuDivider(),
+                PopupMenuItem(
+                  value: 0,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.logout),
+                      const SizedBox(width: 8),
+                      Text(context.t.logout),
+                    ],
+                  ),
+                ),
+              ];
+            },
           ),
+          //IconButton(
+          //  onPressed: () async {
+          //    await FirebaseAuth.instance.signOut();
+          //    await Navigator.pushNamedAndRemoveUntil(
+          //      context,
+          //      '/sign_in',
+          //      (route) => false,
+          //    );
+          //  },
+          //  icon: const Icon(Icons.logout),
+          //),
         ],
       ),
       body: accounts.when(
@@ -39,9 +102,12 @@ class HomePage extends ConsumerWidget {
             itemCount: data.length,
             itemBuilder: (context, index) {
               final account = data[index];
-              return AccountCard(
-                account: account,
-                accountRepository: accountRepository,
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: AccountCard(
+                  account: account,
+                  accountRepository: accountRepository,
+                ),
               );
             },
           );

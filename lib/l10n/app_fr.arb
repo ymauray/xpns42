@@ -15,5 +15,7 @@
     "title": "Titre",
     "firstPerson": "Première personne",
     "secondPerson": "Deuxième personne",
-    "bookPassword": "Mot de passe du compte"
+    "bookPassword": "Mot de passe du compte",
+    "import": "Importer un compte",
+    "logout": "Déconnexion"
 }
