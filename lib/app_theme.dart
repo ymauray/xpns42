@@ -15,6 +15,14 @@ class AppTheme {
         cardTheme: const CardTheme(
           color: Colors.blue,
         ),
+        dialogTheme: DialogTheme(
+          backgroundColor: Colors.blue.shade700,
+          titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+        ),
+        dividerColor: Colors.white,
         inputDecorationTheme: const InputDecorationTheme(
           contentPadding: EdgeInsets.all(16),
           hintStyle: TextStyle(
