@@ -2,19 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/models/account_proxy.dart';
-import 'package:xpns42/widgets/new_account_dialog.dart';
-import 'package:xpns42/providers/secure_storage_provider.dart';
+import 'package:xpns42/providers/account_list_provider.dart';
 import 'package:xpns42/repositories/account_repository.dart';
 import 'package:xpns42/widgets/account_card.dart';
+import 'package:xpns42/widgets/new_account_dialog.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final secureStorage = ref.watch(secureStorageProvider.notifier);
-    final accounts = secureStorage.getProxies();
+    final accounts = ref.watch(accountListProvider);
     final accountRepository = ref.read(accountProvider);
 
     return Scaffold(
@@ -35,19 +33,25 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: FutureBuilder<List<AccountProxy>>(
-        future: accounts,
-        initialData: const [],
-        builder: (context, snapshot) {
+      body: accounts.when(
+        data: (data) {
           return ListView.builder(
-            itemCount: snapshot.data!.length,
+            itemCount: data.length,
             itemBuilder: (context, index) {
-              final account = snapshot.data![index];
+              final account = data[index];
               return AccountCard(
                 account: account,
                 accountRepository: accountRepository,
               );
             },
+          );
+        },
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        error: (error, stackTrace) {
+          return Center(
+            child: Text(error.toString()),
           );
         },
       ),

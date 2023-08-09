@@ -3,14 +3,23 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xpns42/models/account.dart';
 import 'package:xpns42/models/account_proxy.dart';
+import 'package:xpns42/providers/account_list_provider.dart';
 import 'package:xpns42/providers/secure_storage_provider.dart';
 
 part 'account_repository.g.dart';
 
 class AccountRepository {
-  AccountRepository({required this.secureStorage});
+  AccountRepository({
+    required this.accountRef,
+  });
 
-  final SecureStorage secureStorage;
+  final AccountRef accountRef;
+
+  FutureOr<List<AccountProxy>> loadAccounts() async {
+    final secureStorage = accountRef.read(secureStorageProvider.notifier);
+    final proxies = await secureStorage.getProxies();
+    return proxies;
+  }
 
   FutureOr<void> createAccount({
     required String title,
@@ -46,6 +55,7 @@ class AccountRepository {
     );
     await accountRef.set(account.toJson());
 
+    final secureStorage = this.accountRef.read(secureStorageProvider.notifier);
     await secureStorage.write(
       key: 'accountKey',
       value: password,
@@ -54,6 +64,9 @@ class AccountRepository {
     final proxies = await secureStorage.getProxies();
     proxies.add(AccountProxy(id: accountRef.key!, title: title));
     await secureStorage.writeProxies(proxies);
+
+    final accountList = this.accountRef.read(accountListProvider.notifier);
+    await accountList.refresh(proxies);
   }
 
   Future<void> testLoad(String id) async {
@@ -90,7 +103,5 @@ class AccountRepository {
 
 @riverpod
 AccountRepository account(AccountRef ref) {
-  return AccountRepository(
-    secureStorage: ref.read(secureStorageProvider.notifier),
-  );
+  return AccountRepository(accountRef: ref);
 }
