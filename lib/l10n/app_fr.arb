@@ -16,10 +16,15 @@
     "firstPerson": "Première personne",
     "secondPerson": "Deuxième personne",
     "ledgerPassword": "Mot de passe du livre de compte",
-    "import": "Importer un livre de compte",
+    "importALedger": "Importer un livre de compte",
     "logout": "Déconnexion",
     "ledger": "Livre de compte",
     "deleteLedger": "Supprimer",
     "unlock": "Déverrouiller",
-    "unlockFailed": "Déverrouillage échoué"
+    "unlockFailed": "Déverrouillage échoué",
+    "code": "Code",
+    "error": "Erreur",
+    "ledgerDoesNotExit": "Le livre de compte n'existe pas",
+    "ok": "OK",
+    "import": "Importer"
 }

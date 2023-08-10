@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
 import 'package:xpns42/providers/ledgers.dart';
+import 'package:xpns42/widgets/import_ledger_dialog.dart';
 import 'package:xpns42/widgets/ledger_card.dart';
 import 'package:xpns42/widgets/new_ledger_dialog.dart';
 
@@ -33,6 +34,11 @@ class HomePage extends ConsumerWidget {
                   context: context,
                   builder: (context) => const NewLedgerDialog(),
                 );
+              } else if (value == 2) {
+                await showDialog<void>(
+                  context: context,
+                  builder: (context) => const ImportLedgerDialog(),
+                );
               }
             },
             itemBuilder: (BuildContext context) {
@@ -53,7 +59,7 @@ class HomePage extends ConsumerWidget {
                     children: [
                       const Icon(Icons.import_export),
                       const SizedBox(width: 8),
-                      Text(context.t.import),
+                      Text(context.t.importALedger),
                     ],
                   ),
                 ),

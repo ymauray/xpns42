@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
 import 'package:xpns42/models/ledger_proxy.dart';
 import 'package:xpns42/providers/ledgers.dart';
+import 'package:xpns42/widgets/lower_divider.dart';
 import 'package:xpns42/widgets/padded_row.dart';
 
 class NewLedgerForm extends ConsumerWidget {
@@ -62,6 +63,7 @@ class NewLedgerForm extends ConsumerWidget {
               validator: (value) => value!.isEmpty ? '' : null,
             ),
           ),
+          const LowerDivider(),
           PaddedRow(
             child: ElevatedButton(
               onPressed: () async {

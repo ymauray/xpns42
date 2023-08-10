@@ -87,7 +87,7 @@ flutter_launcher_icons:
     image_path: "assets/launcher_icon/saco.png"
     
 flutter_native_splash:
-  color: "#ffffff"
+  color: "#1876d2"
   image: "assets/launcher_icon/saco.png"
   color_dark: "#434343"
   image_dark: "assets/launcher_icon/saco.png"

@@ -16,10 +16,15 @@
     "firstPerson": "First person",
     "secondPerson": "Second person",
     "ledgerPassword": "Ledger password",
-    "import": "Import a ledger",
+    "importALedger": "Import a ledger",
     "logout": "Logout",
     "ledger": "Ledger",
     "deleteLedger": "Delete ledger",
     "unlock": "Unlock",
-    "unlockFailed": "Unlock failed"
+    "unlockFailed": "Unlock failed",
+    "code": "Code",
+    "error": "Error",
+    "ledgerDoesNotExit": "The ledger does not exist on the server",
+    "ok": "Ok",
+    "import": "Import"
 }

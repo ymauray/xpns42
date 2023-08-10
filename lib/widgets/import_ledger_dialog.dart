@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/widgets/new_ledger_form.dart';
-import 'package:xpns42/widgets/title_divider.dart';
+import 'package:xpns42/widgets/import_ledger_form.dart';
 
-class NewLedgerDialog extends ConsumerWidget {
-  const NewLedgerDialog({super.key});
+class ImportLedgerDialog extends ConsumerWidget {
+  const ImportLedgerDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SimpleDialog(
       title: Text(
-        context.t.addLedger,
+        context.t.importALedger,
         textAlign: TextAlign.center,
       ),
       children: const [
-        TitleDivider(),
-        NewLedgerForm(),
+        Divider(
+          thickness: 1,
+          color: Colors.white38,
+        ),
+        ImportLedgerForm(),
       ],
     );
   }

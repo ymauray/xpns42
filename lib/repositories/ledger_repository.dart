@@ -46,6 +46,12 @@ final class LedgerRepository extends BaseRepository {
     await ledgerDBRef.remove();
   }
 
+  FutureOr<bool> checkLedgerExists(String id) async {
+    final accountDBRef = FirebaseDatabase.instance.ref('/ledgers/$id');
+    final snapshot = await accountDBRef.get();
+    return snapshot.exists;
+  }
+
   FutureOr<bool> unlockLedger({
     required String id,
     required String password,
@@ -71,6 +77,28 @@ final class LedgerRepository extends BaseRepository {
         return true;
       }
     }
+    return false;
+  }
+
+  FutureOr<bool> importLedger({
+    required String code,
+    required String password,
+  }) async {
+    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
+    final event =
+        await accountsDBRef.orderByChild('shortCode').equalTo(code).once();
+
+    if (event.snapshot.value != null) {
+      final data = (event.snapshot.value as Map<dynamic, dynamic>).values.first;
+      final jsonMap = Map<String, dynamic>.from(data as Map<dynamic, dynamic>);
+      final unlocked = await unlockLedger(
+        id: jsonMap['id'] as String,
+        password: password,
+      );
+
+      if (unlocked) return true;
+    }
+
     return false;
   }
 }
