@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/repositories/account_repository.dart';
+import 'package:xpns42/models/ledger_proxy.dart';
+import 'package:xpns42/providers/ledgers.dart';
 import 'package:xpns42/widgets/padded_row.dart';
 
-class AccountForm extends ConsumerWidget {
-  const AccountForm({super.key});
+class NewLedgerForm extends ConsumerWidget {
+  const NewLedgerForm({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,25 +57,32 @@ class AccountForm extends ConsumerWidget {
               controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: context.t.bookPassword,
+                labelText: context.t.ledgerPassword,
               ),
               validator: (value) => value!.isEmpty ? '' : null,
             ),
           ),
           PaddedRow(
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
-                  ref.read(accountProvider).createAccount(
-                        title: titleController.text,
-                        firstPerson: firstPersonController.text,
-                        secondPerson: secondPersonController.text,
-                        password: passwordController.text,
-                      );
-                  Navigator.pop(context);
+                  final ledgerId =
+                      await ref.read(ledgersProvider.notifier).addLedger(
+                            title: titleController.text,
+                            firstPerson: firstPersonController.text,
+                            secondPerson: secondPersonController.text,
+                            password: passwordController.text,
+                          );
+                  await Navigator.of(context).pushReplacementNamed(
+                    '/ledger',
+                    arguments: LedgerProxy(
+                      id: ledgerId,
+                      title: titleController.text,
+                    ),
+                  );
                 }
               },
-              child: Text(context.t.addAccount),
+              child: Text(context.t.addLedger),
             ),
           ),
         ],

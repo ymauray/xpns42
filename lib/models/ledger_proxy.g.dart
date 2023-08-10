@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'account_proxy.dart';
+part of 'ledger_proxy.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AccountProxy _$$_AccountProxyFromJson(Map<String, dynamic> json) =>
-    _$_AccountProxy(
+_$_LedgerProxy _$$_LedgerProxyFromJson(Map<String, dynamic> json) =>
+    _$_LedgerProxy(
       id: json['id'] as String,
       title: json['title'] as String,
     );
 
-Map<String, dynamic> _$$_AccountProxyToJson(_$_AccountProxy instance) =>
+Map<String, dynamic> _$$_LedgerProxyToJson(_$_LedgerProxy instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,

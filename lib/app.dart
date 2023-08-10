@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/app_theme.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/pages/account_page.dart';
 import 'package:xpns42/pages/forgot_password_page.dart';
+import 'package:xpns42/pages/ledger_page.dart';
 import 'package:xpns42/pages/register_account_page.dart';
 import 'package:xpns42/pages/sign_in_page.dart';
 import 'package:xpns42/wrapper.dart';
@@ -25,7 +25,7 @@ class App extends ConsumerWidget {
         '/sign_in': (context) => const SignInPage(),
         '/forgot_password': (context) => const ForgotPasswordPage(),
         '/register': (context) => const RegisterAccountPage(),
-        '/account': (context) => const AccountPage(),
+        '/ledger': (context) => const LedgerPage(),
       },
     );
   }

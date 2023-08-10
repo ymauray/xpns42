@@ -1,26 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'secure_storage_provider.dart';
+part of 'ledger_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$secureStorageHash() => r'd45663d17e3a2c36f7579889739b95b3f96ecf18';
+String _$ledgerRepositoryHash() => r'c940c5795ebf0d0845bb756a67f5a5939827e0e4';
 
-/// See also [SecureStorage].
-@ProviderFor(SecureStorage)
-final secureStorageProvider =
-    AutoDisposeNotifierProvider<SecureStorage, FlutterSecureStorage>.internal(
-  SecureStorage.new,
-  name: r'secureStorageProvider',
+/// See also [ledgerRepository].
+@ProviderFor(ledgerRepository)
+final ledgerRepositoryProvider = AutoDisposeProvider<LedgerRepository>.internal(
+  ledgerRepository,
+  name: r'ledgerRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$secureStorageHash,
+      : _$ledgerRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SecureStorage = AutoDisposeNotifier<FlutterSecureStorage>;
+typedef LedgerRepositoryRef = AutoDisposeProviderRef<LedgerRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

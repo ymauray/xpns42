@@ -11,11 +11,15 @@
     "register": "S'inscrire",
     "forgotPassword": "Mot de passe oublié ?",
     "resetPassword": "Réinitialiser",
-    "addAccount": "Ajouter un compte",
+    "addLedger": "Ajouter un livre de compte",
     "title": "Titre",
     "firstPerson": "Première personne",
     "secondPerson": "Deuxième personne",
-    "bookPassword": "Mot de passe du compte",
-    "import": "Importer un compte",
-    "logout": "Déconnexion"
+    "ledgerPassword": "Mot de passe du livre de compte",
+    "import": "Importer un livre de compte",
+    "logout": "Déconnexion",
+    "ledger": "Livre de compte",
+    "deleteLedger": "Supprimer",
+    "unlock": "Déverrouiller",
+    "unlockFailed": "Déverrouillage échoué"
 }

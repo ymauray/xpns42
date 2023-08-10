@@ -2,18 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/providers/account_list_provider.dart';
-import 'package:xpns42/repositories/account_repository.dart';
-import 'package:xpns42/widgets/account_card.dart';
-import 'package:xpns42/widgets/new_account_dialog.dart';
+import 'package:xpns42/providers/ledgers.dart';
+import 'package:xpns42/widgets/ledger_card.dart';
+import 'package:xpns42/widgets/new_ledger_dialog.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accounts = ref.watch(accountListProvider);
-    final accountRepository = ref.read(accountProvider);
+    final asyncLedgers = ref.watch(ledgersProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,29 +31,19 @@ class HomePage extends ConsumerWidget {
               } else if (value == 1) {
                 await showDialog<void>(
                   context: context,
-                  builder: (context) => const NewAccountDialog(),
+                  builder: (context) => const NewLedgerDialog(),
                 );
               }
             },
             itemBuilder: (BuildContext context) {
               return <PopupMenuEntry<int>>[
-                //const PopupMenuItem(
-                //  value: 1,
-                //  child: Row(
-                //    children: [
-                //      Icon(Icons.settings),
-                //      SizedBox(width: 8),
-                //      Text('Settings'),
-                //    ],
-                //  ),
-                //),
                 PopupMenuItem(
                   value: 1,
                   child: Row(
                     children: [
                       const Icon(Icons.add),
                       const SizedBox(width: 8),
-                      Text(context.t.addAccount),
+                      Text(context.t.addLedger),
                     ],
                   ),
                 ),
@@ -83,42 +71,24 @@ class HomePage extends ConsumerWidget {
               ];
             },
           ),
-          //IconButton(
-          //  onPressed: () async {
-          //    await FirebaseAuth.instance.signOut();
-          //    await Navigator.pushNamedAndRemoveUntil(
-          //      context,
-          //      '/sign_in',
-          //      (route) => false,
-          //    );
-          //  },
-          //  icon: const Icon(Icons.logout),
-          //),
         ],
       ),
-      body: accounts.when(
-        data: (data) {
+      body: asyncLedgers.when(
+        data: (ledgers) {
           return ListView.builder(
-            itemCount: data.length,
+            itemCount: ledgers.length,
             itemBuilder: (context, index) {
-              final account = data[index];
+              final ledger = ledgers[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: AccountCard(
-                  account: account,
-                  accountRepository: accountRepository,
-                ),
+                child: LedgerCard(ledger: ledger),
               );
             },
           );
         },
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) {
-          return Center(
-            child: Text(error.toString()),
-          );
+          return Center(child: Text(error.toString()));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -126,10 +96,10 @@ class HomePage extends ConsumerWidget {
         onPressed: () {
           showDialog<void>(
             context: context,
-            builder: (context) => const NewAccountDialog(),
+            builder: (context) => const NewLedgerDialog(),
           );
         },
-        tooltip: context.t.addAccount,
+        tooltip: context.t.addLedger,
         child: const Icon(Icons.add),
       ),
     );

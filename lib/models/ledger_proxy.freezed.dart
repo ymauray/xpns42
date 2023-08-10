@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'account_proxy.dart';
+part of 'ledger_proxy.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,34 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-AccountProxy _$AccountProxyFromJson(Map<String, dynamic> json) {
-  return _AccountProxy.fromJson(json);
+LedgerProxy _$LedgerProxyFromJson(Map<String, dynamic> json) {
+  return _LedgerProxy.fromJson(json);
 }
 
 /// @nodoc
-mixin _$AccountProxy {
+mixin _$LedgerProxy {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AccountProxyCopyWith<AccountProxy> get copyWith =>
+  $LedgerProxyCopyWith<LedgerProxy> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AccountProxyCopyWith<$Res> {
-  factory $AccountProxyCopyWith(
-          AccountProxy value, $Res Function(AccountProxy) then) =
-      _$AccountProxyCopyWithImpl<$Res, AccountProxy>;
+abstract class $LedgerProxyCopyWith<$Res> {
+  factory $LedgerProxyCopyWith(
+          LedgerProxy value, $Res Function(LedgerProxy) then) =
+      _$LedgerProxyCopyWithImpl<$Res, LedgerProxy>;
   @useResult
   $Res call({String id, String title});
 }
 
 /// @nodoc
-class _$AccountProxyCopyWithImpl<$Res, $Val extends AccountProxy>
-    implements $AccountProxyCopyWith<$Res> {
-  _$AccountProxyCopyWithImpl(this._value, this._then);
+class _$LedgerProxyCopyWithImpl<$Res, $Val extends LedgerProxy>
+    implements $LedgerProxyCopyWith<$Res> {
+  _$LedgerProxyCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -68,22 +68,22 @@ class _$AccountProxyCopyWithImpl<$Res, $Val extends AccountProxy>
 }
 
 /// @nodoc
-abstract class _$$_AccountProxyCopyWith<$Res>
-    implements $AccountProxyCopyWith<$Res> {
-  factory _$$_AccountProxyCopyWith(
-          _$_AccountProxy value, $Res Function(_$_AccountProxy) then) =
-      __$$_AccountProxyCopyWithImpl<$Res>;
+abstract class _$$_LedgerProxyCopyWith<$Res>
+    implements $LedgerProxyCopyWith<$Res> {
+  factory _$$_LedgerProxyCopyWith(
+          _$_LedgerProxy value, $Res Function(_$_LedgerProxy) then) =
+      __$$_LedgerProxyCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String title});
 }
 
 /// @nodoc
-class __$$_AccountProxyCopyWithImpl<$Res>
-    extends _$AccountProxyCopyWithImpl<$Res, _$_AccountProxy>
-    implements _$$_AccountProxyCopyWith<$Res> {
-  __$$_AccountProxyCopyWithImpl(
-      _$_AccountProxy _value, $Res Function(_$_AccountProxy) _then)
+class __$$_LedgerProxyCopyWithImpl<$Res>
+    extends _$LedgerProxyCopyWithImpl<$Res, _$_LedgerProxy>
+    implements _$$_LedgerProxyCopyWith<$Res> {
+  __$$_LedgerProxyCopyWithImpl(
+      _$_LedgerProxy _value, $Res Function(_$_LedgerProxy) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_AccountProxyCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
   }) {
-    return _then(_$_AccountProxy(
+    return _then(_$_LedgerProxy(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -107,11 +107,11 @@ class __$$_AccountProxyCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AccountProxy implements _AccountProxy {
-  const _$_AccountProxy({required this.id, required this.title});
+class _$_LedgerProxy implements _LedgerProxy {
+  const _$_LedgerProxy({required this.id, required this.title});
 
-  factory _$_AccountProxy.fromJson(Map<String, dynamic> json) =>
-      _$$_AccountProxyFromJson(json);
+  factory _$_LedgerProxy.fromJson(Map<String, dynamic> json) =>
+      _$$_LedgerProxyFromJson(json);
 
   @override
   final String id;
@@ -120,14 +120,14 @@ class _$_AccountProxy implements _AccountProxy {
 
   @override
   String toString() {
-    return 'AccountProxy(id: $id, title: $title)';
+    return 'LedgerProxy(id: $id, title: $title)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccountProxy &&
+            other is _$_LedgerProxy &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title));
   }
@@ -139,24 +139,23 @@ class _$_AccountProxy implements _AccountProxy {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccountProxyCopyWith<_$_AccountProxy> get copyWith =>
-      __$$_AccountProxyCopyWithImpl<_$_AccountProxy>(this, _$identity);
+  _$$_LedgerProxyCopyWith<_$_LedgerProxy> get copyWith =>
+      __$$_LedgerProxyCopyWithImpl<_$_LedgerProxy>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AccountProxyToJson(
+    return _$$_LedgerProxyToJson(
       this,
     );
   }
 }
 
-abstract class _AccountProxy implements AccountProxy {
-  const factory _AccountProxy(
-      {required final String id,
-      required final String title}) = _$_AccountProxy;
+abstract class _LedgerProxy implements LedgerProxy {
+  const factory _LedgerProxy(
+      {required final String id, required final String title}) = _$_LedgerProxy;
 
-  factory _AccountProxy.fromJson(Map<String, dynamic> json) =
-      _$_AccountProxy.fromJson;
+  factory _LedgerProxy.fromJson(Map<String, dynamic> json) =
+      _$_LedgerProxy.fromJson;
 
   @override
   String get id;
@@ -164,6 +163,6 @@ abstract class _AccountProxy implements AccountProxy {
   String get title;
   @override
   @JsonKey(ignore: true)
-  _$$_AccountProxyCopyWith<_$_AccountProxy> get copyWith =>
+  _$$_LedgerProxyCopyWith<_$_LedgerProxy> get copyWith =>
       throw _privateConstructorUsedError;
 }

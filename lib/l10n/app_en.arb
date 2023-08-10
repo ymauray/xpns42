@@ -11,11 +11,15 @@
     "register": "Register",
     "forgotPassword": "Forgot password ?",
     "resetPassword": "Reset password",
-    "addAccount": "Add account",
+    "addLedger": "Add ledger",
     "title": "Title",
     "firstPerson": "First person",
     "secondPerson": "Second person",
-    "bookPassword": "Book password",
-    "import": "Import an account",
-    "logout": "Logout"
+    "ledgerPassword": "Ledger password",
+    "import": "Import a ledger",
+    "logout": "Logout",
+    "ledger": "Ledger",
+    "deleteLedger": "Delete ledger",
+    "unlock": "Unlock",
+    "unlockFailed": "Unlock failed"
 }
