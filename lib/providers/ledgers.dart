@@ -12,9 +12,6 @@ class Ledgers extends _$Ledgers {
     return await _loadProxies();
   }
 
-  FutureOr<void> refresh(List<LedgerProxy> proxies) async =>
-      state = AsyncValue.data(proxies);
-
   FutureOr<List<LedgerProxy>> _loadProxies() async {
     final secureStorage = ref.read(secureStorageProvider.notifier);
     return await secureStorage.getProxies();
