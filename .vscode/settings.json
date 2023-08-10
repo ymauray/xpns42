@@ -11,6 +11,5 @@
             "database": ".dart_tool/sqflite_common_ffi/databases/freelanceplus.db",
             "name": "Freelance+"
         }
-    ],
-    "java.configuration.updateBuildConfiguration": "automatic"
+    ]
 }
