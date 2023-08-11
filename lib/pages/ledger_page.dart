@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/models/ledger_proxy.dart';
+import 'package:xpns42/models/ledger.dart';
 import 'package:xpns42/providers/ledgers.dart';
 
 class LedgerPage extends ConsumerWidget {
@@ -9,7 +9,7 @@ class LedgerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final proxy = ModalRoute.of(context)!.settings.arguments as LedgerProxy;
+    final proxy = ModalRoute.of(context)!.settings.arguments as Ledger;
 
     return Scaffold(
       appBar: AppBar(

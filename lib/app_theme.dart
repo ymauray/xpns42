@@ -55,6 +55,11 @@ class AppTheme {
           color: Colors.blue.shade600,
         ),
         scaffoldBackgroundColor: Colors.blue.shade700,
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
+          ),
+        ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.white,
         ),

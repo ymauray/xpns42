@@ -24,7 +24,9 @@
     "unlockFailed": "Unlock failed",
     "code": "Code",
     "error": "Error",
-    "ledgerDoesNotExit": "The ledger does not exist on the server",
+    "ledgerDoesNotExit": "The ledger does not exist on the server, and will be romoved from the list",
     "ok": "Ok",
-    "import": "Import"
+    "import": "Import",
+    "ledgerCannotBeImported": "The ledger cannot be imported",
+    "wrongPassword": "Wrong password"
 }

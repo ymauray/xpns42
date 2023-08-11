@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:xpns42/models/ledger.dart';
 import 'package:xpns42/models/ledger_proxy.dart';
 import 'package:xpns42/providers/secure_storage_provider.dart';
 import 'package:xpns42/repositories/ledger_repository.dart';
@@ -17,7 +18,7 @@ class Ledgers extends _$Ledgers {
     return await secureStorage.getProxies();
   }
 
-  FutureOr<String> addLedger({
+  FutureOr<Ledger> addLedger({
     required String title,
     required String firstPerson,
     required String secondPerson,
@@ -47,7 +48,7 @@ class Ledgers extends _$Ledgers {
       return await _loadProxies();
     });
 
-    return ledger.id;
+    return ledger;
   }
 
   FutureOr<void> deleteLedger(String id) async {

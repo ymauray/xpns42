@@ -55,22 +55,33 @@ class ImportLedgerForm extends ConsumerWidget {
                             code: codeController.text,
                             password: passwordController.text,
                           );
-                  if (!unlocked) {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('not ok !'),
-                        backgroundColor: Colors.red,
-                      ),
+                  if (unlocked == null) {
+                    await showDialog<void>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(
+                            context.t.error,
+                            textAlign: TextAlign.center,
+                          ),
+                          content: Text(context.t.ledgerCannotBeImported),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(context.t.ok),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   } else {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('ok'),
-                        backgroundColor: Colors.green,
-                      ),
+                    await Navigator.of(context).pushReplacementNamed(
+                      '/ledger',
+                      arguments: unlocked,
                     );
+                    return;
                   }
                 }
               },

@@ -36,7 +36,9 @@ final class LedgerRepository extends BaseRepository {
 
     await ledgerDBRef.set(ledger.toJson());
 
-    return ledger;
+    final unlocked = await unlockLedger(ledger, password);
+
+    return unlocked!;
   }
 
   FutureOr<void> deleteLedger(String id) async {
@@ -52,54 +54,75 @@ final class LedgerRepository extends BaseRepository {
     return snapshot.exists;
   }
 
-  FutureOr<bool> unlockLedger({
-    required String id,
-    required String password,
-  }) async {
+  FutureOr<Ledger?> loadLedger(String id) async {
     final accountDBRef = FirebaseDatabase.instance.ref('/ledgers/$id');
     final snapshot = await accountDBRef.get();
     if (snapshot.exists) {
-      final jsonMap =
-          Map<String, dynamic>.from(snapshot.value! as Map<dynamic, dynamic>);
-      final account = Ledger.fromJson(jsonMap);
-
-      final encoder = init(id, password);
-
-      final decryptedId = encoder.decrypt(account.encryptedId);
-      if (decryptedId == id) {
-        final secureStorage =
-            ledgerRepositoryRef.read(secureStorageProvider.notifier);
-        await secureStorage.write(
-          key: 'accountKey',
-          value: password,
-        );
-
-        return true;
-      }
+      return _loadLedger(snapshot.value as Map<dynamic, dynamic>);
     }
-    return false;
+
+    return null;
   }
 
-  FutureOr<bool> importLedger({
+  FutureOr<Ledger?> loadLedgerFromCode(String code) async {
+    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
+    final event = await accountsDBRef
+        .orderByChild('shortCode')
+        .equalTo(code)
+        .limitToFirst(1)
+        .once();
+
+    if (event.snapshot.exists) {
+      final value =
+          (event.snapshot.value as Map<dynamic, dynamic>).values.first;
+      return _loadLedger(value as Map<dynamic, dynamic>);
+    }
+
+    return null;
+  }
+
+  FutureOr<Ledger> _loadLedger(Map<dynamic, dynamic> data) async {
+    final jsonMap = Map<String, dynamic>.from(data);
+    final ledger = Ledger.fromJson(jsonMap);
+
+    return ledger;
+  }
+
+  FutureOr<Ledger?> unlockLedger(Ledger lockedLedger, String password) async {
+    final encoder = init(lockedLedger.id, password);
+
+    final decryptedId = encoder.decrypt(lockedLedger.encryptedId);
+    if (decryptedId == lockedLedger.id) {
+      return Ledger(
+        id: lockedLedger.id,
+        shortCode: lockedLedger.shortCode,
+        encryptedId: lockedLedger.encryptedId,
+        title: encoder.decrypt(lockedLedger.title)!,
+        firstPerson: encoder.decrypt(lockedLedger.firstPerson)!,
+        secondPerson: encoder.decrypt(lockedLedger.secondPerson)!,
+      );
+    }
+    return null;
+  }
+
+  FutureOr<Ledger?> importLedger({
     required String code,
     required String password,
   }) async {
-    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
-    final event =
-        await accountsDBRef.orderByChild('shortCode').equalTo(code).once();
+    final ledger = await loadLedgerFromCode(code);
+    if (ledger == null) return null;
 
-    if (event.snapshot.value != null) {
-      final data = (event.snapshot.value as Map<dynamic, dynamic>).values.first;
-      final jsonMap = Map<String, dynamic>.from(data as Map<dynamic, dynamic>);
-      final unlocked = await unlockLedger(
-        id: jsonMap['id'] as String,
-        password: password,
-      );
+    final unlocked = await unlockLedger(ledger, password);
+    if (unlocked == null) return null;
 
-      if (unlocked) return true;
-    }
+    final secureStorage =
+        ledgerRepositoryRef.read(secureStorageProvider.notifier);
+    await secureStorage.write(
+      key: 'accountKey',
+      value: password,
+    );
 
-    return false;
+    return unlocked;
   }
 }
 

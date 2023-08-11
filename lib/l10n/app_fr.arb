@@ -24,7 +24,9 @@
     "unlockFailed": "Déverrouillage échoué",
     "code": "Code",
     "error": "Erreur",
-    "ledgerDoesNotExit": "Le livre de compte n'existe pas",
+    "ledgerDoesNotExit": "Le livre de compte n'existe pas sur le serveur, et va être retiré de la liste",
     "ok": "OK",
-    "import": "Importer"
+    "import": "Importer",
+    "ledgerCannotBeImported": "Le livre de compte ne peut pas être importé",
+    "wrongPassword": "Mot de passe incorrect"
 }

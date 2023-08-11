@@ -5,9 +5,6 @@ import 'package:xpns42/models/ledger_proxy.dart';
 import 'package:xpns42/providers/ledgers.dart';
 import 'package:xpns42/repositories/ledger_repository.dart';
 import 'package:xpns42/widgets/ledger_password_dialog.dart';
-import 'package:xpns42/widgets/lower_divider.dart';
-import 'package:xpns42/widgets/padded_row.dart';
-import 'package:xpns42/widgets/title_divider.dart';
 
 class LedgerCard extends ConsumerWidget {
   const LedgerCard({
@@ -37,27 +34,21 @@ class LedgerCard extends ConsumerWidget {
           } else {
             await showDialog<void>(
               context: context,
-              builder: (context) => SimpleDialog(
+              builder: (context) => AlertDialog(
                 title: Text(
                   context.t.error,
                   textAlign: TextAlign.center,
                 ),
-                children: [
-                  const TitleDivider(),
-                  PaddedRow(
-                    child: Text(context.t.ledgerDoesNotExit),
-                  ),
-                  const LowerDivider(),
-                  PaddedRow(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await ref
-                            .read(ledgersProvider.notifier)
-                            .deleteLedger(ledger.id);
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(context.t.ok),
-                    ),
+                content: Text(context.t.ledgerDoesNotExit),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      await ref
+                          .read(ledgersProvider.notifier)
+                          .deleteLedger(ledger.id);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(context.t.ok),
                   ),
                 ],
               ),

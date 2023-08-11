@@ -32,25 +32,42 @@ class LedgerPasswordForm extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
-                  final unlocked =
-                      await ref.read(ledgerRepositoryProvider).unlockLedger(
-                            id: ledgerProxy.id,
-                            password: passwordController.text,
-                          );
-                  if (unlocked) {
-                    await Navigator.of(context).pushReplacementNamed(
-                      '/ledger',
-                      arguments: ledgerProxy,
+                  final ledgerRepository = ref.read(ledgerRepositoryProvider);
+                  final lockedLedger =
+                      await ledgerRepository.loadLedger(ledgerProxy.id);
+                  if (lockedLedger != null) {
+                    final ledger = await ledgerRepository.unlockLedger(
+                      lockedLedger,
+                      passwordController.text,
                     );
-                  } else {
-                    Navigator.of(context).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text(context.t.unlockFailed),
-                      ),
-                    );
+                    if (ledger != null) {
+                      await Navigator.of(context).pushReplacementNamed(
+                        '/ledger',
+                        arguments: ledger,
+                      );
+                      return;
+                    }
                   }
+                  await showDialog<void>(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          context.t.error,
+                          textAlign: TextAlign.center,
+                        ),
+                        content: Text(context.t.wrongPassword),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(context.t.ok),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: Text(context.t.unlock),
