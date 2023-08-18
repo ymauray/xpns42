@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
+import 'package:xpns42/providers/ledgers.dart';
+import 'package:xpns42/providers/secure_storage_provider.dart';
 import 'package:xpns42/repositories/ledger_repository.dart';
 import 'package:xpns42/widgets/padded_row.dart';
 
@@ -21,6 +23,7 @@ class ImportLedgerForm extends ConsumerWidget {
         children: [
           PaddedRow(
             child: TextFormField(
+              autofocus: true,
               controller: codeController,
               decoration: InputDecoration(
                 labelText: context.t.code,
@@ -50,12 +53,12 @@ class ImportLedgerForm extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
-                  final unlocked =
+                  final ledger =
                       await ref.read(ledgerRepositoryProvider).importLedger(
                             code: codeController.text,
                             password: passwordController.text,
                           );
-                  if (unlocked == null) {
+                  if (ledger == null) {
                     await showDialog<void>(
                       context: context,
                       builder: (context) {
@@ -77,11 +80,21 @@ class ImportLedgerForm extends ConsumerWidget {
                       },
                     );
                   } else {
+                    final secureStorage = ref.read(secureStorageProvider);
+                    await secureStorage.write(
+                      key: 'ledgerId',
+                      value: ledger.id,
+                    );
+                    await secureStorage.write(
+                      key: 'ledgerPassword',
+                      value: passwordController.text,
+                    );
+                    final ledgersNotifier = ref.read(ledgersProvider.notifier);
+                    await ledgersNotifier.add(ledger);
                     await Navigator.of(context).pushReplacementNamed(
                       '/ledger',
-                      arguments: unlocked,
+                      arguments: ledger,
                     );
-                    return;
                   }
                 }
               },

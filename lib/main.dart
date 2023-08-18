@@ -17,7 +17,7 @@ void main() async {
   final locale = await findSystemLocale();
   await initializeDateFormatting(locale);
 
-  if (Platform.isIOS || Platform.isAndroid) {
+  if (Platform.isIOS || Platform.isAndroid || Platform.isMacOS) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

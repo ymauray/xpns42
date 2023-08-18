@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
 import 'package:xpns42/providers/ledgers.dart';
+import 'package:xpns42/providers/secure_storage_provider.dart';
+import 'package:xpns42/repositories/ledger_repository.dart';
 import 'package:xpns42/widgets/import_ledger_dialog.dart';
 import 'package:xpns42/widgets/ledger_card.dart';
 import 'package:xpns42/widgets/new_ledger_dialog.dart';
@@ -13,6 +15,23 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLedgers = ref.watch(ledgersProvider);
+    final secureStorage = ref.read(secureStorageProvider);
+
+    Future.delayed(Duration.zero, () async {
+      final ledgerId = await secureStorage.read(key: 'ledgerId');
+      final ledgerPassword = await secureStorage.read(key: 'ledgerPassword');
+      if (ledgerId != null && ledgerPassword != null) {
+        final ledgerRepository = ref.read(ledgerRepositoryProvider);
+        final activeLedger =
+            await ledgerRepository.load(ledgerId, ledgerPassword);
+        if (activeLedger != null) {
+          await Navigator.of(context).pushNamed(
+            '/ledger',
+            arguments: activeLedger,
+          );
+        }
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(

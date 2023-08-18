@@ -10,11 +10,7 @@ part 'secure_storage_provider.g.dart';
 class SecureStorage extends _$SecureStorage {
   @override
   FlutterSecureStorage build() {
-    return const FlutterSecureStorage(
-      aOptions: AndroidOptions(
-        encryptedSharedPreferences: true,
-      ),
-    );
+    return const FlutterSecureStorage();
   }
 
   Future<List<LedgerProxy>> getProxies() async {
@@ -27,14 +23,10 @@ class SecureStorage extends _$SecureStorage {
     return decodedAccounts;
   }
 
-  FutureOr<void> writeProxies(List<LedgerProxy> proxies) async {
-    await state.write(
-      key: 'accounts',
-      value: jsonEncode(proxies),
-    );
-  }
-
-  FutureOr<void> write({required String key, required String value}) async {
-    await state.write(key: key, value: value);
+  Future<void> setProxies(List<LedgerProxy> proxies) async {
+    proxies.sort((a, b) => a.title.compareTo(b.title));
+    final jsonEncoded = jsonEncode(proxies);
+    await state.write(key: 'accounts', value: null);
+    await state.write(key: 'accounts', value: jsonEncoded);
   }
 }

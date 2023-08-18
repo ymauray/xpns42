@@ -9,14 +9,15 @@ part 'ledgers.g.dart';
 @riverpod
 class Ledgers extends _$Ledgers {
   @override
-  FutureOr<List<LedgerProxy>> build() async {
-    return await _loadProxies();
-  }
-
-  FutureOr<List<LedgerProxy>> _loadProxies() async {
+  Future<List<LedgerProxy>> build() async {
     final secureStorage = ref.read(secureStorageProvider.notifier);
     return await secureStorage.getProxies();
   }
+
+  //FutureOr<List<LedgerProxy>> _loadProxies() async {
+  //  final secureStorage = ref.read(secureStorageProvider.notifier);
+  //  return await secureStorage.getProxies();
+  //}
 
   FutureOr<Ledger> addLedger({
     required String title,
@@ -35,17 +36,12 @@ class Ledgers extends _$Ledgers {
 
     state = await AsyncValue.guard(() async {
       final secureStorage = ref.read(secureStorageProvider.notifier);
-      await secureStorage.write(
-        key: 'accountKey',
-        value: password,
-      );
-
       final proxies = await secureStorage.getProxies();
       proxies.add(LedgerProxy(id: ledger.id, title: title));
 
-      await secureStorage.writeProxies(proxies);
+      await secureStorage.setProxies(proxies);
 
-      return await _loadProxies();
+      return await secureStorage.getProxies();
     });
 
     return ledger;
@@ -57,11 +53,27 @@ class Ledgers extends _$Ledgers {
       final secureStorage = ref.read(secureStorageProvider.notifier);
       final proxies = await secureStorage.getProxies();
       proxies.removeWhere((proxy) => proxy.id == id);
-      await secureStorage.writeProxies(proxies);
+      await secureStorage.setProxies(proxies);
 
       await ref.read(ledgerRepositoryProvider).deleteLedger(id);
 
-      return await _loadProxies();
+      return await secureStorage.getProxies();
+    });
+  }
+
+  Future<void> add(Ledger ledger) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final secureStorage = ref.read(secureStorageProvider.notifier);
+      final proxies = await secureStorage.getProxies();
+      await secureStorage.setProxies(
+        [
+          ...proxies,
+          LedgerProxy(id: ledger.id, title: ledger.title),
+        ],
+      );
+
+      return await secureStorage.getProxies();
     });
   }
 }

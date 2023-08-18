@@ -7,11 +7,11 @@ part 'ledger.g.dart';
 class Ledger with _$Ledger {
   const factory Ledger({
     required String id,
-    required String shortCode,
-    required String encryptedId,
     required String title,
     required String firstPerson,
     required String secondPerson,
+    String? shortCode,
+    String? encryptedId,
   }) = _Ledger;
 
   factory Ledger.fromJson(Map<String, dynamic> json) => _$LedgerFromJson(json);

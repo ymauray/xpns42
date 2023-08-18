@@ -2,10 +2,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xpns42/models/ledger.dart';
-import 'package:xpns42/providers/secure_storage_provider.dart';
 import 'package:xpns42/repositories/base_repository.dart';
 
 part 'ledger_repository.g.dart';
+
+@riverpod
+LedgerRepository ledgerRepository(LedgerRepositoryRef ref) {
+  return LedgerRepository(ledgerRepositoryRef: ref);
+}
 
 final class LedgerRepository extends BaseRepository {
   LedgerRepository({
@@ -13,6 +17,41 @@ final class LedgerRepository extends BaseRepository {
   });
 
   final LedgerRepositoryRef ledgerRepositoryRef;
+
+  // Public API
+
+  /// Load a ledger from id and password.
+  ///
+  /// Returns null if ledger does not exist or password is incorrect.
+  Future<Ledger?> load(String id, String password) async {
+    final ledgerDBRef = FirebaseDatabase.instance.ref('/ledgers/$id');
+    final snapshot = await ledgerDBRef.get();
+    if (snapshot.exists) {
+      final encryptedLedger =
+          await _loadLedger(snapshot.value as Map<dynamic, dynamic>);
+      final decryptedLedger = await _decryptLedger(encryptedLedger, password);
+      if (decryptedLedger != null) {
+        return decryptedLedger;
+      }
+    }
+
+    return null;
+  }
+
+  Future<Ledger?> importLedger({
+    required String code,
+    required String password,
+  }) async {
+    final encryptedLedger = await _loadLedgerFromCode(code);
+    if (encryptedLedger == null) return null;
+
+    final decryptedLedger = await _decryptLedger(encryptedLedger, password);
+    if (decryptedLedger == null) return null;
+
+    return decryptedLedger;
+  }
+
+  // Private methods
 
   FutureOr<Ledger> createLedger({
     required String title,
@@ -36,7 +75,7 @@ final class LedgerRepository extends BaseRepository {
 
     await ledgerDBRef.set(ledger.toJson());
 
-    final unlocked = await unlockLedger(ledger, password);
+    final unlocked = await _decryptLedger(ledger, password);
 
     return unlocked!;
   }
@@ -54,17 +93,7 @@ final class LedgerRepository extends BaseRepository {
     return snapshot.exists;
   }
 
-  FutureOr<Ledger?> loadLedger(String id) async {
-    final accountDBRef = FirebaseDatabase.instance.ref('/ledgers/$id');
-    final snapshot = await accountDBRef.get();
-    if (snapshot.exists) {
-      return _loadLedger(snapshot.value as Map<dynamic, dynamic>);
-    }
-
-    return null;
-  }
-
-  FutureOr<Ledger?> loadLedgerFromCode(String code) async {
+  FutureOr<Ledger?> _loadLedgerFromCode(String code) async {
     final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
     final event = await accountsDBRef
         .orderByChild('shortCode')
@@ -88,10 +117,10 @@ final class LedgerRepository extends BaseRepository {
     return ledger;
   }
 
-  FutureOr<Ledger?> unlockLedger(Ledger lockedLedger, String password) async {
+  FutureOr<Ledger?> _decryptLedger(Ledger lockedLedger, String password) async {
     final encoder = init(lockedLedger.id, password);
 
-    final decryptedId = encoder.decrypt(lockedLedger.encryptedId);
+    final decryptedId = encoder.decrypt(lockedLedger.encryptedId!);
     if (decryptedId == lockedLedger.id) {
       return Ledger(
         id: lockedLedger.id,
@@ -104,29 +133,4 @@ final class LedgerRepository extends BaseRepository {
     }
     return null;
   }
-
-  FutureOr<Ledger?> importLedger({
-    required String code,
-    required String password,
-  }) async {
-    final ledger = await loadLedgerFromCode(code);
-    if (ledger == null) return null;
-
-    final unlocked = await unlockLedger(ledger, password);
-    if (unlocked == null) return null;
-
-    final secureStorage =
-        ledgerRepositoryRef.read(secureStorageProvider.notifier);
-    await secureStorage.write(
-      key: 'accountKey',
-      value: password,
-    );
-
-    return unlocked;
-  }
-}
-
-@riverpod
-LedgerRepository ledgerRepository(LedgerRepositoryRef ref) {
-  return LedgerRepository(ledgerRepositoryRef: ref);
 }

@@ -21,11 +21,11 @@ Ledger _$LedgerFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Ledger {
   String get id => throw _privateConstructorUsedError;
-  String get shortCode => throw _privateConstructorUsedError;
-  String get encryptedId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get firstPerson => throw _privateConstructorUsedError;
   String get secondPerson => throw _privateConstructorUsedError;
+  String? get shortCode => throw _privateConstructorUsedError;
+  String? get encryptedId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $LedgerCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String shortCode,
-      String encryptedId,
       String title,
       String firstPerson,
-      String secondPerson});
+      String secondPerson,
+      String? shortCode,
+      String? encryptedId});
 }
 
 /// @nodoc
@@ -60,24 +60,16 @@ class _$LedgerCopyWithImpl<$Res, $Val extends Ledger>
   @override
   $Res call({
     Object? id = null,
-    Object? shortCode = null,
-    Object? encryptedId = null,
     Object? title = null,
     Object? firstPerson = null,
     Object? secondPerson = null,
+    Object? shortCode = freezed,
+    Object? encryptedId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      shortCode: null == shortCode
-          ? _value.shortCode
-          : shortCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      encryptedId: null == encryptedId
-          ? _value.encryptedId
-          : encryptedId // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
           ? _value.title
@@ -91,6 +83,14 @@ class _$LedgerCopyWithImpl<$Res, $Val extends Ledger>
           ? _value.secondPerson
           : secondPerson // ignore: cast_nullable_to_non_nullable
               as String,
+      shortCode: freezed == shortCode
+          ? _value.shortCode
+          : shortCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      encryptedId: freezed == encryptedId
+          ? _value.encryptedId
+          : encryptedId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -103,11 +103,11 @@ abstract class _$$_LedgerCopyWith<$Res> implements $LedgerCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String shortCode,
-      String encryptedId,
       String title,
       String firstPerson,
-      String secondPerson});
+      String secondPerson,
+      String? shortCode,
+      String? encryptedId});
 }
 
 /// @nodoc
@@ -121,24 +121,16 @@ class __$$_LedgerCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? shortCode = null,
-    Object? encryptedId = null,
     Object? title = null,
     Object? firstPerson = null,
     Object? secondPerson = null,
+    Object? shortCode = freezed,
+    Object? encryptedId = freezed,
   }) {
     return _then(_$_Ledger(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      shortCode: null == shortCode
-          ? _value.shortCode
-          : shortCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      encryptedId: null == encryptedId
-          ? _value.encryptedId
-          : encryptedId // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
           ? _value.title
@@ -152,6 +144,14 @@ class __$$_LedgerCopyWithImpl<$Res>
           ? _value.secondPerson
           : secondPerson // ignore: cast_nullable_to_non_nullable
               as String,
+      shortCode: freezed == shortCode
+          ? _value.shortCode
+          : shortCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      encryptedId: freezed == encryptedId
+          ? _value.encryptedId
+          : encryptedId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -161,11 +161,11 @@ class __$$_LedgerCopyWithImpl<$Res>
 class _$_Ledger implements _Ledger {
   const _$_Ledger(
       {required this.id,
-      required this.shortCode,
-      required this.encryptedId,
       required this.title,
       required this.firstPerson,
-      required this.secondPerson});
+      required this.secondPerson,
+      this.shortCode,
+      this.encryptedId});
 
   factory _$_Ledger.fromJson(Map<String, dynamic> json) =>
       _$$_LedgerFromJson(json);
@@ -173,19 +173,19 @@ class _$_Ledger implements _Ledger {
   @override
   final String id;
   @override
-  final String shortCode;
-  @override
-  final String encryptedId;
-  @override
   final String title;
   @override
   final String firstPerson;
   @override
   final String secondPerson;
+  @override
+  final String? shortCode;
+  @override
+  final String? encryptedId;
 
   @override
   String toString() {
-    return 'Ledger(id: $id, shortCode: $shortCode, encryptedId: $encryptedId, title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson)';
+    return 'Ledger(id: $id, title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, shortCode: $shortCode, encryptedId: $encryptedId)';
   }
 
   @override
@@ -194,21 +194,21 @@ class _$_Ledger implements _Ledger {
         (other.runtimeType == runtimeType &&
             other is _$_Ledger &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.shortCode, shortCode) ||
-                other.shortCode == shortCode) &&
-            (identical(other.encryptedId, encryptedId) ||
-                other.encryptedId == encryptedId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.firstPerson, firstPerson) ||
                 other.firstPerson == firstPerson) &&
             (identical(other.secondPerson, secondPerson) ||
-                other.secondPerson == secondPerson));
+                other.secondPerson == secondPerson) &&
+            (identical(other.shortCode, shortCode) ||
+                other.shortCode == shortCode) &&
+            (identical(other.encryptedId, encryptedId) ||
+                other.encryptedId == encryptedId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, shortCode, encryptedId,
-      title, firstPerson, secondPerson);
+  int get hashCode => Object.hash(runtimeType, id, title, firstPerson,
+      secondPerson, shortCode, encryptedId);
 
   @JsonKey(ignore: true)
   @override
@@ -227,26 +227,26 @@ class _$_Ledger implements _Ledger {
 abstract class _Ledger implements Ledger {
   const factory _Ledger(
       {required final String id,
-      required final String shortCode,
-      required final String encryptedId,
       required final String title,
       required final String firstPerson,
-      required final String secondPerson}) = _$_Ledger;
+      required final String secondPerson,
+      final String? shortCode,
+      final String? encryptedId}) = _$_Ledger;
 
   factory _Ledger.fromJson(Map<String, dynamic> json) = _$_Ledger.fromJson;
 
   @override
   String get id;
   @override
-  String get shortCode;
-  @override
-  String get encryptedId;
-  @override
   String get title;
   @override
   String get firstPerson;
   @override
   String get secondPerson;
+  @override
+  String? get shortCode;
+  @override
+  String? get encryptedId;
   @override
   @JsonKey(ignore: true)
   _$$_LedgerCopyWith<_$_Ledger> get copyWith =>

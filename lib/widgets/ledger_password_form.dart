@@ -33,20 +33,16 @@ class LedgerPasswordForm extends ConsumerWidget {
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   final ledgerRepository = ref.read(ledgerRepositoryProvider);
-                  final lockedLedger =
-                      await ledgerRepository.loadLedger(ledgerProxy.id);
-                  if (lockedLedger != null) {
-                    final ledger = await ledgerRepository.unlockLedger(
-                      lockedLedger,
-                      passwordController.text,
+                  final ledger = await ledgerRepository.load(
+                    ledgerProxy.id,
+                    passwordController.text,
+                  );
+                  if (ledger != null) {
+                    await Navigator.of(context).pushReplacementNamed(
+                      '/ledger',
+                      arguments: ledger,
                     );
-                    if (ledger != null) {
-                      await Navigator.of(context).pushReplacementNamed(
-                        '/ledger',
-                        arguments: ledger,
-                      );
-                      return;
-                    }
+                    return;
                   }
                   await showDialog<void>(
                     context: context,
