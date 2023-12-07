@@ -31,6 +31,7 @@
     "wrongPassword": "Wrong password",
     "niceToSeeYouAgain": "Nice to see you again",
     "continueWithAnEmail": "Continue with an email",
+    "continueAsGuest": "Continue as guest",
     "ledgers": "Ledgers",
     "oupsAnErrorOccured": "Oups, an error occured",
     "noLedgerYet": "No ledger yet",

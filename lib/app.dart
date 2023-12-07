@@ -9,10 +9,11 @@ import 'package:xpns42/pages/ledger_page.dart';
 import 'package:xpns42/pages/ledgers_list_page.dart';
 import 'package:xpns42/pages/register_account_page.dart';
 import 'package:xpns42/pages/sign_in_page.dart';
-import 'package:xpns42/wrapper.dart';
 
 class App extends ConsumerWidget {
-  const App({super.key});
+  const App({required this.onboardingSeen, super.key});
+
+  final bool onboardingSeen;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +27,8 @@ class App extends ConsumerWidget {
         textTheme: GoogleFonts.nunitoTextTheme(),
       ),
       routes: {
-        '/': (context) => const Wrapper(),
+        '/': (context) =>
+            onboardingSeen ? const LedgersListPage() : const FrontPage(),
         '/front_page': (context) =>
             const FrontPage(), // Buttons to sign in or register
         '/sign_in': (context) => const SignInPage(),

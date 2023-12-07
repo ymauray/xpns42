@@ -31,6 +31,7 @@
     "wrongPassword": "Mot de passe incorrect",
     "niceToSeeYouAgain": "Ravi de vous revoir",
     "continueWithAnEmail": "Continuer avec un email",
+    "continueAsGuest": "Continuer en tant qu'invité",
     "ledgers": "Livres de compte",
     "oupsAnErrorOccured": "Oups, une erreur est survenue",
     "noLedgerYet": "Pas encore de livre de compte",
