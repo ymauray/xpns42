@@ -1,5 +1,5 @@
 {
-    "appTitle": "Expense for two",
+    "appTitle": "SplitWise",
     "emailField": "Email",
     "passwordField": "Password",
     "confirmPasswordField": "Confirm password",
@@ -28,5 +28,13 @@
     "ok": "Ok",
     "import": "Import",
     "ledgerCannotBeImported": "The ledger cannot be imported",
-    "wrongPassword": "Wrong password"
+    "wrongPassword": "Wrong password",
+    "niceToSeeYouAgain": "Nice to see you again",
+    "continueWithAnEmail": "Continue with an email",
+    "ledgers": "Ledgers",
+    "oupsAnErrorOccured": "Oups, an error occured",
+    "noLedgerYet": "No ledger yet",
+    "newLedger": "New ledger",
+    "ledgerTitle": "Ledger name",
+    "currency": "Currency"
 }

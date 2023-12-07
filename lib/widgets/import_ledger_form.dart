@@ -81,16 +81,16 @@ class ImportLedgerForm extends ConsumerWidget {
                     );
                   } else {
                     final secureStorage = ref.read(secureStorageProvider);
-                    await secureStorage.write(
-                      key: 'ledgerId',
-                      value: ledger.id,
-                    );
+                    //await secureStorage.write(
+                    //  key: 'ledgerId',
+                    //  value: ledger.id,
+                    //);
                     await secureStorage.write(
                       key: 'ledgerPassword',
                       value: passwordController.text,
                     );
                     final ledgersNotifier = ref.read(ledgersProvider.notifier);
-                    await ledgersNotifier.add(ledger);
+                    //await ledgersNotifier.add(ledger);
                     await Navigator.of(context).pushReplacementNamed(
                       '/ledger',
                       arguments: ledger,

@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xpns42/models/ledger.dart';
 import 'package:xpns42/repositories/base_repository.dart';
@@ -19,6 +19,21 @@ final class LedgerRepository extends BaseRepository {
   final LedgerRepositoryRef ledgerRepositoryRef;
 
   // Public API
+
+  // List available ledgers
+  FutureOr<List<Ledger>> list() async {
+    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
+    final event = await accountsDBRef.once();
+
+    final ledgers = <Ledger>[];
+    if (event.snapshot.exists) {
+      final value =
+          (event.snapshot.value as Map<dynamic, dynamic>).values.toList();
+      for (final ledger in value) {}
+    }
+
+    return ledgers;
+  }
 
   /// Load a ledger from id and password.
   ///
@@ -54,30 +69,40 @@ final class LedgerRepository extends BaseRepository {
   // Private methods
 
   FutureOr<Ledger> createLedger({
-    required String title,
-    required String firstPerson,
-    required String secondPerson,
+    required Ledger ledger,
     required String password,
   }) async {
-    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
-    final ledgerDBRef = accountsDBRef.push();
+    final ledgerDBRef =
+        FirebaseDatabase.instance.ref('/ledgers/${ledger.shortCode}');
 
-    final encoder = init(ledgerDBRef.key!, password);
+    final encoder = init(ledger.shortCode, password);
+    final encodedLedger = encoder.encryptLedger(ledger);
+    await ledgerDBRef.set(encodedLedger.toJson());
 
-    final ledger = Ledger(
-      id: ledgerDBRef.key!,
-      shortCode: nanoid(6),
-      encryptedId: encoder.encrypt(ledgerDBRef.key!),
-      title: encoder.encrypt(title),
-      firstPerson: encoder.encrypt(firstPerson),
-      secondPerson: encoder.encrypt(secondPerson),
-    );
+    final user = FirebaseAuth.instance.currentUser;
 
-    await ledgerDBRef.set(ledger.toJson());
+    final personLedgersDBRef = FirebaseDatabase.instance
+        .ref('/persons/${user!.uid}/ledgers/${ledger.shortCode}');
+    await personLedgersDBRef.set(true);
 
-    final unlocked = await _decryptLedger(ledger, password);
+    return ledger;
+  }
 
-    return unlocked!;
+  FutureOr<List<String>> loadUserLedgers({
+    required String userId,
+  }) async {
+    final userLedgersDBRef =
+        FirebaseDatabase.instance.ref('/persons/$userId/ledgers');
+
+    final userLedgers = await userLedgersDBRef.get();
+    if (userLedgers.exists) {
+      final ledgerIds = List<String>.from(
+        (userLedgers.value as Map<dynamic, dynamic>).keys.toList(),
+      );
+      return ledgerIds;
+    }
+
+    return [];
   }
 
   FutureOr<void> deleteLedger(String id) async {
@@ -118,19 +143,6 @@ final class LedgerRepository extends BaseRepository {
   }
 
   FutureOr<Ledger?> _decryptLedger(Ledger lockedLedger, String password) async {
-    final encoder = init(lockedLedger.id, password);
-
-    final decryptedId = encoder.decrypt(lockedLedger.encryptedId!);
-    if (decryptedId == lockedLedger.id) {
-      return Ledger(
-        id: lockedLedger.id,
-        shortCode: lockedLedger.shortCode,
-        encryptedId: lockedLedger.encryptedId,
-        title: encoder.decrypt(lockedLedger.title)!,
-        firstPerson: encoder.decrypt(lockedLedger.firstPerson)!,
-        secondPerson: encoder.decrypt(lockedLedger.secondPerson)!,
-      );
-    }
     return null;
   }
 }

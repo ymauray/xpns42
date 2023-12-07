@@ -15,8 +15,6 @@ class SignInButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final profileRepository = ref.watch(profileRepositoryProvider);
-
     return ElevatedButton(
       onPressed: () async {
         if (Form.of(context).validate()) {
@@ -28,9 +26,8 @@ class SignInButton extends ConsumerWidget {
             );
             final user = userCredentials.user;
             if (user != null) {
-              //final profile = await profileRepository.getProfile(user.uid);
               await Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/', (_) => true);
+                  .pushNamedAndRemoveUntil('/', (_) => false);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(context.t.authenticationFailed)),
@@ -40,11 +37,10 @@ class SignInButton extends ConsumerWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(context.t.authenticationFailed)),
             );
-            debugPrint(e.toString());
           }
         }
       },
-      child: Text(context.t.signIn),
+      child: Text(context.t.continueWithAnEmail),
     );
   }
 }

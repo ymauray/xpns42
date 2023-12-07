@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/models/ledger_proxy.dart';
+import 'package:xpns42/models/ledger.dart';
 import 'package:xpns42/repositories/ledger_repository.dart';
 import 'package:xpns42/widgets/padded_row.dart';
 
 class LedgerPasswordForm extends ConsumerWidget {
   const LedgerPasswordForm(this.ledgerProxy, {super.key});
 
-  final LedgerProxy ledgerProxy;
+  final Ledger ledgerProxy;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,10 +33,11 @@ class LedgerPasswordForm extends ConsumerWidget {
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   final ledgerRepository = ref.read(ledgerRepositoryProvider);
-                  final ledger = await ledgerRepository.load(
-                    ledgerProxy.id,
-                    passwordController.text,
-                  );
+                  //final ledger = await ledgerRepository.load(
+                  //  ledgerProxy.id,
+                  //  passwordController.text,
+                  //);
+                  const ledger = null;
                   if (ledger != null) {
                     await Navigator.of(context).pushReplacementNamed(
                       '/ledger',

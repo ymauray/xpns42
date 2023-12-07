@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nanoid/nanoid.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xpns42/models/ledger.dart';
-import 'package:xpns42/models/ledger_proxy.dart';
 import 'package:xpns42/providers/secure_storage_provider.dart';
 import 'package:xpns42/repositories/ledger_repository.dart';
 
@@ -9,15 +10,25 @@ part 'ledgers.g.dart';
 @riverpod
 class Ledgers extends _$Ledgers {
   @override
-  Future<List<LedgerProxy>> build() async {
-    final secureStorage = ref.read(secureStorageProvider.notifier);
-    return await secureStorage.getProxies();
-  }
+  Future<List<Ledger>> build() async {
+    final user = FirebaseAuth.instance.currentUser;
 
-  //FutureOr<List<LedgerProxy>> _loadProxies() async {
-  //  final secureStorage = ref.read(secureStorageProvider.notifier);
-  //  return await secureStorage.getProxies();
-  //}
+    final ledgerRepository = ref.read(ledgerRepositoryProvider);
+    final ledgerIds = await ledgerRepository.loadUserLedgers(userId: user!.uid);
+    final secureStorage = ref.read(secureStorageProvider.notifier);
+    final proxies = await secureStorage.getLedgers();
+    final updatedProxies = <Ledger>[];
+
+    for (final proxyLedger in proxies) {
+      if (ledgerIds.contains(proxyLedger.shortCode)) {
+        updatedProxies.add(proxyLedger.copyWith(known: true));
+      } else {
+        updatedProxies.add(proxyLedger.copyWith());
+      }
+    }
+
+    return updatedProxies;
+  }
 
   FutureOr<Ledger> addLedger({
     required String title,
@@ -27,21 +38,26 @@ class Ledgers extends _$Ledgers {
   }) async {
     state = const AsyncValue.loading();
 
-    final ledger = await ref.read(ledgerRepositoryProvider).createLedger(
-          title: title,
-          firstPerson: firstPerson,
-          secondPerson: secondPerson,
-          password: password,
-        );
+    final shortCode = nanoid(6);
+
+    final ledger = Ledger(
+      title: title,
+      firstPerson: firstPerson,
+      secondPerson: secondPerson,
+      shortCode: shortCode,
+    );
+
+    await ref
+        .read(ledgerRepositoryProvider)
+        .createLedger(ledger: ledger, password: password);
 
     state = await AsyncValue.guard(() async {
       final secureStorage = ref.read(secureStorageProvider.notifier);
-      final proxies = await secureStorage.getProxies();
-      proxies.add(LedgerProxy(id: ledger.id, title: title));
+      final proxies = await secureStorage.getLedgers();
+      proxies.add(ledger);
+      await secureStorage.setLedgers(proxies);
 
-      await secureStorage.setProxies(proxies);
-
-      return await secureStorage.getProxies();
+      return await secureStorage.getLedgers();
     });
 
     return ledger;
@@ -51,29 +67,32 @@ class Ledgers extends _$Ledgers {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final secureStorage = ref.read(secureStorageProvider.notifier);
-      final proxies = await secureStorage.getProxies();
-      proxies.removeWhere((proxy) => proxy.id == id);
-      await secureStorage.setProxies(proxies);
+      final proxies = await secureStorage.getLedgers();
+      await secureStorage.setLedgers(proxies);
 
       await ref.read(ledgerRepositoryProvider).deleteLedger(id);
 
-      return await secureStorage.getProxies();
+      return await secureStorage.getLedgers();
     });
   }
 
-  Future<void> add(Ledger ledger) async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      final secureStorage = ref.read(secureStorageProvider.notifier);
-      final proxies = await secureStorage.getProxies();
-      await secureStorage.setProxies(
-        [
-          ...proxies,
-          LedgerProxy(id: ledger.id, title: ledger.title),
-        ],
-      );
+  //Future<void> add(Ledger ledger) async {
+  //  state = const AsyncValue.loading();
+  //  state = await AsyncValue.guard(() async {
+  //    final secureStorage = ref.read(secureStorageProvider.notifier);
+  //    final ledgers = await secureStorage.getLedgers();
+  //    await secureStorage.setLedgers(
+  //      [
+  //        ...ledgers,
+  //        Ledger(
+  //          title: ledger.title,
+  //          firstPerson: ledger.firstPerson,
+  //          secondPerson: ledger.secondPerson,
+  //        ),
+  //      ],
+  //    );
 
-      return await secureStorage.getProxies();
-    });
-  }
+  //    return await secureStorage.getLedgers();
+  //  });
+  //}
 }

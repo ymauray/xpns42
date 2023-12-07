@@ -50,6 +50,8 @@ class AppTheme {
         ),
         listTileTheme: const ListTileThemeData(
           iconColor: Colors.white,
+          textColor: Colors.white,
+          titleTextStyle: TextStyle(fontSize: 20),
         ),
         popupMenuTheme: PopupMenuThemeData(
           color: Colors.blue.shade600,

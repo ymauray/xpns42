@@ -6,12 +6,13 @@ part 'ledger.g.dart';
 @freezed
 class Ledger with _$Ledger {
   const factory Ledger({
-    required String id,
     required String title,
     required String firstPerson,
     required String secondPerson,
-    String? shortCode,
-    String? encryptedId,
+    required String shortCode,
+    String? password,
+    @Default(true) bool locked,
+    @Default(false) bool known,
   }) = _Ledger;
 
   factory Ledger.fromJson(Map<String, dynamic> json) => _$LedgerFromJson(json);

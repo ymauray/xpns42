@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/models/ledger_proxy.dart';
+import 'package:xpns42/models/ledger.dart';
 import 'package:xpns42/widgets/ledger_password_form.dart';
 
 class LedgerPasswordDialog extends ConsumerWidget {
   const LedgerPasswordDialog(this.ledgerProxy, {super.key});
 
-  final LedgerProxy ledgerProxy;
+  final Ledger ledgerProxy;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

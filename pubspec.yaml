@@ -80,16 +80,17 @@ flutter:
 
 flutter_launcher_icons:
   remove_alpha_ios: true
-  image_path: "assets/launcher_icon/saco.png"
+  image_path: "assets/img/logo.png"
   ios: true
+  android: true
   macos:
     generate: true
-    image_path: "assets/launcher_icon/saco.png"
+    image_path: "assets/img/logo.png"
     
 flutter_native_splash:
-  color: "#1876d2"
-  image: "assets/launcher_icon/saco.png"
-  color_dark: "#434343"
-  image_dark: "assets/launcher_icon/saco.png"
+  color: "#FFFFFF"
+  image: "assets/img/splash.jpg"
+  color_dark: "#FFFFFF"
+  image_dark: "assets/img/splash.jpg"
   android: true
   ios: true

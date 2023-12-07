@@ -1,69 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/models/ledger.dart';
-import 'package:xpns42/providers/ledgers.dart';
-import 'package:xpns42/providers/secure_storage_provider.dart';
+import 'package:xpns42/models/local_ledger.dart';
+import 'package:xpns42/widgets/form_field_wrapper.dart';
 
 class LedgerPage extends ConsumerWidget {
-  const LedgerPage({this.ledger, super.key});
-
-  final Ledger? ledger;
+  const LedgerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ledger =
-        this.ledger ?? ModalRoute.of(context)!.settings.arguments as Ledger;
-
-    final secureStorage = ref.read(secureStorageProvider);
-
-    final ledgerId = secureStorage.read(key: 'ledgerId');
-    final ledgerPassword = secureStorage.read(key: 'ledgerPassword');
-    Future.wait([ledgerId, ledgerPassword]).then((value) {
-      debugPrint(value[0]);
-      debugPrint(value[1]);
-    });
+    final ledger = ModalRoute.of(context)!.settings.arguments as LocalLedger?;
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: BackButton(
-          onPressed: () async {
-            await secureStorage.write(key: 'ledgerId', value: null);
-            await secureStorage.write(key: 'ledgerPassword', value: null);
-            await Navigator.of(context)
-                .pushNamedAndRemoveUntil('/', (route) => false);
-          },
-        ),
-        title: Text(ledger.title),
+        title: Text(ledger?.title ?? context.t.newLedger),
         centerTitle: true,
         actions: [
-          PopupMenuButton(
-            icon: const Icon(Icons.more_vert),
-            onSelected: (value) async {
-              if (value == 0) {
-                await ref
-                    .read(ledgersProvider.notifier)
-                    .deleteLedger(ledger.id);
-                Navigator.of(context).pop();
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuEntry<int>>[
-                PopupMenuItem(
-                  value: 0,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.delete),
-                      const SizedBox(width: 8),
-                      Text(context.t.deleteLedger),
-                    ],
-                  ),
-                ),
-              ];
-            },
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: () {},
           ),
         ],
+      ),
+      body: Form(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FormFieldWrapper(
+              leading: const Icon(Icons.book_online_outlined),
+              label: context.t.ledgerTitle,
+              formField: TextFormField(
+                decoration: InputDecoration(
+                  hintText: context.t.ledgerTitle,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            FormFieldWrapper(
+              leading: const Icon(Icons.person_2_outlined),
+              label: context.t.firstPerson,
+              formField: TextFormField(
+                decoration: InputDecoration(
+                  hintText: context.t.firstPerson,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            FormFieldWrapper(
+              leading: const Icon(Icons.person_2),
+              label: context.t.secondPerson,
+              formField: TextFormField(
+                decoration: InputDecoration(
+                  hintText: context.t.secondPerson,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            FormFieldWrapper(
+              leading: const Icon(Icons.money_rounded),
+              label: context.t.currency,
+              formField: const Text('CHF'),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/models/ledger_proxy.dart';
-import 'package:xpns42/providers/ledgers.dart';
-import 'package:xpns42/repositories/ledger_repository.dart';
-import 'package:xpns42/widgets/ledger_password_dialog.dart';
+import 'package:xpns42/models/ledger.dart';
 
 class LedgerCard extends ConsumerWidget {
   const LedgerCard({
@@ -12,20 +8,27 @@ class LedgerCard extends ConsumerWidget {
     super.key,
   });
 
-  final LedgerProxy ledger;
+  final Ledger ledger;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       child: ListTile(
         title: Text(ledger.title),
+        subtitle: Text('${ledger.firstPerson} & ${ledger.secondPerson}'),
         trailing: const Icon(
           Icons.keyboard_arrow_right_outlined,
         ),
+        leading: Icon(
+          ledger.known ? Icons.lock_open : Icons.lock,
+        ),
         onTap: () async {
-          final found = await ref
-              .read(ledgerRepositoryProvider)
-              .checkLedgerExists(ledger.id);
+          await Navigator.of(context).pushNamed(
+            '/ledger',
+            arguments: ledger,
+          );
+          /*
+          const found = false;
           if (found) {
             await showDialog<void>(
               context: context,
@@ -42,18 +45,14 @@ class LedgerCard extends ConsumerWidget {
                 content: Text(context.t.ledgerDoesNotExit),
                 actions: [
                   ElevatedButton(
-                    onPressed: () async {
-                      await ref
-                          .read(ledgersProvider.notifier)
-                          .deleteLedger(ledger.id);
-                      Navigator.of(context).pop();
-                    },
+                    onPressed: () async {},
                     child: Text(context.t.ok),
                   ),
                 ],
               ),
             );
           }
+          */
         },
       ),
     );

@@ -6,12 +6,13 @@ part of 'profile.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Profile _$$_ProfileFromJson(Map<String, dynamic> json) => _$_Profile(
+_$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
+    _$ProfileImpl(
       publicKey: json['publicKey'] as String,
       id: json['id'] as String?,
     );
 
-Map<String, dynamic> _$$_ProfileToJson(_$_Profile instance) =>
+Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
     <String, dynamic>{
       'publicKey': instance.publicKey,
       'id': instance.id,

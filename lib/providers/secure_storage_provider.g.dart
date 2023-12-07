@@ -6,7 +6,7 @@ part of 'secure_storage_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$secureStorageHash() => r'2956bbc4127cce4845f7d5db92b0dd350fe547d0';
+String _$secureStorageHash() => r'a499fb5653f035ef87a03e4d5167eff66475482b';
 
 /// See also [SecureStorage].
 @ProviderFor(SecureStorage)
@@ -23,4 +23,4 @@ final secureStorageProvider =
 
 typedef _$SecureStorage = AutoDisposeNotifier<FlutterSecureStorage>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

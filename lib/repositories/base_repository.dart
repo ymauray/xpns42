@@ -1,4 +1,5 @@
 import 'package:encrypt/encrypt.dart';
+import 'package:xpns42/models/ledger.dart';
 
 final class Encoder {
   Encoder(this.encrypter, this.iv);
@@ -10,6 +11,15 @@ final class Encoder {
     final string = object.toString();
     final encrypted = encrypter.encrypt(string, iv: iv);
     return encrypted.base64;
+  }
+
+  Ledger encryptLedger(Ledger ledger) {
+    return Ledger(
+      title: encrypt(ledger.title),
+      firstPerson: encrypt(ledger.firstPerson),
+      secondPerson: encrypt(ledger.secondPerson),
+      shortCode: ledger.shortCode,
+    );
   }
 
   String? decrypt(String string) {

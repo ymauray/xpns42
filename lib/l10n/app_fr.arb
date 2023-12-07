@@ -1,5 +1,5 @@
 {
-    "appTitle": "Dépenses pour deux",
+    "appTitle": "SplitWise",
     "emailField": "Email",
     "passwordField": "Mot de passe",
     "confirmPasswordField": "Confirmer le mot de passe",
@@ -28,5 +28,13 @@
     "ok": "OK",
     "import": "Importer",
     "ledgerCannotBeImported": "Le livre de compte ne peut pas être importé",
-    "wrongPassword": "Mot de passe incorrect"
+    "wrongPassword": "Mot de passe incorrect",
+    "niceToSeeYouAgain": "Ravi de vous revoir",
+    "continueWithAnEmail": "Continuer avec un email",
+    "ledgers": "Livres de compte",
+    "oupsAnErrorOccured": "Oups, une erreur est survenue",
+    "noLedgerYet": "Pas encore de livre de compte",
+    "newLedger": "Nouveau livre de compte",
+    "ledgerTitle": "Nom du livre de compte",
+    "currency": "Devise"
 }
