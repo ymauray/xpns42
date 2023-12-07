@@ -33,35 +33,53 @@ class FrontPage extends ConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: ElevatedButton(
-                      style: Theme.of(context).textButtonTheme.style,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/sign_in');
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/ledgers', (route) => false);
                       },
                       child: Text(
-                        context.t.signIn,
+                        context.t.continueAsGuest,
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/forgot_password');
-                      },
-                      child: Text(
-                        context.t.register,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            //Row(
+            //  children: [
+            //    Expanded(
+            //      child: Padding(
+            //        padding: const EdgeInsets.symmetric(horizontal: 32),
+            //        child: ElevatedButton(
+            //          style: Theme.of(context).textButtonTheme.style,
+            //          onPressed: () {
+            //            Navigator.pushNamed(context, '/sign_in');
+            //          },
+            //          child: Text(
+            //            context.t.signIn,
+            //          ),
+            //        ),
+            //      ),
+            //    ),
+            //  ],
+            //),
+            //Row(
+            //  children: [
+            //    Expanded(
+            //      child: Padding(
+            //        padding: const EdgeInsets.symmetric(horizontal: 32),
+            //        child: ElevatedButton(
+            //          onPressed: () {
+            //            Navigator.pushNamed(context, '/forgot_password');
+            //          },
+            //          child: Text(
+            //            context.t.register,
+            //          ),
+            //        ),
+            //      ),
+            //    ),
+            //  ],
+            //),
           ],
         ),
       ),
