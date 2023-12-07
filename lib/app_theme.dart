@@ -65,7 +65,7 @@ class AppTheme {
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.white,
         ),
-        textTheme: GoogleFonts.interTextTheme(
+        textTheme: GoogleFonts.nunitoTextTheme(
           const TextTheme(
             bodyMedium: TextStyle(color: Colors.white),
             titleMedium: TextStyle(color: Colors.white),
