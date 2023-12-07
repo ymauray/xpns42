@@ -38,4 +38,8 @@ void main() async {
   );
 
   runApp(const ProviderScope(child: App()));
+  final sharedPrefs = await SharedPreferences.getInstance();
+  final onboardingSeen = sharedPrefs.getBool('onboarding_seen') ?? false;
+
+  runApp(ProviderScope(child: App(onboardingSeen: onboardingSeen)));
 }
