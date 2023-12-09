@@ -6,7 +6,7 @@ part of 'ledgers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ledgersHash() => r'eb015ef904b9f4dc0bd6a69b976344898f2d1c31';
+String _$ledgersHash() => r'fae368e842cab4180a764996b0980002c6532e83';
 
 /// See also [Ledgers].
 @ProviderFor(Ledgers)

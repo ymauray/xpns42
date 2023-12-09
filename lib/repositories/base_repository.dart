@@ -14,11 +14,13 @@ final class Encoder {
   }
 
   Ledger encryptLedger(Ledger ledger) {
-    return Ledger(
+    return ledger.copyWith(
       title: encrypt(ledger.title),
       firstPerson: encrypt(ledger.firstPerson),
       secondPerson: encrypt(ledger.secondPerson),
+      currency: encrypt(ledger.currency),
       shortCode: ledger.shortCode,
+      password: '',
     );
   }
 

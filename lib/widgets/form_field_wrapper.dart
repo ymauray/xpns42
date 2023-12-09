@@ -22,13 +22,13 @@ class FormFieldWrapper extends ConsumerWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            left: 16,
+            left: 32,
             top: 16,
           ),
           child: Text(label),
         ),
         Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: ListTile(
             leading: leading,
             tileColor: Theme.of(context).colorScheme.surfaceVariant,

@@ -39,9 +39,7 @@ void main() async {
     overlays: [SystemUiOverlay.bottom],
   );
 
-  if (FirebaseAuth.instance.currentUser == null) {
-    await FirebaseAuth.instance.signInAnonymously();
-  }
+  await FirebaseAuth.instance.signInAnonymously();
 
   final sharedPrefs = await SharedPreferences.getInstance();
   final onboardingSeen = sharedPrefs.getBool('onboarding_seen') ?? false;

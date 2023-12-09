@@ -11,9 +11,8 @@ _$LedgerImpl _$$LedgerImplFromJson(Map<String, dynamic> json) => _$LedgerImpl(
       firstPerson: json['firstPerson'] as String,
       secondPerson: json['secondPerson'] as String,
       shortCode: json['shortCode'] as String,
-      password: json['password'] as String?,
-      locked: json['locked'] as bool? ?? true,
-      known: json['known'] as bool? ?? false,
+      password: json['password'] as String,
+      currency: json['currency'] as String,
     );
 
 Map<String, dynamic> _$$LedgerImplToJson(_$LedgerImpl instance) =>
@@ -23,6 +22,5 @@ Map<String, dynamic> _$$LedgerImplToJson(_$LedgerImpl instance) =>
       'secondPerson': instance.secondPerson,
       'shortCode': instance.shortCode,
       'password': instance.password,
-      'locked': instance.locked,
-      'known': instance.known,
+      'currency': instance.currency,
     };

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/providers/ledgers.dart';
 import 'package:xpns42/providers/secure_storage_provider.dart';
 import 'package:xpns42/repositories/ledger_repository.dart';
 import 'package:xpns42/widgets/padded_row.dart';
@@ -89,7 +88,7 @@ class ImportLedgerForm extends ConsumerWidget {
                       key: 'ledgerPassword',
                       value: passwordController.text,
                     );
-                    final ledgersNotifier = ref.read(ledgersProvider.notifier);
+                    // TODO : fix that ! final ledgersNotifier = ref.read(ledgersProvider.notifier);
                     //await ledgersNotifier.add(ledger);
                     await Navigator.of(context).pushReplacementNamed(
                       '/ledger',

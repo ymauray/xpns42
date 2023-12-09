@@ -13,6 +13,7 @@ _$LocalLedgerImpl _$$LocalLedgerImplFromJson(Map<String, dynamic> json) =>
       secondPerson: json['secondPerson'] as String,
       shortCode: json['shortCode'] as String,
       password: json['password'] as String,
+      currency: json['currency'] as String,
     );
 
 Map<String, dynamic> _$$LocalLedgerImplToJson(_$LocalLedgerImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$LocalLedgerImplToJson(_$LocalLedgerImpl instance) =>
       'secondPerson': instance.secondPerson,
       'shortCode': instance.shortCode,
       'password': instance.password,
+      'currency': instance.currency,
     };

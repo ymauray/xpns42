@@ -24,9 +24,8 @@ mixin _$Ledger {
   String get firstPerson => throw _privateConstructorUsedError;
   String get secondPerson => throw _privateConstructorUsedError;
   String get shortCode => throw _privateConstructorUsedError;
-  String? get password => throw _privateConstructorUsedError;
-  bool get locked => throw _privateConstructorUsedError;
-  bool get known => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get currency => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,9 +42,8 @@ abstract class $LedgerCopyWith<$Res> {
       String firstPerson,
       String secondPerson,
       String shortCode,
-      String? password,
-      bool locked,
-      bool known});
+      String password,
+      String currency});
 }
 
 /// @nodoc
@@ -65,9 +63,8 @@ class _$LedgerCopyWithImpl<$Res, $Val extends Ledger>
     Object? firstPerson = null,
     Object? secondPerson = null,
     Object? shortCode = null,
-    Object? password = freezed,
-    Object? locked = null,
-    Object? known = null,
+    Object? password = null,
+    Object? currency = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -86,18 +83,14 @@ class _$LedgerCopyWithImpl<$Res, $Val extends Ledger>
           ? _value.shortCode
           : shortCode // ignore: cast_nullable_to_non_nullable
               as String,
-      password: freezed == password
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String?,
-      locked: null == locked
-          ? _value.locked
-          : locked // ignore: cast_nullable_to_non_nullable
-              as bool,
-      known: null == known
-          ? _value.known
-          : known // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -114,9 +107,8 @@ abstract class _$$LedgerImplCopyWith<$Res> implements $LedgerCopyWith<$Res> {
       String firstPerson,
       String secondPerson,
       String shortCode,
-      String? password,
-      bool locked,
-      bool known});
+      String password,
+      String currency});
 }
 
 /// @nodoc
@@ -134,9 +126,8 @@ class __$$LedgerImplCopyWithImpl<$Res>
     Object? firstPerson = null,
     Object? secondPerson = null,
     Object? shortCode = null,
-    Object? password = freezed,
-    Object? locked = null,
-    Object? known = null,
+    Object? password = null,
+    Object? currency = null,
   }) {
     return _then(_$LedgerImpl(
       title: null == title
@@ -155,18 +146,14 @@ class __$$LedgerImplCopyWithImpl<$Res>
           ? _value.shortCode
           : shortCode // ignore: cast_nullable_to_non_nullable
               as String,
-      password: freezed == password
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String?,
-      locked: null == locked
-          ? _value.locked
-          : locked // ignore: cast_nullable_to_non_nullable
-              as bool,
-      known: null == known
-          ? _value.known
-          : known // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -179,9 +166,8 @@ class _$LedgerImpl implements _Ledger {
       required this.firstPerson,
       required this.secondPerson,
       required this.shortCode,
-      this.password,
-      this.locked = true,
-      this.known = false});
+      required this.password,
+      required this.currency});
 
   factory _$LedgerImpl.fromJson(Map<String, dynamic> json) =>
       _$$LedgerImplFromJson(json);
@@ -195,17 +181,13 @@ class _$LedgerImpl implements _Ledger {
   @override
   final String shortCode;
   @override
-  final String? password;
+  final String password;
   @override
-  @JsonKey()
-  final bool locked;
-  @override
-  @JsonKey()
-  final bool known;
+  final String currency;
 
   @override
   String toString() {
-    return 'Ledger(title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, shortCode: $shortCode, password: $password, locked: $locked, known: $known)';
+    return 'Ledger(title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, shortCode: $shortCode, password: $password, currency: $currency)';
   }
 
   @override
@@ -222,14 +204,14 @@ class _$LedgerImpl implements _Ledger {
                 other.shortCode == shortCode) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.locked, locked) || other.locked == locked) &&
-            (identical(other.known, known) || other.known == known));
+            (identical(other.currency, currency) ||
+                other.currency == currency));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, title, firstPerson, secondPerson,
-      shortCode, password, locked, known);
+      shortCode, password, currency);
 
   @JsonKey(ignore: true)
   @override
@@ -251,9 +233,8 @@ abstract class _Ledger implements Ledger {
       required final String firstPerson,
       required final String secondPerson,
       required final String shortCode,
-      final String? password,
-      final bool locked,
-      final bool known}) = _$LedgerImpl;
+      required final String password,
+      required final String currency}) = _$LedgerImpl;
 
   factory _Ledger.fromJson(Map<String, dynamic> json) = _$LedgerImpl.fromJson;
 
@@ -266,11 +247,9 @@ abstract class _Ledger implements Ledger {
   @override
   String get shortCode;
   @override
-  String? get password;
+  String get password;
   @override
-  bool get locked;
-  @override
-  bool get known;
+  String get currency;
   @override
   @JsonKey(ignore: true)
   _$$LedgerImplCopyWith<_$LedgerImpl> get copyWith =>

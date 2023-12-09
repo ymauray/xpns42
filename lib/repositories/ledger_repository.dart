@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xpns42/models/ledger.dart';
@@ -67,26 +66,6 @@ final class LedgerRepository extends BaseRepository {
   }
 
   // Private methods
-
-  FutureOr<Ledger> createLedger({
-    required Ledger ledger,
-    required String password,
-  }) async {
-    final ledgerDBRef =
-        FirebaseDatabase.instance.ref('/ledgers/${ledger.shortCode}');
-
-    final encoder = init(ledger.shortCode, password);
-    final encodedLedger = encoder.encryptLedger(ledger);
-    await ledgerDBRef.set(encodedLedger.toJson());
-
-    final user = FirebaseAuth.instance.currentUser;
-
-    final personLedgersDBRef = FirebaseDatabase.instance
-        .ref('/persons/${user!.uid}/ledgers/${ledger.shortCode}');
-    await personLedgersDBRef.set(true);
-
-    return ledger;
-  }
 
   FutureOr<List<String>> loadUserLedgers({
     required String userId,

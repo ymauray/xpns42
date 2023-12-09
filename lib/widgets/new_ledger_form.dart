@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
-import 'package:xpns42/providers/ledgers.dart';
 import 'package:xpns42/widgets/lower_divider.dart';
 import 'package:xpns42/widgets/padded_row.dart';
 
@@ -67,17 +66,17 @@ class NewLedgerForm extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
-                  final ledger =
-                      await ref.read(ledgersProvider.notifier).addLedger(
-                            title: titleController.text,
-                            firstPerson: firstPersonController.text,
-                            secondPerson: secondPersonController.text,
-                            password: passwordController.text,
-                          );
-                  await Navigator.of(context).pushReplacementNamed(
-                    '/ledger',
-                    arguments: ledger,
-                  );
+                  //final ledger =
+                  //    await ref.read(ledgersProvider.notifier).addLedger(
+                  //          title: titleController.text,
+                  //          firstPerson: firstPersonController.text,
+                  //          secondPerson: secondPersonController.text,
+                  //          password: passwordController.text,
+                  //        );
+                  //await Navigator.of(context).pushReplacementNamed(
+                  //  '/ledger',
+                  //  arguments: ledger,
+                  // )
                 }
               },
               child: Text(context.t.addLedger),

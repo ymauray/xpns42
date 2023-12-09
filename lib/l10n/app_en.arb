@@ -37,5 +37,7 @@
     "noLedgerYet": "No ledger yet",
     "newLedger": "New ledger",
     "ledgerTitle": "Ledger name",
-    "currency": "Currency"
+    "currency": "Currency",
+    "formContainsErrors": "The form contains errors",
+    "password": "Password"
 }

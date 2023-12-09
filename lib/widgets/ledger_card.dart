@@ -19,8 +19,9 @@ class LedgerCard extends ConsumerWidget {
         trailing: const Icon(
           Icons.keyboard_arrow_right_outlined,
         ),
-        leading: Icon(
-          ledger.known ? Icons.lock_open : Icons.lock,
+        leading: const Icon(
+          // TODO : fix that !
+          Icons.lock,
         ),
         onTap: () async {
           await Navigator.of(context).pushNamed(

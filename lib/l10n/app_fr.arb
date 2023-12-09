@@ -37,5 +37,7 @@
     "noLedgerYet": "Pas encore de livre de compte",
     "newLedger": "Nouveau livre de compte",
     "ledgerTitle": "Nom du livre de compte",
-    "currency": "Devise"
+    "currency": "Devise",
+    "formContainsErrors": "Le formulaire contient des erreurs",
+    "password": "Mot de passe"
 }
