@@ -8,13 +8,15 @@ part 'local_ledger.g.dart';
 
 @freezed
 class LocalLedger with _$LocalLedger {
-  const factory LocalLedger({
+  const factory LocalLedger._({
     required String title,
     required String firstPerson,
     required String secondPerson,
     required String shortCode,
     required String password,
     required String currency,
+    // ignore: unused_element
+    @Default(false) bool hasTransactions,
   }) = _LocalLedger;
 
   factory LocalLedger.create({
@@ -24,7 +26,7 @@ class LocalLedger with _$LocalLedger {
     required String currency,
     required String password,
   }) =>
-      LocalLedger(
+      LocalLedger._(
         title: title,
         firstPerson: firstPerson,
         secondPerson: secondPerson,

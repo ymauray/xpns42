@@ -14,13 +14,25 @@ class LedgerListTile extends ConsumerWidget {
         localLedger.title,
         style: Theme.of(context).textTheme.titleLarge,
       ),
+      trailing: Column(
+        children: [
+          Text(
+            localLedger.currency,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          Text('0.00', style: Theme.of(context).textTheme.titleLarge),
+        ],
+      ),
       subtitle:
           Text('${localLedger.firstPerson} & ${localLedger.secondPerson}'),
       onTap: () {
-        Navigator.of(context).pushNamed(
-          '/ledger',
-          arguments: localLedger,
-        );
+        if (localLedger.hasTransactions) {
+        } else {
+          Navigator.of(context).pushNamed(
+            '/ledger',
+            arguments: localLedger,
+          );
+        }
       },
       shape: const Border(
         bottom: BorderSide(

@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
 import 'package:xpns42/models/local_ledger.dart';
 import 'package:xpns42/providers/local_ledgers.dart';
-import 'package:xpns42/widgets/form_field_wrapper.dart';
-import 'package:xpns42/widgets/wrapped_text_form_field.dart';
+import 'package:xpns42/widgets/form/wrapped_text_form_field.dart';
 
 class LedgerPage extends ConsumerWidget {
   const LedgerPage({super.key});
@@ -18,6 +17,7 @@ class LedgerPage extends ConsumerWidget {
         TextEditingController(text: ledger?.firstPerson);
     final secondPersonController =
         TextEditingController(text: ledger?.secondPerson);
+    final currencyController = TextEditingController(text: ledger?.currency);
     final currentPasswordController = TextEditingController();
     final passwordController = TextEditingController();
     final checkPasswordController = TextEditingController();
@@ -30,7 +30,7 @@ class LedgerPage extends ConsumerWidget {
           final ledgerTitle = ledgerTitleController.text;
           final firstPerson = firstPersonController.text;
           final secondPerson = secondPersonController.text;
-          const currency = 'CHF';
+          final currency = currencyController.text;
           final password = passwordController.text;
           final currentPassword = currentPasswordController.text;
 
@@ -96,6 +96,7 @@ class LedgerPage extends ConsumerWidget {
                 label: context.t.ledgerTitle,
                 controller: ledgerTitleController,
                 validator: (value) => value!.isEmpty ? '' : null,
+                textCapitalization: TextCapitalization.sentences,
                 tileColor: Theme.of(context).colorScheme.surfaceVariant,
               ),
               /*
@@ -129,14 +130,47 @@ class LedgerPage extends ConsumerWidget {
                * Currency
                * ========================
                */
-              FormFieldWrapper(
-                leading: const Icon(Icons.money_rounded),
+              WrappedTextFormField(
+                iconData: Icons.money_rounded,
                 label: context.t.currency,
-                formField: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Text('CHF'),
-                ),
+                controller: currencyController,
+                validator: (value) =>
+                    currencyController.text.isEmpty ? '' : null,
+                readonly: true,
+                onTap: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (context) {
+                      return ListView(
+                        children: [
+                          ListTile(
+                            title: const Text('CHF'),
+                            onTap: () {
+                              currencyController.text = 'CHF';
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          ListTile(
+                            title: const Text('EUR'),
+                            onTap: () {
+                              currencyController.text = 'EUR';
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          ListTile(
+                            title: const Text('USD'),
+                            onTap: () {
+                              currencyController.text = 'USD';
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 trailing: const Icon(Icons.chevron_right),
+                tileColor: Theme.of(context).colorScheme.surfaceVariant,
               ),
               /*
                * ========================
@@ -210,8 +244,36 @@ class LedgerPage extends ConsumerWidget {
                                     ),
                           ),
                           onPressed: () {
-                            ref.read(localLedgersProvider.notifier).d(ledger);
-                            Navigator.of(context).pop();
+                            // confirm deletion
+                            showDialog<void>(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(context.t.deleteLedger),
+                                  content: Text(context.t.confirmDeleteLedger),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(context.t.cancel),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        ref
+                                            .read(
+                                              localLedgersProvider.notifier,
+                                            )
+                                            .d(ledger);
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(context.t.delete),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                         ),
                       ),

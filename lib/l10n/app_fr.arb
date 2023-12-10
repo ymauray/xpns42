@@ -31,7 +31,7 @@
     "wrongPassword": "Mot de passe incorrect",
     "niceToSeeYouAgain": "Ravi de vous revoir",
     "continueWithAnEmail": "Continuer avec un email",
-    "continueAsGuest": "Continuer en tant qu'invité",
+    "continueAsGuest": "Pas d'authentification nécessaire !",
     "ledgers": "Livres de compte",
     "oupsAnErrorOccured": "Oups, une erreur est survenue",
     "noLedgerYet": "Pas encore de livre de compte",
@@ -42,5 +42,8 @@
     "password": "Mot de passe",
     "confirmPassword": "Confirmer le mot de passe",
     "currentPassword": "Mot de passe actuel",
-    "newPassword": "Nouveau mot de passe"
+    "newPassword": "Nouveau mot de passe",
+    "confirmDeleteLedger": "Êtes-vous sûr de vouloir supprimer ce livre de compte ?",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
 }

@@ -25,7 +25,9 @@ mixin _$LocalLedger {
   String get secondPerson => throw _privateConstructorUsedError;
   String get shortCode => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
+  String get currency =>
+      throw _privateConstructorUsedError; // ignore: unused_element
+  bool get hasTransactions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +47,8 @@ abstract class $LocalLedgerCopyWith<$Res> {
       String secondPerson,
       String shortCode,
       String password,
-      String currency});
+      String currency,
+      bool hasTransactions});
 }
 
 /// @nodoc
@@ -67,6 +70,7 @@ class _$LocalLedgerCopyWithImpl<$Res, $Val extends LocalLedger>
     Object? shortCode = null,
     Object? password = null,
     Object? currency = null,
+    Object? hasTransactions = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -93,6 +97,10 @@ class _$LocalLedgerCopyWithImpl<$Res, $Val extends LocalLedger>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      hasTransactions: null == hasTransactions
+          ? _value.hasTransactions
+          : hasTransactions // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -111,7 +119,8 @@ abstract class _$$LocalLedgerImplCopyWith<$Res>
       String secondPerson,
       String shortCode,
       String password,
-      String currency});
+      String currency,
+      bool hasTransactions});
 }
 
 /// @nodoc
@@ -131,6 +140,7 @@ class __$$LocalLedgerImplCopyWithImpl<$Res>
     Object? shortCode = null,
     Object? password = null,
     Object? currency = null,
+    Object? hasTransactions = null,
   }) {
     return _then(_$LocalLedgerImpl(
       title: null == title
@@ -157,6 +167,10 @@ class __$$LocalLedgerImplCopyWithImpl<$Res>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      hasTransactions: null == hasTransactions
+          ? _value.hasTransactions
+          : hasTransactions // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -170,7 +184,8 @@ class _$LocalLedgerImpl implements _LocalLedger {
       required this.secondPerson,
       required this.shortCode,
       required this.password,
-      required this.currency});
+      required this.currency,
+      this.hasTransactions = false});
 
   factory _$LocalLedgerImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocalLedgerImplFromJson(json);
@@ -187,10 +202,14 @@ class _$LocalLedgerImpl implements _LocalLedger {
   final String password;
   @override
   final String currency;
+// ignore: unused_element
+  @override
+  @JsonKey()
+  final bool hasTransactions;
 
   @override
   String toString() {
-    return 'LocalLedger(title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, shortCode: $shortCode, password: $password, currency: $currency)';
+    return 'LocalLedger._(title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, shortCode: $shortCode, password: $password, currency: $currency, hasTransactions: $hasTransactions)';
   }
 
   @override
@@ -208,13 +227,15 @@ class _$LocalLedgerImpl implements _LocalLedger {
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.currency, currency) ||
-                other.currency == currency));
+                other.currency == currency) &&
+            (identical(other.hasTransactions, hasTransactions) ||
+                other.hasTransactions == hasTransactions));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, title, firstPerson, secondPerson,
-      shortCode, password, currency);
+      shortCode, password, currency, hasTransactions);
 
   @JsonKey(ignore: true)
   @override
@@ -237,7 +258,8 @@ abstract class _LocalLedger implements LocalLedger {
       required final String secondPerson,
       required final String shortCode,
       required final String password,
-      required final String currency}) = _$LocalLedgerImpl;
+      required final String currency,
+      final bool hasTransactions}) = _$LocalLedgerImpl;
 
   factory _LocalLedger.fromJson(Map<String, dynamic> json) =
       _$LocalLedgerImpl.fromJson;
@@ -254,6 +276,8 @@ abstract class _LocalLedger implements LocalLedger {
   String get password;
   @override
   String get currency;
+  @override // ignore: unused_element
+  bool get hasTransactions;
   @override
   @JsonKey(ignore: true)
   _$$LocalLedgerImplCopyWith<_$LocalLedgerImpl> get copyWith =>

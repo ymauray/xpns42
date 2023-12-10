@@ -31,7 +31,7 @@
     "wrongPassword": "Wrong password",
     "niceToSeeYouAgain": "Nice to see you again",
     "continueWithAnEmail": "Continue with an email",
-    "continueAsGuest": "Continue as guest",
+    "continueAsGuest": "No authentication required !",
     "ledgers": "Ledgers",
     "oupsAnErrorOccured": "Oups, an error occured",
     "noLedgerYet": "No ledger yet",
@@ -42,5 +42,8 @@
     "password": "Password",
     "confirmPassword": "Confirm password",
     "currentPassword": "Current password",
-    "newPassword": "New password"
+    "newPassword": "New password",
+    "confirmDeleteLedger": "Are you sure you want to delete this ledger ?",
+    "cancel": "Cancel",
+    "delete": "Delete"
 }
