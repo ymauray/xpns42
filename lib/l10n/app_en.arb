@@ -39,5 +39,8 @@
     "ledgerTitle": "Ledger name",
     "currency": "Currency",
     "formContainsErrors": "The form contains errors",
-    "password": "Password"
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "currentPassword": "Current password",
+    "newPassword": "New password"
 }

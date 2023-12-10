@@ -39,5 +39,8 @@
     "ledgerTitle": "Nom du livre de compte",
     "currency": "Devise",
     "formContainsErrors": "Le formulaire contient des erreurs",
-    "password": "Mot de passe"
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe"
 }
