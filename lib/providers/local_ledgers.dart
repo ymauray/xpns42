@@ -1,41 +1,16 @@
-import 'dart:convert';
-
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xpns42/models/ledger.dart';
 import 'package:xpns42/models/local_ledger.dart';
+import 'package:xpns42/providers/secure_storage.dart';
 import 'package:xpns42/repositories/ledgers_repository.dart';
 
 part 'local_ledgers.g.dart';
 
 @riverpod
-class LocalLedgers extends _$LocalLedgers {
-  final _key = 'local_ledgers';
-
+class LocalLedgers extends _$LocalLedgers with SecureStorage {
   @override
   FutureOr<List<LocalLedger>> build() async {
-    return await _readLocalLedgers();
-  }
-
-  Future<List<LocalLedger>> _readLocalLedgers() async {
-    const secureStorage = FlutterSecureStorage();
-    final fromStorage = await secureStorage.read(key: _key);
-    if (fromStorage != null) {
-      final localLedgers = (jsonDecode(fromStorage) as List<dynamic>)
-          .map((e) => LocalLedger.fromJson(e as Map<String, dynamic>))
-          .toList();
-
-      return localLedgers;
-    }
-    return const [];
-  }
-
-  FutureOr<void> _writeLocalLedgers(List<LocalLedger> localLedgers) async {
-    const secureStorage = FlutterSecureStorage();
-    await secureStorage.write(
-      key: _key,
-      value: jsonEncode(localLedgers.map((e) => e.toJson()).toList()),
-    );
+    return await readLocalLedgers();
   }
 
   // CRUD operations
@@ -45,10 +20,10 @@ class LocalLedgers extends _$LocalLedgers {
     LedgersRepository.instance.c(ledger);
 
     final localLedgers = state.value ?? [];
-    await _writeLocalLedgers(
+    await writeLocalLedgers(
       [...localLedgers, localLedger],
     );
-    state = await AsyncValue.guard(_readLocalLedgers);
+    state = await AsyncValue.guard(readLocalLedgers);
   }
 
   FutureOr<void> u(LocalLedger localLedger) async {
@@ -61,8 +36,8 @@ class LocalLedgers extends _$LocalLedgers {
         if (l.shortCode == localLedger.shortCode) localLedger else l,
     ];
 
-    await _writeLocalLedgers(updatedLedgers);
-    state = await AsyncValue.guard(_readLocalLedgers);
+    await writeLocalLedgers(updatedLedgers);
+    state = await AsyncValue.guard(readLocalLedgers);
   }
 
   FutureOr<void> d(LocalLedger localLedger) async {
@@ -73,7 +48,7 @@ class LocalLedgers extends _$LocalLedgers {
         .where((l) => l.shortCode != localLedger.shortCode)
         .toList();
 
-    await _writeLocalLedgers(updatedLedgers);
-    state = await AsyncValue.guard(_readLocalLedgers);
+    await writeLocalLedgers(updatedLedgers);
+    state = await AsyncValue.guard(readLocalLedgers);
   }
 }

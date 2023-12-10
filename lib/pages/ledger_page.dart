@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
 import 'package:xpns42/models/local_ledger.dart';
+import 'package:xpns42/providers/active_local_ledger.dart';
 import 'package:xpns42/providers/local_ledgers.dart';
-import 'package:xpns42/widgets/form_field_wrapper.dart';
-import 'package:xpns42/widgets/wrapped_text_form_field.dart';
+import 'package:xpns42/widgets/form/wrapped_text_form_field.dart';
 
 class LedgerPage extends ConsumerWidget {
   const LedgerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ledger = ModalRoute.of(context)!.settings.arguments as LocalLedger?;
+    final ledger = ref.watch(activeLocalLedgerProvider);
 
     final ledgerTitleController = TextEditingController(text: ledger?.title);
     final firstPersonController =
         TextEditingController(text: ledger?.firstPerson);
     final secondPersonController =
         TextEditingController(text: ledger?.secondPerson);
+    final currencyController = TextEditingController(text: ledger?.currency);
     final currentPasswordController = TextEditingController();
     final passwordController = TextEditingController();
     final checkPasswordController = TextEditingController();
@@ -30,7 +31,7 @@ class LedgerPage extends ConsumerWidget {
           final ledgerTitle = ledgerTitleController.text;
           final firstPerson = firstPersonController.text;
           final secondPerson = secondPersonController.text;
-          const currency = 'CHF';
+          final currency = currencyController.text;
           final password = passwordController.text;
           final currentPassword = currentPasswordController.text;
 
@@ -47,15 +48,15 @@ class LedgerPage extends ConsumerWidget {
               ),
             );
           } else {
-            localLedgersNotifier.u(
-              ledger.copyWith(
-                title: ledgerTitle,
-                firstPerson: firstPerson,
-                secondPerson: secondPerson,
-                currency: currency,
-                password: password == '' ? currentPassword : password,
-              ),
+            final updatedLedger = ledger.copyWith(
+              title: ledgerTitle,
+              firstPerson: firstPerson,
+              secondPerson: secondPerson,
+              currency: currency,
+              password: password == '' ? currentPassword : password,
             );
+            localLedgersNotifier.u(updatedLedger);
+            ref.read(activeLocalLedgerProvider.notifier).set(updatedLedger);
           }
           Navigator.of(context).pop();
         }
@@ -96,6 +97,7 @@ class LedgerPage extends ConsumerWidget {
                 label: context.t.ledgerTitle,
                 controller: ledgerTitleController,
                 validator: (value) => value!.isEmpty ? '' : null,
+                textCapitalization: TextCapitalization.sentences,
                 tileColor: Theme.of(context).colorScheme.surfaceVariant,
               ),
               /*
@@ -109,6 +111,7 @@ class LedgerPage extends ConsumerWidget {
                 controller: firstPersonController,
                 validator: (value) => value!.isEmpty ? '' : null,
                 textCapitalization: TextCapitalization.sentences,
+                readonly: ledger != null,
                 tileColor: Theme.of(context).colorScheme.surfaceVariant,
               ),
               /*
@@ -122,6 +125,7 @@ class LedgerPage extends ConsumerWidget {
                 controller: secondPersonController,
                 validator: (value) => value!.isEmpty ? '' : null,
                 textCapitalization: TextCapitalization.sentences,
+                readonly: ledger != null,
                 tileColor: Theme.of(context).colorScheme.surfaceVariant,
               ),
               /*
@@ -129,15 +133,51 @@ class LedgerPage extends ConsumerWidget {
                * Currency
                * ========================
                */
-              FormFieldWrapper(
-                leading: const Icon(Icons.money_rounded),
-                label: context.t.currency,
-                formField: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Text('CHF'),
+              if (ledger == null)
+                WrappedTextFormField(
+                  iconData: Icons.money_rounded,
+                  label: context.t.currency,
+                  controller: currencyController,
+                  validator: (value) =>
+                      currencyController.text.isEmpty ? '' : null,
+                  readonly: true,
+                  onTap: ledger != null
+                      ? null
+                      : () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (context) {
+                              return ListView(
+                                children: [
+                                  ListTile(
+                                    title: const Text('CHF'),
+                                    onTap: () {
+                                      currencyController.text = 'CHF';
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: const Text('EUR'),
+                                    onTap: () {
+                                      currencyController.text = 'EUR';
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: const Text('USD'),
+                                    onTap: () {
+                                      currencyController.text = 'USD';
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                  trailing: const Icon(Icons.chevron_right),
+                  tileColor: Theme.of(context).colorScheme.surfaceVariant,
                 ),
-                trailing: const Icon(Icons.chevron_right),
-              ),
               /*
                * ========================
                * Current password
@@ -194,6 +234,11 @@ class LedgerPage extends ConsumerWidget {
                   obscureText: true,
                   tileColor: Theme.of(context).colorScheme.surfaceVariant,
                 ),
+              /*
+                * ========================
+                * Delete button
+                * ========================
+                */
               if (ledger != null)
                 Padding(
                   padding:
@@ -210,8 +255,42 @@ class LedgerPage extends ConsumerWidget {
                                     ),
                           ),
                           onPressed: () {
-                            ref.read(localLedgersProvider.notifier).d(ledger);
-                            Navigator.of(context).pop();
+                            if (formKey.currentState!.validate()) {
+                              showDialog<void>(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(context.t.deleteLedger),
+                                    content:
+                                        Text(context.t.confirmDeleteLedger),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(context.t.cancel),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          ref
+                                              .read(
+                                                localLedgersProvider.notifier,
+                                              )
+                                              .d(ledger);
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).popUntil(
+                                            (route) =>
+                                                route.settings.name ==
+                                                '/ledgers',
+                                          );
+                                        },
+                                        child: Text(context.t.delete),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           },
                         ),
                       ),

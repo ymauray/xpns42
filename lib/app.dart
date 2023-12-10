@@ -9,6 +9,7 @@ import 'package:xpns42/pages/ledger_page.dart';
 import 'package:xpns42/pages/ledgers_list_page.dart';
 import 'package:xpns42/pages/register_account_page.dart';
 import 'package:xpns42/pages/sign_in_page.dart';
+import 'package:xpns42/pages/transations_list_page.dart';
 
 class App extends ConsumerWidget {
   const App({required this.onboardingSeen, super.key});
@@ -35,6 +36,7 @@ class App extends ConsumerWidget {
         '/forgot_password': (context) => const ForgotPasswordPage(),
         '/register': (context) => const RegisterAccountPage(),
         '/ledgers': (context) => const LedgersListPage(),
+        '/transactions': (context) => const TransactionsListPage(),
         '/ledger': (context) => const LedgerPage(),
       },
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpns42/l10n/l10n_extension.dart';
+import 'package:xpns42/providers/active_local_ledger.dart';
 import 'package:xpns42/providers/local_ledgers.dart';
 import 'package:xpns42/widgets/error_text.dart';
 import 'package:xpns42/widgets/ledgers_list.dart';
@@ -18,10 +19,35 @@ class LedgersListPage extends ConsumerWidget {
         title: Text(context.t.ledgers),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () async {
-              await Navigator.of(context).pushNamed('/ledger');
+          PopupMenuButton(
+            icon: const Icon(Icons.more_horiz),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'add',
+                child: Row(
+                  children: [
+                    const Icon(Icons.add),
+                    const VerticalDivider(),
+                    Text(context.t.addLedger),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'import',
+                child: Row(
+                  children: [
+                    const Icon(Icons.upload),
+                    const VerticalDivider(),
+                    Text(context.t.importLedger),
+                  ],
+                ),
+              ),
+            ],
+            onSelected: (value) async {
+              if (value == 'add') {
+                ref.read(activeLocalLedgerProvider.notifier).set(null);
+                await Navigator.of(context).pushNamed('/ledger');
+              }
             },
           ),
         ],
