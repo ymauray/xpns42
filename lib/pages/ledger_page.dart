@@ -255,8 +255,42 @@ class LedgerPage extends ConsumerWidget {
                                     ),
                           ),
                           onPressed: () {
-                            ref.read(localLedgersProvider.notifier).d(ledger);
-                            Navigator.of(context).pop();
+                            if (formKey.currentState!.validate()) {
+                              showDialog<void>(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(context.t.deleteLedger),
+                                    content:
+                                        Text(context.t.confirmDeleteLedger),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(context.t.cancel),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          ref
+                                              .read(
+                                                localLedgersProvider.notifier,
+                                              )
+                                              .d(ledger);
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).popUntil(
+                                            (route) =>
+                                                route.settings.name ==
+                                                '/ledgers',
+                                          );
+                                        },
+                                        child: Text(context.t.delete),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           },
                         ),
                       ),
