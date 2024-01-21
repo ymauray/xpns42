@@ -42,9 +42,9 @@ void main() async {
   await FirebaseAuth.instance.signInAnonymously();
 
   final sharedPrefs = await SharedPreferences.getInstance();
-  final onboardingSeen = sharedPrefs.getBool('onboarding_seen') ?? false;
+  final showOnboardingSeen = sharedPrefs.getBool('onboarding_seen') ?? false;
 
   await Future<void>.delayed(const Duration(seconds: 5));
 
-  runApp(ProviderScope(child: App(onboardingSeen: onboardingSeen)));
+  runApp(ProviderScope(child: App(onboardingSeen: showOnboardingSeen)));
 }

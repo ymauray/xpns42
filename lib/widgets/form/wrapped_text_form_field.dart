@@ -15,10 +15,11 @@ class WrappedTextFormField extends FormField<String> {
     Widget? trailing,
     GestureTapCallback? onTap,
     TextCapitalization textCapitalization = TextCapitalization.none,
-  })  : assert(
+  }) : assert(
           onTap == null || readonly,
           'readonly must be true if onTap is not null',
         ),
+        
         super(
           initialValue: controller.text,
           builder: (FormFieldState<String> field) {
@@ -56,7 +57,18 @@ class WrappedTextFormField extends FormField<String> {
                         border: InputBorder.none,
                       ),
                     ),
-                    trailing: trailing,
+                    trailing: trailing ??
+                        (obscureText
+                            ? IconButton(
+                                icon: const Icon(Icons.visibility),
+                                onPressed: () {
+                                  // ignore: invalid_use_of_protected_member
+                                  field.setState(() {
+                                    obscureText = false;
+                                  });
+                                },
+                              )
+                            : null),
                   ),
                 ),
               ],
