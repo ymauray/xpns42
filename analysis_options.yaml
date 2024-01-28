@@ -12,18 +12,17 @@ linter:
     parameter_assignments: false
     use_build_context_synchronously: false
     non_constant_identifier_names: false
-    combinators_ordering: false
-    no_default_cases: false
 
 analyzer:
   plugins:
     - very_good_analysis
   errors:
     deprecated_member_use_from_same_package: ignore
+  exclude:
+    - lib/firebase_options.dart
     
 dart_code_metrics:
   metrics-exlude:
     - test/**
     - lib/src/generated/**
     - lib/src/generated_plugin_registrant.dart
-    

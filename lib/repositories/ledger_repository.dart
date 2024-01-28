@@ -1,127 +1,91 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:xpns42/models/ledger.dart';
+import 'package:xpns42/pocketbase_util.dart';
 import 'package:xpns42/repositories/base_repository.dart';
 
-part 'ledger_repository.g.dart';
-
-@riverpod
-LedgerRepository ledgerRepository(LedgerRepositoryRef ref) {
-  return LedgerRepository(ledgerRepositoryRef: ref);
-}
-
-final class LedgerRepository extends BaseRepository {
-  LedgerRepository({
-    required this.ledgerRepositoryRef,
-  });
-
-  final LedgerRepositoryRef ledgerRepositoryRef;
-
-  // Public API
-
-  // List available ledgers
-  FutureOr<List<Ledger>> list() async {
-    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
-    final event = await accountsDBRef.once();
-
-    final ledgers = <Ledger>[];
-    if (event.snapshot.exists) {
-      final value =
-          (event.snapshot.value as Map<dynamic, dynamic>).values.toList();
-      for (final ledger in value) {}
-    }
-
-    return ledgers;
-  }
-
-  /// Load a ledger from id and password.
-  ///
-  /// Returns null if ledger does not exist or password is incorrect.
-  Future<Ledger?> load(String id, String password) async {
-    final ledgerDBRef = FirebaseDatabase.instance.ref('/ledgers/$id');
-    final snapshot = await ledgerDBRef.get();
-    if (snapshot.exists) {
-      final encryptedLedger =
-          await _loadLedger(snapshot.value as Map<dynamic, dynamic>);
-      final decryptedLedger = await _decryptLedger(encryptedLedger, password);
-      if (decryptedLedger != null) {
-        return decryptedLedger;
-      }
-    }
-
-    return null;
-  }
-
-  Future<Ledger?> importLedger({
-    required String code,
-    required String password,
+class LedgerRepository extends BaseRepository {
+  // createLedger
+  static Future<Ledger?> createLedger({
+    required String title,
+    required String groupId,
+    required String firstPerson,
+    required String secondPerson,
   }) async {
-    final encryptedLedger = await _loadLedgerFromCode(code);
-    if (encryptedLedger == null) return null;
+    final userCredential = pocketBaseInstance.authStore.model as RecordModel;
+    final newLedger = await pocketBaseInstance.collection('ledgers').create(
+      body: {
+        'uid': userCredential.id,
+      },
+    );
+    final key = newLedger.id;
+    final ledger = Ledger(
+      title: title,
+      id: key,
+      firstPerson: firstPerson,
+      secondPerson: secondPerson,
+    );
 
-    final decryptedLedger = await _decryptLedger(encryptedLedger, password);
-    if (decryptedLedger == null) return null;
+    final encryptedData = BaseRepository.encrypt(key, ledger.toJson());
+    await pocketBaseInstance.collection('ledgers').update(
+      key,
+      body: {
+        'encoded': BaseRepository.bin2hex(encryptedData),
+      },
+    );
 
-    return decryptedLedger;
-  }
-
-  // Private methods
-
-  FutureOr<List<String>> loadUserLedgers({
-    required String userId,
-  }) async {
-    final userLedgersDBRef =
-        FirebaseDatabase.instance.ref('/persons/$userId/ledgers');
-
-    final userLedgers = await userLedgersDBRef.get();
-    if (userLedgers.exists) {
-      final ledgerIds = List<String>.from(
-        (userLedgers.value as Map<dynamic, dynamic>).keys.toList(),
-      );
-      return ledgerIds;
-    }
-
-    return [];
-  }
-
-  FutureOr<void> deleteLedger(String id) async {
-    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
-    final ledgerDBRef = accountsDBRef.child(id);
-
-    await ledgerDBRef.remove();
-  }
-
-  FutureOr<bool> checkLedgerExists(String id) async {
-    final accountDBRef = FirebaseDatabase.instance.ref('/ledgers/$id');
-    final snapshot = await accountDBRef.get();
-    return snapshot.exists;
-  }
-
-  FutureOr<Ledger?> _loadLedgerFromCode(String code) async {
-    final accountsDBRef = FirebaseDatabase.instance.ref('/ledgers');
-    final event = await accountsDBRef
-        .orderByChild('shortCode')
-        .equalTo(code)
-        .limitToFirst(1)
-        .once();
-
-    if (event.snapshot.exists) {
-      final value =
-          (event.snapshot.value as Map<dynamic, dynamic>).values.first;
-      return _loadLedger(value as Map<dynamic, dynamic>);
-    }
-
-    return null;
-  }
-
-  FutureOr<Ledger> _loadLedger(Map<dynamic, dynamic> data) async {
-    final jsonMap = Map<String, dynamic>.from(data);
-    final ledger = Ledger.fromJson(jsonMap);
+    await pocketBaseInstance.collection('ledgersrefs').create(
+      body: {
+        'uid': userCredential.id,
+        'gid': groupId,
+        'lid': key,
+      },
+    );
 
     return ledger;
   }
 
-  FutureOr<Ledger?> _decryptLedger(Ledger lockedLedger, String password) async {
-    return null;
+  // listLedgers
+  static Future<List<Ledger>> listLedgers(String groupId) async {
+    final ledgers = <Ledger>[];
+
+    final records =
+        await pocketBaseInstance.collection('ledgersrefs').getFullList(
+              filter: pocketBaseInstance.filter(
+                'gid = {:gid}',
+                {'gid': groupId},
+              ),
+            );
+    for (final record in records) {
+      final ledgerId = record.data['lid'] as String;
+      final ledgerRecord =
+          await pocketBaseInstance.collection('ledgers').getOne(ledgerId);
+      final encryptedData =
+          BaseRepository.hex2bin(ledgerRecord.data['encoded'] as String);
+      final decryptedData = BaseRepository.decrypt(
+        ledgerRecord.id,
+        encryptedData,
+      );
+      final ledger = Ledger.fromJson(decryptedData);
+      ledgers.add(ledger);
+    }
+    ledgers.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+
+    return ledgers;
+  }
+
+  // updateLedger
+  static Future<void> updateLedger(Ledger ledger) async {
+    final encryptedData = BaseRepository.encrypt(ledger.id, ledger.toJson());
+    await pocketBaseInstance.collection('ledgers').update(
+      ledger.id,
+      body: {
+        'encoded': BaseRepository.bin2hex(encryptedData),
+      },
+    );
+  }
+
+  // deleteLedger
+  static Future<void> deleteLedger(Ledger ledger) async {
+    await pocketBaseInstance.collection('ledgers').delete(ledger.id);
   }
 }

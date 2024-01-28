@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -10,9 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xpns42/app.dart';
 import 'package:xpns42/firebase_options.dart';
+import 'package:xpns42/pocketbase_util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,12 +40,21 @@ void main() async {
     overlays: [SystemUiOverlay.bottom],
   );
 
-  await FirebaseAuth.instance.signInAnonymously();
-
   final sharedPrefs = await SharedPreferences.getInstance();
   final showOnboardingSeen = sharedPrefs.getBool('onboarding_seen') ?? false;
 
-  await Future<void>.delayed(const Duration(seconds: 5));
+  final store = AsyncAuthStore(
+    save: (String data) async => sharedPrefs.setString('pb_auth', data),
+    initial: sharedPrefs.getString('pb_auth'),
+  );
 
-  runApp(ProviderScope(child: App(onboardingSeen: showOnboardingSeen)));
+  pocketBaseInstance = PocketBase(
+    'https://xpns42.yannickmauray.ch/',
+    authStore: store,
+    lang: 'fr-CH',
+  );
+
+  runApp(
+    ProviderScope(child: App(showOnboardingSeen: showOnboardingSeen)),
+  );
 }

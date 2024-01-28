@@ -20,12 +20,13 @@ Ledger _$LedgerFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Ledger {
+  String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get firstPerson => throw _privateConstructorUsedError;
   String get secondPerson => throw _privateConstructorUsedError;
-  String get shortCode => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
+  double get balance => throw _privateConstructorUsedError;
+  int get references => throw _privateConstructorUsedError;
+  int get sortOrder => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,12 +39,13 @@ abstract class $LedgerCopyWith<$Res> {
       _$LedgerCopyWithImpl<$Res, Ledger>;
   @useResult
   $Res call(
-      {String title,
+      {String id,
+      String title,
       String firstPerson,
       String secondPerson,
-      String shortCode,
-      String password,
-      String currency});
+      double balance,
+      int references,
+      int sortOrder});
 }
 
 /// @nodoc
@@ -59,14 +61,19 @@ class _$LedgerCopyWithImpl<$Res, $Val extends Ledger>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? firstPerson = null,
     Object? secondPerson = null,
-    Object? shortCode = null,
-    Object? password = null,
-    Object? currency = null,
+    Object? balance = null,
+    Object? references = null,
+    Object? sortOrder = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -79,18 +86,18 @@ class _$LedgerCopyWithImpl<$Res, $Val extends Ledger>
           ? _value.secondPerson
           : secondPerson // ignore: cast_nullable_to_non_nullable
               as String,
-      shortCode: null == shortCode
-          ? _value.shortCode
-          : shortCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
+      balance: null == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      references: null == references
+          ? _value.references
+          : references // ignore: cast_nullable_to_non_nullable
+              as int,
+      sortOrder: null == sortOrder
+          ? _value.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -103,12 +110,13 @@ abstract class _$$LedgerImplCopyWith<$Res> implements $LedgerCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String title,
+      {String id,
+      String title,
       String firstPerson,
       String secondPerson,
-      String shortCode,
-      String password,
-      String currency});
+      double balance,
+      int references,
+      int sortOrder});
 }
 
 /// @nodoc
@@ -122,14 +130,19 @@ class __$$LedgerImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? firstPerson = null,
     Object? secondPerson = null,
-    Object? shortCode = null,
-    Object? password = null,
-    Object? currency = null,
+    Object? balance = null,
+    Object? references = null,
+    Object? sortOrder = null,
   }) {
     return _then(_$LedgerImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -142,18 +155,18 @@ class __$$LedgerImplCopyWithImpl<$Res>
           ? _value.secondPerson
           : secondPerson // ignore: cast_nullable_to_non_nullable
               as String,
-      shortCode: null == shortCode
-          ? _value.shortCode
-          : shortCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
+      balance: null == balance
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      references: null == references
+          ? _value.references
+          : references // ignore: cast_nullable_to_non_nullable
+              as int,
+      sortOrder: null == sortOrder
+          ? _value.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -162,16 +175,19 @@ class __$$LedgerImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LedgerImpl implements _Ledger {
   const _$LedgerImpl(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.firstPerson,
       required this.secondPerson,
-      required this.shortCode,
-      required this.password,
-      required this.currency});
+      this.balance = 0.0,
+      this.references = 1,
+      this.sortOrder = 9999});
 
   factory _$LedgerImpl.fromJson(Map<String, dynamic> json) =>
       _$$LedgerImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final String title;
   @override
@@ -179,39 +195,42 @@ class _$LedgerImpl implements _Ledger {
   @override
   final String secondPerson;
   @override
-  final String shortCode;
+  @JsonKey()
+  final double balance;
   @override
-  final String password;
+  @JsonKey()
+  final int references;
   @override
-  final String currency;
+  @JsonKey()
+  final int sortOrder;
 
   @override
   String toString() {
-    return 'Ledger(title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, shortCode: $shortCode, password: $password, currency: $currency)';
+    return 'Ledger(id: $id, title: $title, firstPerson: $firstPerson, secondPerson: $secondPerson, balance: $balance, references: $references, sortOrder: $sortOrder)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LedgerImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.firstPerson, firstPerson) ||
                 other.firstPerson == firstPerson) &&
             (identical(other.secondPerson, secondPerson) ||
                 other.secondPerson == secondPerson) &&
-            (identical(other.shortCode, shortCode) ||
-                other.shortCode == shortCode) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.references, references) ||
+                other.references == references) &&
+            (identical(other.sortOrder, sortOrder) ||
+                other.sortOrder == sortOrder));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, firstPerson, secondPerson,
-      shortCode, password, currency);
+  int get hashCode => Object.hash(runtimeType, id, title, firstPerson,
+      secondPerson, balance, references, sortOrder);
 
   @JsonKey(ignore: true)
   @override
@@ -229,15 +248,18 @@ class _$LedgerImpl implements _Ledger {
 
 abstract class _Ledger implements Ledger {
   const factory _Ledger(
-      {required final String title,
+      {required final String id,
+      required final String title,
       required final String firstPerson,
       required final String secondPerson,
-      required final String shortCode,
-      required final String password,
-      required final String currency}) = _$LedgerImpl;
+      final double balance,
+      final int references,
+      final int sortOrder}) = _$LedgerImpl;
 
   factory _Ledger.fromJson(Map<String, dynamic> json) = _$LedgerImpl.fromJson;
 
+  @override
+  String get id;
   @override
   String get title;
   @override
@@ -245,11 +267,11 @@ abstract class _Ledger implements Ledger {
   @override
   String get secondPerson;
   @override
-  String get shortCode;
+  double get balance;
   @override
-  String get password;
+  int get references;
   @override
-  String get currency;
+  int get sortOrder;
   @override
   @JsonKey(ignore: true)
   _$$LedgerImplCopyWith<_$LedgerImpl> get copyWith =>

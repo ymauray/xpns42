@@ -1,57 +1,84 @@
-import 'package:encrypt/encrypt.dart';
-import 'package:xpns42/models/ledger.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 
-final class Encoder {
-  Encoder(this.encrypter, this.iv);
+import 'package:pointycastle/export.dart';
 
-  final Encrypter encrypter;
-  final IV iv;
-
-  String encrypt(Object object) {
-    final string = object.toString();
-    final encrypted = encrypter.encrypt(string, iv: iv);
-    return encrypted.base64;
+abstract class BaseRepository {
+  static String bin2hex(Uint8List bytes) {
+    final buf = StringBuffer();
+    for (final b in bytes) {
+      final s = b.toRadixString(16);
+      buf.write('${(s.length == 1) ? '0' : ''}$s');
+    }
+    return buf.toString();
   }
 
-  Ledger encryptLedger(Ledger ledger) {
-    return ledger.copyWith(
-      title: encrypt(ledger.title),
-      firstPerson: encrypt(ledger.firstPerson),
-      secondPerson: encrypt(ledger.secondPerson),
-      currency: encrypt(ledger.currency),
-      shortCode: ledger.shortCode,
-      password: '',
+  static Uint8List hex2bin(String hexStr) {
+    if (hexStr.length % 2 != 0) {
+      throw const FormatException(
+        'not an even number of hexadecimal characters',
+      );
+    }
+    final result = Uint8List(hexStr.length ~/ 2);
+    for (var i = 0; i < result.length; i++) {
+      result[i] = int.parse(hexStr.substring(2 * i, 2 * (i + 1)), radix: 16);
+    }
+    return result;
+  }
+
+  static Uint8List getKeyBytes(String key, int size) {
+    assert(size == 32 || size == 16, 'Key size must be 16 or 32');
+
+    final temp = StringBuffer(key);
+    while (temp.length < 32) {
+      temp.write(key);
+    }
+    final cryptoKey =
+        Uint8List.fromList(temp.toString().substring(0, 32).codeUnits);
+    return cryptoKey;
+  }
+
+  static Uint8List encrypt(String key, Map<String, dynamic> jsonMap) {
+    final cryptoKey = getKeyBytes(key, 32);
+    final iv = cryptoKey.sublist(0, 16);
+
+    final cbc = CBCBlockCipher(AESEngine())
+      ..init(true, ParametersWithIV(KeyParameter(cryptoKey), iv));
+
+    final jsonString = StringBuffer(json.encode(jsonMap));
+    while (jsonString.length % 16 != 0) {
+      jsonString.write(' ');
+    }
+    final paddedPlaintext = Uint8List.fromList(jsonString.toString().codeUnits);
+    final cipherText = Uint8List(paddedPlaintext.length); // allocate space
+
+    var offset = 0;
+    while (offset < paddedPlaintext.length) {
+      offset += cbc.processBlock(paddedPlaintext, offset, cipherText, offset);
+    }
+
+    return cipherText;
+  }
+
+  static Map<String, dynamic> decrypt(String key, Uint8List encryptedData) {
+    final cryptoKey = getKeyBytes(key, 32);
+    final iv = cryptoKey.sublist(0, 16);
+
+    final cbc = CBCBlockCipher(AESEngine())
+      ..init(false, ParametersWithIV(KeyParameter(cryptoKey), iv));
+
+    final paddedPlaintext = Uint8List(encryptedData.length); // allocate space
+
+    var offset = 0;
+    while (offset < encryptedData.length) {
+      offset +=
+          cbc.processBlock(encryptedData, offset, paddedPlaintext, offset);
+    }
+
+    final plaintext = String.fromCharCodes(paddedPlaintext).trim();
+
+    return Map<String, dynamic>.from(
+      json.decode(plaintext) as Map<String, dynamic>,
     );
-  }
-
-  String? decrypt(String string) {
-    final encrypted = Encrypted.fromBase64(string);
-    try {
-      final decrypted = encrypter.decrypt(encrypted, iv: iv);
-      return decrypted;
-    } catch (e) {
-      return null;
-    }
-  }
-}
-
-base class BaseRepository {
-  Encoder init(String key, String password) {
-    final longPasswordBuffer = StringBuffer(password);
-    while (longPasswordBuffer.length < 16) {
-      longPasswordBuffer.write(password);
-    }
-    final longPassword = longPasswordBuffer.toString().substring(0, 16);
-
-    final passwordKey = Key.fromUtf8(longPassword);
-    final encrypter = Encrypter(AES(passwordKey));
-
-    var id = key;
-    if (id.length > 16) {
-      id = id.substring(id.length - 16);
-    }
-    final iv = IV.fromUtf8(id);
-
-    return Encoder(encrypter, iv);
   }
 }
