@@ -47,3 +47,20 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+flutter_launcher_icons:
+  remove_alpha_ios: true
+  image_path: "assets/img/logo.png"
+  ios: true
+  android: true
+  macos:
+    generate: true
+    image_path: "assets/img/logo.png"
+    
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/img/splash.jpg"
+  color_dark: "#FFFFFF"
+  image_dark: "assets/img/splash.jpg"
+  android: true
+  ios: true
