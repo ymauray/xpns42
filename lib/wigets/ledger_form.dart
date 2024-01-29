@@ -30,6 +30,7 @@ class LedgerForm extends ConsumerWidget {
             TextFormField(
               controller: titleController,
               autofocus: true,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 floatingLabelBehavior: FloatingLabelBehavior.always,

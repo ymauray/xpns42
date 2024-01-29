@@ -24,6 +24,7 @@ class GroupForm extends ConsumerWidget {
             TextFormField(
               controller: nameController,
               autofocus: true,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
